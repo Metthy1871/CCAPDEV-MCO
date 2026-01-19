@@ -1,0 +1,111 @@
+:root {
+  --p5-red: #ef2c2c;
+  --p5-black: #000000;
+  --p5-white: #ffffff;
+
+  
+}
+
+.nav_bar {
+
+    background-color: var(--p5-black);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 25px;
+}
+
+.left {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+
+.logo {
+
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.logo_text {
+
+    color: var(--p5-white);
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+.center {
+
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    
+    margin: 0 20px;
+}
+
+.search_bar {
+
+    color: var(--p5-white);
+    background-color: var(--p5-white);
+    border: 1px solid var(--p5-black);
+    border-radius: 9999px; /* "Pill" shape */
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    height: 40px;
+}
+
+.search_input {
+
+    background: transparent;
+    color: var(--p5-black);
+    width: 100%;
+    outline: none;
+    border: none;
+    font-size: 15px;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+}
+
+.pill {
+
+    padding: 8px 25px;
+    border-radius: 9999px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+    font-family: 'Arial Black', sans-serif;
+    margin-right: 5px;
+}
+
+.home {
+    background-color: var(--p5-red);
+    color: var(--p5-black);
+}
+
+.register {
+    background-color: var(--p5-red);
+    color: var(--p5-black);
+}
+
+.log_in {
+    background-color: var(--p5-red);
+    color: var(--p5-black);
+}
+
+.links {
+    display: flex;
+}

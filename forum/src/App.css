@@ -1,0 +1,53 @@
+:root {
+  --p5-red: #ef2c2c;
+  --p5-black: #000000;
+  --p5-white: #ffffff;
+}
+
+body {
+  background-color: var(--p5-black);
+  /* The iconic P5 "halftone" pattern look (optional texture) */
+  background-image: url("https://i.redd.it/made-some-more-minimalist-p5-wallpapers-1440p-v0-z3qgfuxh2ws81.png?width=2560&format=png&auto=webp&s=436010236c6c41083626487da25533dd38ae557e");
+  background-size: cover;
+  margin: 0;
+  font-family: 'Arial Black', sans-serif;
+  overflow-x: hidden;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+}
+
+/* THE MAGIC P5 BOX */
+.p5-box {
+  background-color: var(--p5-black);
+  color: var(--p5-white);
+  border: 3px solid var(--p5-white);
+  padding: 15px 40px;
+  font-size: 2rem;
+  text-transform: uppercase;
+  
+  /* This is the key P5 visual style: THE SKEW */
+  transform: skewX(-15deg); 
+  box-shadow: 10px 10px 0px var(--p5-red); /* Hard shadow, no blur */
+  
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* Un-skew the text inside so it's readable */
+.p5-box span {
+  display: block;
+  transform: skewX(15deg);
+}
+
+/* Hover Effect: "Take Your Heart" style */
+.p5-box:hover {
+  background-color: var(--p5-red);
+  color: var(--p5-black);
+  transform: skewX(-15deg) translate(-5px, -5px); /* Move it up slightly */
+  box-shadow: 15px 15px 0px var(--p5-white);
+}
