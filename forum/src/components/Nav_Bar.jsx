@@ -17,6 +17,7 @@ function Nav_Bar(){
                 <span className = "logo_text">
                     The Phantom Aficionado Forum
                 </span>
+
             </div>
             
             <div className = "center">
@@ -28,9 +29,9 @@ function Nav_Bar(){
 
             <div className = "right">
                 <div className = "links">
-                    <button className = "pill home"> Home </button>
-                    <button className = "pill register"> Register </button>
-                    <button className = "pill log_in"> Log In </button>
+                    <button className = "nav_pill home_button"> Home </button>
+                    <button className = "nav_pill register_button"> Register </button>
+                    <button className = "nav_pill log_in_button"> Log In </button>
                 </div>
             </div>
             
@@ -39,4 +40,4 @@ function Nav_Bar(){
     );
 }
 
-export default Nav_Bar
+export default Nav_Bar;

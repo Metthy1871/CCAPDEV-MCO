@@ -1,0 +1,28 @@
+:root {
+
+    --p5-red: #ef2c2c;
+    --p5-black: #000000;
+    --p5-white: #ffffff;
+    --grey: #808080;
+    --bg: #2d2d2d;
+    --hover-color: rgba(255, 255, 255, 0.04);
+}
+
+.home_container {
+
+    overflow-x: hidden;
+    min-height: 100vh;
+
+    background-color: var(--bg);
+}
+
+.feed_container {
+
+    max-width: 600px; 
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+
+    
+}

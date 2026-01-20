@@ -1,0 +1,104 @@
+.post {
+
+    margin-bottom: 25px; /* Space between posts */
+
+    padding: 20px;
+    
+    color: var(--p5-white);
+    border: none;
+
+    border-top: 1px solid var(--p5-red);
+}
+
+.post:hover {
+
+    background-color: var(--hover-color);
+}
+
+.post_header {
+    
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    color: #aaa;
+    font-size: 15px;
+}
+
+.post_author {
+
+    color: var(--p5-white);
+    font-weight: bold;
+}
+
+.post_date {
+
+    color: var(--p5-white);
+    font-weight: bold;
+}
+
+.post_title {
+
+    font-size: 20px;
+    margin: 0 0 10px 0;
+    font-family: 'Arial Black', sans-serif;
+    text-transform: uppercase;
+}
+
+.post_content {
+
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.post_footer {
+    
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-top: 10px;
+    justify-content: space-between;
+}
+
+.post_pill {
+
+    padding: 8px 15px;
+    border-radius: 9999px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+
+    align-items: center;
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
+    
+    font-family: 'Arial Black', sans-serif;
+    margin-right: 5px;
+    
+    color: var(--p5-white);
+    background-color: var(--grey);
+}
+
+.post_pill:hover {
+
+    background-color: var(--hover-color);
+}
+
+.post_vote_count {
+
+    color: var(--p5-white);
+}
+
+.post_vote_arrow {
+
+    color: var(--p5-white);
+}
+
+.post_vote_arrow:hover {
+
+    color: var(--p5-red);
+}
