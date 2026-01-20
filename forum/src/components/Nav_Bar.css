@@ -67,10 +67,10 @@
 }
 
 .right {
+    
     display: flex;
     align-items: center;
     gap: 10px;
-    
 }
 
 .nav_pill {
@@ -109,9 +109,4 @@
 
     background-color: var(--p5-red);
     color: var(--p5-white);
-}
-
-.links {
-
-    display: flex;
 }

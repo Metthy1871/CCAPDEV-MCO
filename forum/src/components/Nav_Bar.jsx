@@ -10,7 +10,7 @@ function Nav_Bar(){
                 
                 <img
                     src = "https://wallpaperaccess.com/full/13458433.jpg"
-                    alt = "failed"
+                    alt = "failed to load images"
                     className = "logo"
                 />
 
@@ -21,21 +21,32 @@ function Nav_Bar(){
             </div>
             
             <div className = "center">
+
                 <div className = "search_bar">
-                    <input type = "text" placeholder = "Search" className = "search_input"/>
+
+                    <input
+                        type = "text" 
+                        placeholder = "Search" 
+                        className = "search_input"
+                    />
+
                 </div>    
+
             </div>
 
 
             <div className = "right">
+
                 <div className = "links">
+
                     <button className = "nav_pill home_button"> Home </button>
                     <button className = "nav_pill register_button"> Register </button>
                     <button className = "nav_pill log_in_button"> Log In </button>
+
                 </div>
+
             </div>
             
-
         </nav>
     );
 }
