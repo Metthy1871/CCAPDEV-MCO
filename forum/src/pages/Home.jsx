@@ -1,5 +1,6 @@
 import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
 import Nav_Bar from '../components/Nav_Bar.jsx';
+import Right_Side_Bar from '../components/Right_Side_Bar.jsx'
 import Post from '../components/Post.jsx';
 import './Home.css';
 
@@ -60,6 +61,12 @@ function App() {
             />
           ))}
           
+        </div>
+
+        <div className = "right_side_container">
+
+            <Right_Side_Bar/>
+
         </div>
 
       </div>

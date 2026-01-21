@@ -16,9 +16,9 @@ function Left_Side_Bar() {
     
             <div className = "left_side_buttons">
 
-                <button className = "side_button home_button"> Home </button>
-                <button className = "side_button popular_button"> Popular </button>
-                <button className = "side_button explore_button"> Explore </button>
+                <button className = "side_button home_button"> 🏠 Home </button>
+                <button className = "side_button popular_button"> 🔥 Popular </button>
+                <button className = "side_button explore_button"> 🧭 Explore </button>
 
             </div>
 
@@ -26,12 +26,12 @@ function Left_Side_Bar() {
 
             <div className = "recent_communities">
 
-                <h3 className = "section_title">
-                    Recent:
+                <h3 className = "left_section_title">
+                    Recent Communities:
                 </h3>
 
                 {recentCommunities.map((community) => (
-                    <button key={community.id} className="community_link">
+                    <button key={community.id} className="left_community_link">
                         <span className="com_icon">{community.icon}</span>
                         <span className="com_name">{community.name}</span>
                     </button>

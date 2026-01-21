@@ -39,7 +39,6 @@ function Nav_Bar(){
 
                 <div className = "links">
 
-                    <button className = "nav_pill home_button"> Home </button>
                     <button className = "nav_pill register_button"> Register </button>
                     <button className = "nav_pill log_in_button"> Log In </button>
 
