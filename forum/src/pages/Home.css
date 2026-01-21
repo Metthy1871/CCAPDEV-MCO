@@ -15,6 +15,12 @@
     background-color: var(--bg);
 }
 
+.left_side_container {
+
+    flex: 0 0 250px;
+}
+
+
 .feed_container {
 
     max-width: 600px; 

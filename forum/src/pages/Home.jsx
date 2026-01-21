@@ -1,3 +1,4 @@
+import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
 import Nav_Bar from '../components/Nav_Bar.jsx';
 import Post from '../components/Post.jsx';
 import './Home.css';
@@ -40,7 +41,13 @@ function App() {
 
         <title>The Phantom Aficionado Forum</title>
         
-        <div className="feed_container">
+        <div className = "left_side_container">
+
+            <Left_Side_Bar/>
+            
+        </div>
+
+        <div className = "feed_container">
 
           {samplePosts.map((post) => (
             <Post 
