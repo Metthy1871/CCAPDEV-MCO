@@ -10,7 +10,6 @@
 
 .home_container {
 
-    overflow-x: hidden;
     background-color: var(--bg);
     display: flex;
 }
@@ -25,6 +24,7 @@
 
     flex: 1;
     max-width: 700px; 
+    min-width: 0;
     margin: 0 auto;
     padding: 40px 20px;
     display: flex;

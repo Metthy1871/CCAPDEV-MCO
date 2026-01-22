@@ -4,10 +4,13 @@
     width: 300px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     border-right: 2px solid var(--grey);
 
-    top: 100vh;
-    position: sticky;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    position: fixed;
 
     overflow-y: auto;
 }

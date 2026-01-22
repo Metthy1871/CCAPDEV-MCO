@@ -7,6 +7,10 @@
     padding: 25px;
     height: 50px;
 
+    top: 0;
+    position: sticky;
+    z-index: 90;
+
     border-bottom: 1px solid var(--grey);
 }
 
@@ -46,7 +50,6 @@
     background-color: var(--grey);
     border: 1px solid var(--p5-black);
     border-radius: 9999px; /* "Pill" shape */
-    width: 600px;
     display: flex;
     align-items: center;
     padding: 0 15px;
@@ -56,6 +59,9 @@
 
 .search_input {
 
+    flex: 1;
+    max-width: 600px;
+    min-width: 400px;
     color: var(--p5-white);
     background-color: var(--grey);
     width: 100%;

@@ -4,10 +4,13 @@
     width: 300px;
     display: flex;
     flex-direction: column;
-    position: sticky;
 
+    top: 50px;
+    right: 0;
+    bottom: 0;
+    position: fixed;
     overflow-y: auto;
-    border: 1px solid var(--grey);
+    border: 2px solid var(--grey);
 }
 
 .popular_communities {
