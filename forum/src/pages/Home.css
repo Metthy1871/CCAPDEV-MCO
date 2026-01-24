@@ -1,6 +1,6 @@
 :root {
 
-    --p5-red: #ef2c2c;
+    --p5-red: #c70e0e;
     --p5-black: #000000;
     --p5-white: #ffffff;
     --grey: #808080;
@@ -19,16 +19,16 @@
     flex: 0 0 300px;
 }
 
-
 .feed_container {
 
     flex: 1;
-    max-width: 700px; 
-    min-width: 0;
+    max-width: 670px; 
+    width: 100%;
     margin: 0 auto;
     padding: 40px 20px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .right_side_container {

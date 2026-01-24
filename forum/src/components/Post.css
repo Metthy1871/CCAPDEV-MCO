@@ -1,13 +1,12 @@
 .post {
 
-    margin-bottom: 25px; /* Space between posts */
-
+    margin-bottom: 25px; 
     padding: 20px;
     
     color: var(--p5-white);
     border: none;
 
-    border-top: 1px solid var(--p5-red);
+    border-bottom: 2px solid var(--p5-red);
 }
 
 .post:hover {

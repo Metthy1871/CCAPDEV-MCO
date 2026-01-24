@@ -1,0 +1,62 @@
+.trend_container {
+
+    margin-top: 30px;
+    padding: 0 15px;
+}
+
+.trend_header {
+
+    color: var(--p5-white);
+    font-size: 25px;
+    border-bottom: 2px solid var(--p5-red);
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    transform: skew(-10deg);
+    display: inline-block;
+}
+
+.trend_cloud {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.buzz_word {
+
+    color: var(--p5-white);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: sans-serif;
+}
+
+.buzz_word:hover {
+
+    color: var(--p5-red);
+    transform: scale(1.1) rotate(-2deg);
+}
+
+.buzz_word:nth-child(even) {
+
+    animation: float 4s infinite ease-in-out;
+}
+
+.buzz_word:nth-child(odd) {
+
+    animation: float 5s infinite ease-in-out reverse;
+}
+
+.buzz_word:active {
+
+    transform: translate(2px, 2px);
+}
+
+@keyframes float {
+    
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0px); }
+}

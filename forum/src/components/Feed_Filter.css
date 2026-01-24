@@ -1,0 +1,34 @@
+.feed_filter_container {
+
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--p5-red);
+}
+
+.filter_button {
+
+    background: transparent;
+    color: var(--grey);
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 10px;
+    position: relative;
+    transition: all 0.2s;
+    align-items: center;
+}
+
+.filter_button:hover {
+
+    color: var(--p5-white);
+}
+
+.filter_button.active {
+
+    color: var(--p5-white);
+    background-color: var(--p5-red);
+    box-shadow: 3px 3px 0 black;
+}

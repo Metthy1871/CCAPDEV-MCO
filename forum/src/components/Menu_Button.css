@@ -1,0 +1,59 @@
+.menu_button {
+
+    width: 200px;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    cursor: pointer;
+    
+    background-color: var(--p5-red);
+    text-shadow: 1px 1px 5px var(--p5-black); 
+
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    transition: all 0.1s;
+    position: relative;
+
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: sans-serif;
+
+    border: 2px solid black;
+    box-shadow: 3px 3px 0 black;
+    transform: skew(-10deg);
+}
+
+.menu_button:hover {
+
+    background-color: var(--p5-red);
+    transform: skew(-5deg) translate(1px, 1px);
+    border: 2px solid black;
+    box-shadow: 3px 3px black;
+}
+
+.menu_button:active {
+
+    transform:  translate(1px, 1px);
+}
+
+.menu_button_icon {
+
+    font-size: 1.2rem;
+}
+
+.menu_button_text {
+
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+@keyframes float {
+    
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0px); }
+}

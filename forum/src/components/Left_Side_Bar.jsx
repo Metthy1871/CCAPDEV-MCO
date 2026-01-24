@@ -1,14 +1,8 @@
 import './Left_Side_Bar.css';
-
+import Menu_Button from './Menu_Button.jsx';
+import Trending_Topics from './Trending_Topics.jsx';
 
 function Left_Side_Bar() {
-
-    const recentCommunities = [
-        { id: 1, name: "r/Persona5", icon: "🎭" },
-        { id: 2, name: "r/WebDev", icon: "💻" },
-        { id: 3, name: "r/JokerMain", icon: "🃏" },
-        { id: 4, name: "r/ShujinAcademy", icon: "🏫" }
-    ];
 
     return (
         
@@ -16,30 +10,15 @@ function Left_Side_Bar() {
     
             <div className = "left_side_buttons">
 
-                <button className = "side_button home_button"> 🏠 Home </button>
-                <button className = "side_button popular_button"> 🔥 Popular </button>
-                <button className = "side_button explore_button"> 🧭 Explore </button>
+                <Menu_Button className = "post_button" icon = "✉️" text = "Post"></Menu_Button>
+                <Menu_Button className = "home_button" icon = "🏠" text = "Home"></Menu_Button>
+                <Menu_Button className = "explore_button" icon = "🧭" text = "Explore"></Menu_Button>
 
             </div>
 
             <hr className="separator" />
 
-            <div className = "recent_communities">
-
-                <h3 className = "left_section_title">
-                    Recent Communities:
-                </h3>
-
-                {recentCommunities.map((community) => (
-                    <button key={community.id} className="left_community_link">
-                        <span className="com_icon">{community.icon}</span>
-                        <span className="com_name">{community.name}</span>
-                    </button>
-                ))}
-
-            </div>
-
-            {/* Maybe add "my communities? */}
+            <Trending_Topics/>
 
         </nav>
     )

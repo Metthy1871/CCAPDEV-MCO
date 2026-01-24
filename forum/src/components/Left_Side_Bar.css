@@ -1,7 +1,7 @@
 .left_side_bar {
 
     height: 100vh;
-    width: 300px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -11,79 +11,18 @@
     left: 0;
     bottom: 0;
     position: fixed;
+    margin-left: 30px;
 
     overflow-y: auto;
 }
 
+
 .left_side_buttons {
 
-    margin-top: 25px;
-    margin-left: 10px;
-}
-
-.side_button {
-
-    padding: 8px 15px;
-    width: 200px;
-    border-radius: 9999px;
-
-    color: var(--p5-white);
-    background-color: transparent;
-    border: none;
-
-    font-weight: bold;
-    font-size: 1rem;
-
-    display: flex;
-    justify-content: flex-start;
-    gap: 12px;
-    align-items: center;
-
-    height: 40px;
-}
-
-.side_button:hover {
-
-    background-color: var(--grey);
+    margin-top: 30px;
 }
 
 .separator {
 
     margin: 20px;
-}
-
-.recent_communities {
-
-    margin-left: 10px;
-}
-
-.left_section_title {
-
-    width: 250px;
-    margin: 20px 20px;
-    color: var(--p5-white);
-    font-size: 17px;
-}
-
-.left_community_link {
-
-    color: var(--p5-white);
-    background-color: transparent;
-    border: none;
-    border-radius: 9999px;
-    width: 200px;
-    padding: 8px 15px;
-    font-size: 1rem;
-
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 12px;
-
-    height: 40px;
-}
-
-.left_community_link:hover {
-
-    background-color: var(--grey);
 }
