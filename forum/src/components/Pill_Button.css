@@ -1,0 +1,40 @@
+.pill_button {
+
+    padding: 8px 25px;
+    border-radius: 9999px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.2s;
+    font-family: 'Arial Black', sans-serif;
+    margin-right: 5px;
+
+    border: 2px solid var(--p5-black);
+    color: var(--p5-white);
+    background-color: var(--p5-red);
+
+    transition: all 0.2s;
+}
+
+.pill_button:hover {
+
+    transform: skew(-5deg) translate(1px, 1px);
+    border: 2px solid black;
+    box-shadow: 3px 3px black;
+}
+
+.pill_button:active {
+
+    border-color: white; 
+    box-shadow: 2px 2px 0 black;
+}
+
+.pill_button.icon {
+
+    font-size: 1.5rem;
+}
+
+.pill_button_text {
+
+    font-size: 0.9rem;
+}

@@ -1,11 +1,11 @@
 .nav_bar {
 
-    background-color: var(--p5-black);
+    background-color: var(--bg);
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 25px;
-    height: 50px;
+    height: 90px;
 
     top: 0;
     position: sticky;
@@ -39,75 +39,54 @@
 
 .center {
 
-    margin-left: 40px;
-    flex: 0.9;
+    flex: 1;
     display: flex;
     justify-content: center;
-}
-
-.search_bar {
-
-    background-color: var(--grey);
-    border: 1px solid var(--p5-black);
-    border-radius: 9999px; /* "Pill" shape */
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    height: 35px;
 }
 
 .search_input {
 
     flex: 1;
-    max-width: 600px;
-    min-width: 400px;
+    min-width: 600px;
     color: var(--p5-white);
-    background-color: var(--grey);
+    background-color: var(--p5-red);
+    border-radius: 9999px;
+    padding: 0 15px;
+    height: 50px;
     width: 100%;
     outline: none;
     border: none;
     font-size: 15px;
+
+    border: 2px solid var(--p5-black);
+}
+
+.search_input:focus {
+
+    border: 2px solid var(--p5-white);
+    outline: none;
 }
 
 .search_input::placeholder {
 
-    color: #b0b0b0;
+    color: var(--p5-white);
 }
 
 .right {
     
-    margin-left: 30px;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 10px;
 }
 
-.nav_pill {
+.pill_button.register_button {
 
-    padding: 8px 25px;
-    border-radius: 9999px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: none;
-    transition: opacity 0.2s;
-    font-family: 'Arial Black', sans-serif;
-    margin-right: 5px;
+    padding: 12px 30px;
 }
 
-.nav_pill:hover {
-
-    background-color: var(--bg);
-}
-
-.register_button {
-
-    background-color: var(--p5-red);
-    color: var(--p5-white);
-}
-
-.log_in_button {
-
-    background-color: var(--p5-red);
-    color: var(--p5-white);
+.pill_button.log_in_button {
+    
+    padding: 12px 30px;
 }

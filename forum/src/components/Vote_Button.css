@@ -1,0 +1,61 @@
+.vote_pill {
+
+    display: flex;
+    align-items: center;
+    color: var(--p5-white);
+    background-color: var(--p5-red);
+    border: 2px solid black;
+    border-radius: 9999px; 
+    overflow: hidden;
+    padding: 8px 10px;
+    width: fit-content;
+    transition: all 0.2s;
+}
+
+.vote_pill:hover {
+
+    transform: skew(-5deg) translate(1px, 1px);
+    border: 2px solid black;
+    box-shadow: 3px 3px black;
+}
+
+.vote_btn {
+
+    background: none;
+    border: none;
+    color: var(--p5-white);
+    cursor: pointer;
+    padding: 0 10px;
+    font-size: 1.2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: color 0.1s;
+
+    text-shadow: 
+       -1px -1px 0 black,  
+        1px -1px 0 black,
+       -1px  1px 0 black,
+        1px  1px 0 black;
+}
+
+.vote_btn.up:hover, .vote_btn.up.active {
+
+    color: aqua;
+}
+
+.vote_btn.down:hover, .vote_btn.down.active{
+
+    color: grey;
+}
+
+.vote_score {
+
+    font-weight: bold;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1rem;
+    padding: 0 5px;
+    min-width: 30px;
+    text-align: center;
+}

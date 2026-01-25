@@ -1,7 +1,9 @@
 import './Post.css';
+import Pill_Button from './Pill_Button';
+import Vote_Button from './Vote_Button';
 
 function Post({title, author, date, content, votes}) {
-
+    
     return (
         
         <div className = "post">
@@ -23,15 +25,16 @@ function Post({title, author, date, content, votes}) {
 
             <div className = "post_footer">
 
-                <div className = "post_pill">
+                <Vote_Button 
+                    initialScore = {votes}>
 
-                    <span className = "post_vote_arrow">▲</span>
-                    <span className = "post_vote_count">{votes}</span>
-                    <span className = "post_vote_arrow">▼</span>
+                </Vote_Button>
 
-                </div>
-
-                <button className = "post_pill">Comment</button>
+                <Pill_Button 
+                    className = "comment_button"
+                    icon = "💬"
+                    text = "Comment">
+                </Pill_Button>
                 
             </div>
 

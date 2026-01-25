@@ -61,43 +61,4 @@
     justify-content: space-between;
 }
 
-.post_pill {
 
-    padding: 8px 15px;
-    border-radius: 9999px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border: none;
-
-    align-items: center;
-    min-width: 100px;
-    display: flex;
-    justify-content: center;
-    
-    font-family: 'Arial Black', sans-serif;
-    margin-right: 5px;
-    
-    color: var(--p5-white);
-    background-color: var(--grey);
-}
-
-.post_pill:hover {
-
-    background-color: var(--hover-color);
-}
-
-.post_vote_count {
-
-    color: var(--p5-white);
-}
-
-.post_vote_arrow {
-
-    color: var(--p5-white);
-}
-
-.post_vote_arrow:hover {
-
-    color: var(--p5-red);
-}

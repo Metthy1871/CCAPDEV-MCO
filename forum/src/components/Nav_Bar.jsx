@@ -1,4 +1,6 @@
 import './Nav_Bar.css';
+import Pill_Button from './Pill_Button';
+import Profile_Icon from './Profile_Icon';
 
 function Nav_Bar(){
 
@@ -26,7 +28,7 @@ function Nav_Bar(){
 
                     <input
                         type = "text" 
-                        placeholder = "Search" 
+                        placeholder = "Search..." 
                         className = "search_input"
                     />
 
@@ -34,15 +36,25 @@ function Nav_Bar(){
 
             </div>
 
-
             <div className = "right">
 
                 <div className = "links">
 
-                    <button className = "nav_pill register_button"> Register </button>
-                    <button className = "nav_pill log_in_button"> Log In </button>
+                    <Pill_Button 
+                        className = "register_button"
+                        icon = ""
+                        text = "Register"> 
+                    </Pill_Button>
+
+                    <Pill_Button 
+                        className = "log_in_button"
+                        icon = ""
+                        text = "Log In"> 
+                    </Pill_Button>
 
                 </div>
+
+                <Profile_Icon/>
 
             </div>
             

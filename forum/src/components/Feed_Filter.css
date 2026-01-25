@@ -11,7 +11,6 @@
 
     background: transparent;
     color: var(--grey);
-    border: none;
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
@@ -24,11 +23,13 @@
 .filter_button:hover {
 
     color: var(--p5-white);
+    background-color: var(--hover-color);
 }
 
 .filter_button.active {
 
     color: var(--p5-white);
     background-color: var(--p5-red);
-    box-shadow: 3px 3px 0 black;
+    border-color: black; 
+    box-shadow: 1px 1px 0 black;
 }
