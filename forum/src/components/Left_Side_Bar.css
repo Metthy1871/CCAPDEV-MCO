@@ -5,7 +5,6 @@
     display: flex;
     flex-direction: column;
 
-    justify-content: flex-start;
     border-right: 2px solid var(--grey);
 
     top: 60px;
@@ -17,12 +16,30 @@
     overflow-y: auto;
 }
 
-.left_side_buttons {
+.pill_button.post_button {
 
     margin-top: 30px;
+    height: 100px;
+    width: 100%;
+    padding: 15px;
+    border-radius: 0;
+
+    border: 3px solid black;
+
+    justify-content: center;
+}
+
+.pill_button.post_button .pill_button_icon {
+
+    font-size: 2rem;
+}
+
+.pill_button.post_button .pill_button_text {
+
+    font-size: 2rem;
 }
 
 .separator {
 
-    margin-right: 30px;
+    margin: 20px;
 }

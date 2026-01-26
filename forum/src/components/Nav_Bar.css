@@ -27,11 +27,12 @@
     width: 50px;
     height: 50px;
     object-fit: contain;
+    background: transparent;
 }
 
 .logo_text {
 
-    color: var(--p5-white);
+    color: white;
     font-weight: bold;
     font-family: Arial, sans-serif;
     font-size: 18px;
@@ -81,12 +82,20 @@
     gap: 10px;
 }
 
-.pill_button.register_button {
+.pill_button.home_button {
 
-    padding: 12px 30px;
+    width: 110px;
+    height: 60px;
 }
 
 .pill_button.log_in_button {
     
-    padding: 12px 30px;
+    width: 110px;
+    height: 60px;
 }
+
+.home_link {
+
+    text-decoration: none;
+}
+

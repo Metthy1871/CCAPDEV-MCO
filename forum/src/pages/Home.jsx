@@ -5,7 +5,7 @@ import Right_Side_Bar from '../components/Right_Side_Bar.jsx'
 import Post from '../components/Post.jsx';
 import Feed_Filter from '../components/Feed_Filter.jsx';
 
-function App() {
+function Home() {
   
     {/*Placeholder posts*/}
     const samplePosts = [
@@ -89,4 +89,4 @@ function App() {
   )
 }
 
-export default App
+export default Home;

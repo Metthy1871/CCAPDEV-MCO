@@ -1,4 +1,6 @@
 import './Nav_Bar.css';
+import { Link } from 'react-router-dom';
+import Phantom_Logo from '../media/Phantom_Logo.png';
 import Pill_Button from './Pill_Button';
 import Profile_Icon from './Profile_Icon';
 
@@ -10,15 +12,21 @@ function Nav_Bar(){
 
             <div className = "left">
                 
-                <img
-                    src = "https://wallpaperaccess.com/full/13458433.jpg"
-                    alt = "failed to load images"
-                    className = "logo"
-                />
+                <Link to = '/' className = "home_link">
 
-                <span className = "logo_text">
-                    The Phantom Aficionado Forum
-                </span>
+                    <img
+                        src = {Phantom_Logo}
+                        alt = "failed to load images"
+                        className = "logo"
+                    />
+                </Link>
+
+                <Link to = '/' className = "home_link">
+                    <span className = "logo_text">
+                        The Phantom Aficionado Forum
+                    </span>
+                </Link>
+                
 
             </div>
             
@@ -40,11 +48,13 @@ function Nav_Bar(){
 
                 <div className = "links">
 
-                    <Pill_Button 
-                        className = "register_button"
-                        icon = ""
-                        text = "Register"> 
-                    </Pill_Button>
+                    <Link to = "/" className= 'home_link'>
+                        <Pill_Button 
+                            className = "home_button"
+                            icon = ""
+                            text = "Home"> 
+                        </Pill_Button>
+                    </Link>
 
                     <Pill_Button 
                         className = "log_in_button"
