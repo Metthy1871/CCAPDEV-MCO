@@ -27,7 +27,6 @@ function Post({title, author, date, content, votes}) {
 
                 <Vote_Button 
                     initialScore = {votes}>
-
                 </Vote_Button>
 
                 <Pill_Button 

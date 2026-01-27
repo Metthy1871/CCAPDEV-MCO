@@ -10,27 +10,29 @@ function Nav_Bar(){
 
         <nav className = "nav_bar">
 
-            <div className = "left">
+            <div className = "nav_left">
                 
-                <Link to = '/' className = "home_link">
+                <Link to = "/" className = "nav_link">
 
                     <img
                         src = {Phantom_Logo}
                         alt = "failed to load images"
                         className = "logo"
                     />
+
                 </Link>
 
-                <Link to = '/' className = "home_link">
+                <Link to = "/" className = "nav_link">
+
                     <span className = "logo_text">
                         The Phantom Aficionado Forum
                     </span>
+
                 </Link>
-                
 
             </div>
             
-            <div className = "center">
+            <div className = "nav_center">
 
                 <div className = "search_bar">
 
@@ -44,17 +46,19 @@ function Nav_Bar(){
 
             </div>
 
-            <div className = "right">
+            <div className = "nav_right">
 
-                <div className = "links">
+                <Link to = "/" className = 'nav_link'>
 
-                    <Link to = "/" className= 'home_link'>
-                        <Pill_Button 
-                            className = "home_button"
-                            icon = ""
-                            text = "Home"> 
-                        </Pill_Button>
-                    </Link>
+                    <Pill_Button 
+                        className = "home_button"
+                        icon = ""
+                        text = "Home"> 
+                    </Pill_Button>
+
+                </Link>
+
+                <Link to = "/login" className = 'nav_link'>
 
                     <Pill_Button 
                         className = "log_in_button"
@@ -62,8 +66,8 @@ function Nav_Bar(){
                         text = "Log In"> 
                     </Pill_Button>
 
-                </div>
-
+                </Link>
+                    
                 <Profile_Icon/>
 
             </div>

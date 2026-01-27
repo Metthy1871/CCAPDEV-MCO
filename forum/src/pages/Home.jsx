@@ -7,7 +7,7 @@ import Feed_Filter from '../components/Feed_Filter.jsx';
 
 function Home() {
   
-    {/*Placeholder posts*/}
+    {/* Placeholder posts */}
     const samplePosts = [
         {
         id: 1,
@@ -34,59 +34,61 @@ function Home() {
         votes: 42
         },
         {
-            id: 4,
-            title: "Anyone see what happened in Yuchengko?",
-            author: "P. Diddy",
-            date: "3 days ago",
-            content: "Is it something in the air, the water, or whatever cursed potion is brewing inside their vape juice? I genuinely cannot comprehend why some of my fellow Lasallians are perpetually in heat, as if the campus operates on a year-round mating season, nor why public spaces seem to be their venue of choice." +
-            "During a vacancy, I decided to stroll around campus to kill time. I passed by SJ, LS, then Yuch. While walking through the halls, I heard a faint rhythmic thumping. To my surprise, it was a conyo Neanderthal enthusiastically treating an empty classroom like a discount motel, stuffing his girlfriend like a Thanksgiving turkey with zero shame and even less rhythm. Traumatized, I fled to the library to cleanse my soul, only to spot another couple in my peripheral vision aggressively sampling each other’s necks in a so-called blind spot." +
-            "When did Yuch and the library turn into SOGO? If you cannot get a room, at least have the human decency to remember that desks are for studying, not a canvas to leave your jizz. SMH.",
-            votes: 1100
+        id: 4,
+        title: "Anyone see what happened in Yuchengko?",
+        author: "P. Diddy",
+        date: "3 days ago",
+        content: "Is it something in the air, the water, or whatever cursed potion is brewing inside their vape juice? I genuinely cannot comprehend why some of my fellow Lasallians are perpetually in heat, as if the campus operates on a year-round mating season, nor why public spaces seem to be their venue of choice." +
+        "During a vacancy, I decided to stroll around campus to kill time. I passed by SJ, LS, then Yuch. While walking through the halls, I heard a faint rhythmic thumping. To my surprise, it was a conyo Neanderthal enthusiastically treating an empty classroom like a discount motel, stuffing his girlfriend like a Thanksgiving turkey with zero shame and even less rhythm. Traumatized, I fled to the library to cleanse my soul, only to spot another couple in my peripheral vision aggressively sampling each other’s necks in a so-called blind spot." +
+        "When did Yuch and the library turn into SOGO? If you cannot get a room, at least have the human decency to remember that desks are for studying, not a canvas to leave your jizz. SMH.",
+        votes: 1100
         },
     ];
 
-  return (
+    return (
     
-    <>
-      <Nav_Bar/>
+        <>
 
-      <div className = "home_container">
-
-        <title>The Phantom Aficionado Forum</title>
+            <title>The Phantom Aficionado Forum</title>
         
-        <div className = "left_side_container">
-
-            <Left_Side_Bar/>
+            {/* Place Nav_Bar component on top */}
+            <Nav_Bar/>
             
-        </div>
+            <div className = "home_container">
 
-        <div className = "feed_container">
+                <div className = "left_side_container">
 
-            <Feed_Filter/>
+                    <Left_Side_Bar/>
+                    
+                </div>
 
-            {samplePosts.map((post) => (
-                <Post 
-                key={post.id}
-                title={post.title}
-                author={post.author}
-                date={post.date}
-                content={post.content}
-                votes={post.votes}
-                />
-            ))}
-          
-        </div>
+                <div className = "feed_container">
 
-        <div className = "right_side_container">
+                    <Feed_Filter/>
 
-            <Right_Side_Bar/>
+                    {samplePosts.map((post) => (
+                        <Post 
+                        key={post.id}
+                        title={post.title}
+                        author={post.author}
+                        date={post.date}
+                        content={post.content}
+                        votes={post.votes}
+                        />
+                    ))}
+                
+                </div>
 
-        </div>
+                <div className = "right_side_container">
 
-      </div>
-    
-    </>
-  )
+                    <Right_Side_Bar/>
+
+                </div>
+
+            </div>
+        
+        </>
+    );
 }
 
 export default Home;

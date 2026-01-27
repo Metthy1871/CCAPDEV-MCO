@@ -1,15 +1,15 @@
 import './Pill_Button.css';
 
-function Pill_Button({icon, text, className}) {
+function Pill_Button({icon, text, className, onClick}) {
 
     return (
 
-        <button className={`pill_button ${className ? className : ''}`}>
+        <div className={`pill_button ${className ? className : ''}`} onClick = {onClick}>
 
             <span className = "pill_button_icon">{icon}</span>
             <span className = "pill_button_text">{text}</span>
             
-        </button>
+        </div>
     );
 }
 

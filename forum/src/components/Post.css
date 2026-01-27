@@ -3,7 +3,7 @@
     margin-bottom: 25px; 
     padding: 20px;
     
-    color: var(--p5-white);
+    color: white;
     border: none;
 
     border-bottom: 2px solid var(--p5-red);
@@ -27,14 +27,16 @@
 
 .post_author {
 
-    color: var(--p5-white);
+    color: white;
     font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .post_date {
 
-    color: var(--p5-white);
+    color: white;
     font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .post_title {
@@ -50,6 +52,7 @@
     font-size: 1rem;
     line-height: 1.5;
     margin-bottom: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .post_footer {

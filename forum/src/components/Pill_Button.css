@@ -9,10 +9,13 @@
     font-family: 'Arial Black', sans-serif;
     margin-right: 5px;
 
-    border: 2px solid var(--p5-black);
-    color: var(--p5-white);
+    border: 2px solid black;
+    color: white;
     background-color: var(--p5-red);
 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.2s;
 }
 
