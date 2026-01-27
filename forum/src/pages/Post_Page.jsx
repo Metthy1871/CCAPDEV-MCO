@@ -1,10 +1,8 @@
-import './Home.css';
-import Comment from '../components/Comment.jsx';
-import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
-import Nav_Bar from '../components/Nav_Bar.jsx';
-import Right_Side_Bar from '../components/Right_Side_Bar.jsx'
+import './Post_Page.css';
+import { useParams } from 'react-router-dom';
+import Nav_bar from '../components/Nav_Bar.jsx';
 import Post from '../components/Post.jsx';
-import Feed_Filter from '../components/Feed_Filter.jsx';
+
 
 {/* Placeholder posts */}
     const samplePosts = [
@@ -88,55 +86,49 @@ import Feed_Filter from '../components/Feed_Filter.jsx';
         },
     ];
 
-function Home() {
+function Post_Page() {
+
+    const { id } = useParams();
+
+    // 2. Find the specific post in your data
+    // (Note: URL params are strings, so we convert to Number)
+    const post = samplePosts.find(p => p.id === Number(id));
+
+    if (!post) {
+        return <div>Post not found!</div>;
+    }
 
     return (
-    
+
         <>
-
-            <title>The Phantom Aficionado Forum</title>
         
-            {/* Place Nav_Bar component on top */}
-            <Nav_Bar/>
-            
-            <div className = "home_container">
+            <Nav_bar />
 
-                <div className = "left_side_container">
+            <div className="post_page_container">
 
-                    <Left_Side_Bar/>
-                    
-                </div>
+                <div className = "post_page_view">
 
-                <div className = "feed_container">
-
-                    <Feed_Filter/>
-
-                    {samplePosts.map((post) => (
-                        <Post 
-                            key={post.id}
-                            id={post.id}
-                            title={post.title}
-                            author={post.author}
-                            date={post.date}
-                            content={post.content}
-                            votes={post.votes}
-                            isPreview={true}
-                            comments={post.comments}
-                        />
-                    ))}
-                
-                </div>
-
-                <div className = "right_side_container">
-
-                    <Right_Side_Bar/>
+                    {/* 3. Reuse your existing Component! */}
+                    <Post 
+                        id={post.id}
+                        title={post.title}
+                        author={post.author}
+                        date={post.date}
+                        content={post.content}
+                        votes={post.votes}
+                        isPreview={false}
+                        comments={post.comments}
+                        
+                        /* 4. UX Upgrade: Force comments to be open */
+                        isExpanded={true} 
+                    />
 
                 </div>
 
             </div>
-        
+
         </>
     );
 }
 
-export default Home;
+export default Post_Page;

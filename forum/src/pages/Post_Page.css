@@ -1,0 +1,16 @@
+.post_page_container {
+
+    background-color: var(--bg);
+    display: flex;
+    height: 100vh;
+}
+
+.post_page_view {
+
+    flex: 1;
+    max-width: 800px; 
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+}

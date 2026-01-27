@@ -39,6 +39,12 @@
     font-size: 2rem;
 }
 
+.pill_button.post_button:active {
+
+    border-color: white; 
+    box-shadow: 2px 2px 0 black;
+}
+
 .separator {
 
     margin: 20px;
