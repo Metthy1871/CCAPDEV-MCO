@@ -10,6 +10,7 @@
 
     background-color: var(--bg);
     display: flex;
+    justify-content: center;
 }
 
 .left_side_container {
@@ -19,8 +20,10 @@
 
 .feed_container {
 
-    flex: 1;
-    max-width: 800px; 
+    flex-grow: 1;
+    flex-shrink: 1;
+    max-width: 700px; 
+    min-width: 600px;
     margin: 0 auto;
     padding: 40px 20px;
     display: flex;
