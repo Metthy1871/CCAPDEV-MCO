@@ -1,6 +1,6 @@
 import './Nav_Bar.css';
 import { Link } from 'react-router-dom';
-import Phantom_Logo from '../media/Phantom_Logo.png';
+import phantom_logo from '../media/phantom_logo.png';
 import Pill_Button from './Pill_Button';
 import Profile_Icon from './Profile_Icon';
 
@@ -15,7 +15,7 @@ function Nav_Bar(){
                 <Link to = "/" className = "nav_link">
 
                     <img
-                        src = {Phantom_Logo}
+                        src = {phantom_logo}
                         alt = "failed to load images"
                         className = "logo"
                     />

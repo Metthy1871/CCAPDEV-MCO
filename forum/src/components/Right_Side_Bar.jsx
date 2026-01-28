@@ -1,7 +1,7 @@
 import './Right_Side_Bar.css';
+import { forum_rules } from '../data/forum_rules.js';
 
 function Right_Side_Bar() {
-
 
     return (
 
@@ -45,10 +45,11 @@ function Right_Side_Bar() {
                 <h4 className = "rules_header"> Forum Rules </h4>
 
                 <ul className = "rules_list">
-                    <li>🚫 No revealing real identities.</li>
-                    <li>👺 Only target corrupted adults.</li>
-                    <li>🤝 Believe in the Phantom Thieves.</li>
-                    <li>🔥 Steal hearts, not wallets.</li>
+                    {forum_rules.map((rule) => (
+                        <li key = {rule.id}>
+                            <span> {rule.id}. {rule.title}</span>
+                        </li>
+                    ))}
                 </ul>
 
             </div>

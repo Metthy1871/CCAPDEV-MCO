@@ -34,7 +34,7 @@
     gap: 10px;
 }
 
-.buzz_word {
+.keyword {
 
     color: white;
     font-size: 1rem;
@@ -45,13 +45,13 @@
     border-left: 3px solid var(--p5-red);
 }
 
-.buzz_word:hover {
+.keyword:hover {
 
     cursor: pointer;
     color: var(--p5-red);
 }
 
-.buzz_word:active {
+.keyword:active {
 
     transform: translate(1px, 1px);
 }
