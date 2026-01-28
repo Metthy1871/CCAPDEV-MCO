@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     color: white;
-    background-color: var(--p5-red);
+    background-color: transparent;
     border: 2px solid black;
     border-radius: 9999px; 
     overflow: hidden;
@@ -39,9 +39,10 @@
         1px  1px 0 black;
 }
 
-.vote_btn.up:hover, .vote_btn.up.active {
+.vote_btn.up:hover, .vote_btn.up.active, .vote_pill {
 
-    color: aqua;
+    color: var(--p5-red);
+    background-color: var(--p5-red);
 }
 
 .vote_btn.down:hover, .vote_btn.down.active{

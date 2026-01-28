@@ -75,3 +75,18 @@
     background-color: var(--hover-color);
 }
 
+.comment_section_container {
+
+    margin-left: 10px; /* Space from the left edge */
+    padding-left: 15px; /* Space between line and text */
+    
+    border-left: 2px solid transparent;
+    
+    transition: border-color 0.2s;
+}
+
+.comment_section_container:hover {
+
+    border-left: 2px solid var(--p5-red); 
+}
+

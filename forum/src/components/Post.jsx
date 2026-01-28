@@ -11,8 +11,8 @@ function Post({id, title, author, date, content, votes, isPreview, comments}) {
 
     const navigate = useNavigate(); // 2. Activate hook
 
-    // 3. The Click Handler
     const handlePostClick = () => {
+
         if (isPreview) {
             navigate(`/post/${id}`);
         }
@@ -21,7 +21,8 @@ function Post({id, title, author, date, content, votes, isPreview, comments}) {
     const handleCommentButtonClick = () => {
         // If we are on the Home page (Preview), don't toggle!
         // Just let the click bubble up to the container so it navigates.
-        if (isPreview) return;
+        if (isPreview) 
+            return;
 
         // If we are on the Post Page, toggle the visibility.
         setShowComments(!showComments);

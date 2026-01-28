@@ -1,6 +1,8 @@
 import './Post_Page.css';
 import { useParams } from 'react-router-dom';
 import Nav_bar from '../components/Nav_Bar.jsx';
+import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
+import Right_Side_Bar from '../components/Right_Side_Bar.jsx';
 import Post from '../components/Post.jsx';
 
 
@@ -106,9 +108,14 @@ function Post_Page() {
 
             <div className="post_page_container">
 
+                <div className = "left_side_container">
+
+                    <Left_Side_Bar/>
+                    
+                </div>
+
                 <div className = "post_page_view">
 
-                    {/* 3. Reuse your existing Component! */}
                     <Post 
                         id={post.id}
                         title={post.title}
@@ -118,10 +125,13 @@ function Post_Page() {
                         votes={post.votes}
                         isPreview={false}
                         comments={post.comments}
-                        
-                        /* 4. UX Upgrade: Force comments to be open */
-                        isExpanded={true} 
                     />
+
+                </div>
+
+                <div className = "right_side_container">
+
+                    <Right_Side_Bar/>
 
                 </div>
 

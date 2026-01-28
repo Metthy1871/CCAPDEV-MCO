@@ -3,13 +3,20 @@
     margin-top: 20px; 
     width: auto;
     
-    color: white;
     border: none;
 
     border-top: 2px solid grey;
 }
 
-.comment:hover {
+
+
+.comment_block {
+
+    background: transparent;
+    color: white; 
+}
+
+.comment_block:hover {
 
     background-color: var(--hover-color);
 }
@@ -54,6 +61,24 @@
     gap: 20px;
     padding-top: 10px;
     justify-content: space-between;
+}
+
+.nested_thread_container {
+
+    margin-left: 10px; /* Space from the left edge */
+    padding-left: 15px; /* Space between line and text */
+    
+    /* THE LINE ITSELF */
+    border-left: 2px solid transparent; /* Dark Grey line (Like VS Code indent guides) */
+    
+    /* Transition for the hover effect */
+    transition: border-color 0.2s;
+}
+
+/* 2. Hover Effect (Reddit Style) */
+/* When you hover over the thread container, the line lights up */
+.nested_thread_container:hover {
+    border-left: 2px solid var(--p5-red); /* Phantom Red Highlight */
 }
 
 
