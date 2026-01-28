@@ -4,7 +4,7 @@ export const sample_posts = [
     {
         id: 1,
         title: "The Phantom Thieves Strike Again!",
-        author: "JokerFan22",
+        author: "Joker",
         date: "3 hours ago",
         content: "Did anyone else see the calling card on the news? Kamoshida is done for.",
         votes: 1205,

@@ -1,0 +1,64 @@
+jsx
+
+<div className="profile_stats">
+
+                                <div className="stat_box">
+
+                                    <span className = "stat_num">
+                                        {current_user.stats.posts}
+                                    </span>
+
+                                    <span className = "stat_label">
+                                        POSTS
+                                    </span>
+
+                                </div>
+
+                                <div className = "stat_box">
+
+                                    <span className = "stat_num">
+                                        {current_user.stats.hearts}
+                                    </span>
+
+                                    <span className = "stat_label">
+                                        HEARTS
+                                    </span>
+
+                                </div>
+
+                                <div className = "stat_box">
+
+                                    <span className="stat_label">
+                                        SINCE: {current_user.joinDate}
+                                    </span>
+
+                            </div>
+
+css
+
+.profile_stats {
+
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    border-top: 2px solid #444;
+    padding-top: 15px;
+}
+
+.stat_box {
+
+    display: flex;
+    flex-direction: column;
+}
+
+.stat_num {
+
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.stat_label {
+
+    font-size: 0.75rem;
+    color: #888;
+}

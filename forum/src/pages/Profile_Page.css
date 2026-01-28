@@ -1,0 +1,137 @@
+.profile_page_container {
+
+    background-color: var(--bg); 
+    min-height: 100vh;
+}
+
+.profile_content {
+
+    margin-top: 25px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.profile_header {
+
+    background-color: var(--p5-red);
+    color: white;
+    padding: 30px;
+    margin-bottom: 50px;
+     
+    border: 10px solid black;
+}
+
+.profile_info {
+    
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+
+/* Section 1: Profile Picture */
+
+
+.profile_picture_wrapper {
+
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    margin: 20px;
+}
+
+.profile_picture_mask {
+
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transform: rotate(45deg);
+
+    border: 3px solid black; 
+    box-shadow: 4px 4px 0px black; 
+    
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.profile_picture {
+
+    width: 142%;
+    height: 142%;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    transform: translate(-50%, -50%) rotate(-45deg); 
+    
+    object-fit: cover;
+}
+
+.profile_picture_wrapper:hover {
+
+    transform: scale(1.1) rotate(10deg); 
+    transition: transform 0.2s;
+}
+
+.profile_picture_wrapper:hover .profile_picture_mask {
+
+    border-color: var(--p5-red);
+}
+
+.profile_picture_wrapper:active .profile_picture_mask {
+
+    border-color: grey; 
+    box-shadow: 2px 2px 0 black;
+}
+
+.profile_picture_wrapper:active {
+
+    transform: scale(1) translate(1px 1px); 
+    transition: transform 0.2s;
+}
+
+
+/* Section 2: Profile Information */
+
+
+.profile_name {
+
+    font-size: 2.5rem;
+    margin: 0;
+    text-transform: uppercase;
+    font-family: 'Arial Black'; 
+    letter-spacing: 2px;
+}
+
+.profile_handle {
+
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.profile_bio {
+
+    font-size: 1rem;
+    color: white;
+    max-width: 400px;
+    line-height: 1.4;
+}
+
+/* Section 3: Post History */
+
+
+.section_title {
+
+    color: white;
+    background-color: #000;
+    display: inline-block;
+    padding: 5px 20px;
+    transform: skewX(-10deg);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}

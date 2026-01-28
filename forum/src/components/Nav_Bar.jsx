@@ -82,8 +82,13 @@ function Nav_Bar(){
 
                 </Link>
                     
-                {/* Profile icon */}
-                <Profile_Icon/>
+                {/* Link to profile page */}
+                <Link to = "/profile" className = 'nav_link'>
+                
+                    {/* Profile icon */}
+                    <Profile_Icon/>
+
+                </Link>
 
             </div>
             
