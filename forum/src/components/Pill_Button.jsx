@@ -1,3 +1,5 @@
+/* This component serves as a template for a "pill" styled button. */
+
 import './Pill_Button.css';
 
 function Pill_Button({icon, text, className, onClick}) {

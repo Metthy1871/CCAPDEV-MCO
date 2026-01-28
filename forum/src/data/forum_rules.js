@@ -1,3 +1,4 @@
+{/* Sample forum rules */}
 export const forum_rules = [
 
     { id: 1, title: "No Spoilers"},

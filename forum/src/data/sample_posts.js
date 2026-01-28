@@ -1,3 +1,4 @@
+{/* Sampe posts */}
 export const sample_posts = [
 
     {

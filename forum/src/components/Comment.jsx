@@ -1,3 +1,5 @@
+/* This component renders a single comment to a post. */
+
 import { useState } from 'react';
 import './Comment.css';
 import Vote_Button from './Vote_Button';
@@ -14,26 +16,36 @@ function Comment({user, date, content, votes, comments}) {
 
             <div className = "comment_block">
 
+                {/* Section 1: Comment Header */}
                 <div className = "comment_header">
 
-                    <span className = "comment_user"> @{user} </span>
-                    <span className = "comment_date"> • {date} </span>
+                    {/* Comment author */}
+                    <span className = "comment_user">
+                         @{user} 
+                    </span>
+
+                    {/* Comment date */}
+                    <span className = "comment_date"> 
+                        • {date} 
+                    </span>
 
                 </div>
 
+                {/* Comment content */}
                 <p className = "comment_content"> 
                     {content} 
                 </p>
 
+                {/* Section 2: Comment Footer */}
                 <div className = "comment_footer">
 
+                    {/* Vote_Button component */}
                     <Vote_Button 
                         initialScore = {votes}>
                     </Vote_Button>
 
-
+                    {/* Comment Button */}
                     {nestedComments.length > 0 && (
-
                         <Pill_Button 
                             className = "comment_button"
                             icon = "💬"
@@ -47,6 +59,7 @@ function Comment({user, date, content, votes, comments}) {
 
             </div>
 
+            {/* Section 3: Comment Section */}
             {showComments && nestedComments.length > 0 && (
                 <div className="nested_thread_container">
                     {nestedComments.map((commentData, index) => (

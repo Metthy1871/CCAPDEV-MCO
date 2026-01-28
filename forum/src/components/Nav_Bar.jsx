@@ -1,3 +1,5 @@
+/* This component provides global navigation for the application. */
+
 import './Nav_Bar.css';
 import { Link } from 'react-router-dom';
 import phantom_logo from '../media/phantom_logo.png';
@@ -10,10 +12,13 @@ function Nav_Bar(){
 
         <nav className = "nav_bar">
 
+            {/* Section 1: Logos */}
             <div className = "nav_left">
                 
+                {/* Links to home page */}
                 <Link to = "/" className = "nav_link">
 
+                    {/* Web app logo */}
                     <img
                         src = {phantom_logo}
                         alt = "failed to load images"
@@ -22,8 +27,10 @@ function Nav_Bar(){
 
                 </Link>
 
+                {/* Links to home page */}
                 <Link to = "/" className = "nav_link">
 
+                    {/* Web app title */}
                     <span className = "logo_text">
                         The Phantom Aficionado Forum
                     </span>
@@ -32,8 +39,10 @@ function Nav_Bar(){
 
             </div>
             
+            {/* Section 2: Search Bar */}
             <div className = "nav_center">
 
+                {/* Search bar in the center */}
                 <div className = "search_bar">
 
                     <input
@@ -46,10 +55,13 @@ function Nav_Bar(){
 
             </div>
 
+            {/* Section 3: Links and Utilities */}
             <div className = "nav_right">
 
+                {/* Link to home page */}
                 <Link to = "/" className = 'nav_link'>
 
+                    {/* Home Button */}
                     <Pill_Button 
                         className = "home_button"
                         icon = ""
@@ -58,8 +70,10 @@ function Nav_Bar(){
 
                 </Link>
 
+                {/* Link to login page */}
                 <Link to = "/login" className = 'nav_link'>
 
+                    {/* Log In Button */}
                     <Pill_Button 
                         className = "log_in_button"
                         icon = ""
@@ -68,6 +82,7 @@ function Nav_Bar(){
 
                 </Link>
                     
+                {/* Profile icon */}
                 <Profile_Icon/>
 
             </div>

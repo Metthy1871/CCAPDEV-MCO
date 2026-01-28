@@ -1,3 +1,5 @@
+/* This is the root of the application */
+
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -9,11 +11,11 @@ function App() {
 
         <div className = "App">
 
+            {/* Client-side routes are managed here*/}
             <Routes>
 
                 <Route path = "/" element = {<Home/>}/>
                 <Route path = "/login" element = {<Login/>}/>
-
                 <Route path = "/post/:id" element = {<Post_Page/>}/>
             
             </Routes>

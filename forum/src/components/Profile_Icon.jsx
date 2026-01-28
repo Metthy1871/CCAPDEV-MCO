@@ -1,3 +1,5 @@
+/* This component renders the user's profile icon. */
+
 import './Profile_Icon.css';
 
 function Profile_Icon() {

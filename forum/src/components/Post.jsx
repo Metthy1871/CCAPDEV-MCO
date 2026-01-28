@@ -1,3 +1,5 @@
+/* This component renders a single post. */
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Post.css';
@@ -7,10 +9,12 @@ import Comment from './Comment';
 
 function Post({id, title, author, date, content, votes, isPreview, comments}) {
     
+    /* If we are in Preview (Home), hide comments. If Full Page, show them */
     const [showComments, setShowComments] = useState(!isPreview);
 
-    const navigate = useNavigate(); // 2. Activate hook
+    const navigate = useNavigate();
 
+    /* Navigates to the specific post page */
     const handlePostClick = () => {
 
         if (isPreview) {
@@ -18,13 +22,14 @@ function Post({id, title, author, date, content, votes, isPreview, comments}) {
         }
     };
 
+    /* Displays post comments*/
     const handleCommentButtonClick = () => {
-        // If we are on the Home page (Preview), don't toggle!
-        // Just let the click bubble up to the container so it navigates.
+
+        /* If we are on the Home page (Preview), don't toggle! */
         if (isPreview) 
             return;
 
-        // If we are on the Post Page, toggle the visibility.
+        /* If we are on the Post Page, toggle the visibility. */
         setShowComments(!showComments);
     };
 
@@ -32,40 +37,58 @@ function Post({id, title, author, date, content, votes, isPreview, comments}) {
         
         <div className = {`post_container ${isPreview ? 'clickable_post' : ''}`} onClick={handlePostClick}>
 
-            <div className = 'post_header'>
+            <div className = "post_block">
 
-                <span className = "post_author"> @{author}</span>
-                <span className = "post_date"> • {date}</span>
+                {/* Section 1: Post Header */}
+                <div className = 'post_header'>
 
-            </div>
+                    {/* Post author */}
+                    <span className = "post_author"> 
+                        @{author}
+                    </span>
 
-            <h2 className = "post_title">
-                {title}
-            </h2>
-
-            <p className = "post_content">
-                {content}
-            </p>
-
-            <div className = "post_footer">
-
-                <div onClick = {(e) => e.stopPropagation()}>
-
-                    <Vote_Button 
-                        initialScore = {votes}>
-                    </Vote_Button>
+                    {/* Post date */}
+                    <span className = "post_date">
+                        • {date}
+                    </span>
 
                 </div>
 
-                <Pill_Button 
-                    className = "comment_button"
-                    icon = "💬"
-                    text = {showComments ? "Hide Comments" : `Comments (${comments.length})`}
-                    onClick = {handleCommentButtonClick}>
-                </Pill_Button>
+                {/* Post title */}
+                <h2 className = "post_title">
+                    {title}
+                </h2>
+
+                {/* Post content */}
+                <p className = "post_content">
+                    {content}
+                </p>
+
+                {/* Section 2: Post Footer */}
+                <div className = "post_footer">
+
+                    <div onClick = {(e) => e.stopPropagation()}>
+
+                        {/* Vote_Button component */}
+                        <Vote_Button 
+                            initialScore = {votes}>
+                        </Vote_Button>
+
+                    </div>
+
+                    {/* Comment Button */}
+                    <Pill_Button 
+                        className = "comment_button"
+                        icon = "💬"
+                        text = {showComments ? "Hide Comments" : `Comments (${comments.length})`}
+                        onClick = {handleCommentButtonClick}>
+                    </Pill_Button>
+                    
+                </div>
                 
             </div>
 
+            {/* Section 3: Comment Section */}
             {showComments && (
                     <div className="comment_section_container">
                         {comments.map((commentData, index) => (

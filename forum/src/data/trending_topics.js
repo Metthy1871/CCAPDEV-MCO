@@ -1,3 +1,4 @@
+{/* Sample trending topics */}
 export const trending_topics = [
 
     { id: 1, text: "PhantomThieves"},

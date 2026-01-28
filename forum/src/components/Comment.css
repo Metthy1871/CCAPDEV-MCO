@@ -8,8 +8,6 @@
     border-top: 2px solid grey;
 }
 
-
-
 .comment_block {
 
     background: transparent;
@@ -20,6 +18,10 @@
 
     background-color: var(--hover-color);
 }
+
+
+/* Section 1: Comment Header */
+
 
 .comment_header {
     
@@ -54,6 +56,10 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+
+/* Section 2: Comment Footer */
+
+
 .comment_footer {
     
     display: flex;
@@ -63,22 +69,23 @@
     justify-content: space-between;
 }
 
+
+/* Section 3: Comment Section */
+
+
 .nested_thread_container {
 
-    margin-left: 10px; /* Space from the left edge */
-    padding-left: 15px; /* Space between line and text */
+    margin-left: 10px;
+    padding-left: 15px;
     
-    /* THE LINE ITSELF */
-    border-left: 2px solid transparent; /* Dark Grey line (Like VS Code indent guides) */
+    border-left: 2px solid transparent;
     
-    /* Transition for the hover effect */
     transition: border-color 0.2s;
 }
 
-/* 2. Hover Effect (Reddit Style) */
-/* When you hover over the thread container, the line lights up */
 .nested_thread_container:hover {
-    border-left: 2px solid var(--p5-red); /* Phantom Red Highlight */
+
+    border-left: 2px solid var(--p5-red); 
 }
 
 

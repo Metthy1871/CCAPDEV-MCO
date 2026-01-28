@@ -1,18 +1,22 @@
+/* This is the entry point of the React application. */
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import './index.css'
+import './Main.css'
 import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   
-  <React.StrictMode>
+    /* Developmental tool that helps identify problems with the app */
+    <React.StrictMode>
 
-    <BrowserRouter>
+        {/* Allows client-side routing */}
+        <BrowserRouter>
 
-      <App/>
+            <App/>
 
-    </BrowserRouter>
+        </BrowserRouter>
 
-  </React.StrictMode>,
+    </React.StrictMode>,
 )

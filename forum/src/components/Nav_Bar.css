@@ -14,6 +14,8 @@
     border-bottom: 1px solid grey;
 }
 
+/* Section 1: Logos */
+
 .nav_left {
 
     display: flex;
@@ -45,6 +47,8 @@
     justify-content: center;
 }
 
+/* Section 2: Search Bar */
+
 .search_input {
 
     flex: 1;
@@ -74,6 +78,8 @@
     font-weight: bold;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
+/* Section 3: Links and Utilities */
 
 .nav_right {
     

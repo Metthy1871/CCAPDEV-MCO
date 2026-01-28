@@ -1,3 +1,5 @@
+/* Renders a page dedicated to a single post and its comments. */
+
 import './Post_Page.css';
 import { sample_posts } from '../data/sample_posts.js';
 import { useParams } from 'react-router-dom';
@@ -10,8 +12,7 @@ function Post_Page() {
 
     const { id } = useParams();
 
-    // 2. Find the specific post in your data
-    // (Note: URL params are strings, so we convert to Number)
+    /* Find the specific post in your data */
     const post = sample_posts.find(p => p.id === Number(id));
 
     if (!post) {

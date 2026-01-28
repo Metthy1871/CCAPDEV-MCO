@@ -9,10 +9,26 @@
     border-bottom: 2px solid var(--p5-red);
 }
 
-.post_container:hover {
+.post_block {
+
+    background: transparent;
+    color: white; 
+}
+
+.post_block:hover {
 
     background-color: var(--hover-color);
 }
+
+.clickable_post {
+
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+
+/* Section 1: Post Header */
+
 
 .post_header {
     
@@ -55,6 +71,10 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+
+/* Section 2: Post Footer */
+
+
 .post_footer {
     
     display: flex;
@@ -64,16 +84,9 @@
     justify-content: space-between;
 }
 
-.clickable_post {
 
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
+/* Section 3: Comment Section */
 
-.clickable_post:hover {
-    
-    background-color: var(--hover-color);
-}
 
 .comment_section_container {
 

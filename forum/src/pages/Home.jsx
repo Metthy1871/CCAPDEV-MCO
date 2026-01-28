@@ -1,3 +1,5 @@
+/* This is the home page of the application. */
+
 import './Home.css';
 import { sample_posts } from '../data/sample_posts.js';
 import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
@@ -12,7 +14,7 @@ function Home() {
     return (
     
         <>
-
+            {/* Set title of the page */}
             <title>The Phantom Aficionado Forum</title>
         
             {/* Place Nav_Bar component on top */}
@@ -22,14 +24,17 @@ function Home() {
 
                 <div className = "left_side_container">
 
+                    {/* Place Left_Side_Bar component on the left */}
                     <Left_Side_Bar/>
                     
                 </div>
 
                 <div className = "feed_container">
 
+                    {/* Place Feed_Filter component on the center */}
                     <Feed_Filter/>
 
+                    {/* Place all posts below the Feed_Filter */}
                     {sample_posts.map((post) => (
                         <Post 
                             key={post.id}
@@ -48,6 +53,7 @@ function Home() {
 
                 <div className = "right_side_container">
 
+                    {/* Place Right_Side_Bar component on the right */}
                     <Right_Side_Bar/>
 
                 </div>

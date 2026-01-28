@@ -1,3 +1,5 @@
+/* This component renders the trending topics. */
+
 import './Trending_Topics.css';
 import { trending_topics } from '../data/trending_topics';
 
@@ -13,6 +15,7 @@ function Trending_Topics() {
 
                 <div className = "trend_cloud">
 
+                    {/* Map the list of trending topics */}
                     {trending_topics.map((word) => (
 
                         <span

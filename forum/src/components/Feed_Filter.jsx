@@ -1,3 +1,5 @@
+/* This component allows the user to filter posts on the feed. */
+
 import React, { useState } from 'react';
 import './Feed_Filter.css';
 
@@ -9,6 +11,7 @@ function Feed_Filter() {
 
         <div className="feed_filter_container">
 
+            {/* No sorting */}
             <button 
                 className={`filter_button ${activeTab === 'all' ? 'active' : ''}`}
                 onClick={() => setActiveTab('all')}
@@ -16,6 +19,7 @@ function Feed_Filter() {
                 ALL 
             </button>
 
+            {/* Sort by popularity */}
             <button 
                 className={`filter_button ${activeTab === 'discussion' ? 'active' : ''}`}
                 onClick={() => setActiveTab('discussion')}
@@ -23,9 +27,10 @@ function Feed_Filter() {
                 🔥 POPULAR 
             </button>
 
+            {/* Sort by recency */}
             <button 
-                className={`filter_button ${activeTab === 'requests' ? 'active' : ''}`}
-                onClick={() => setActiveTab('requests')}
+                className={`filter_button ${activeTab === 'recent' ? 'active' : ''}`}
+                onClick={() => setActiveTab('recent')}
             >
                 ✨ RECENT
             </button>

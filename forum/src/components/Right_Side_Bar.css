@@ -1,5 +1,3 @@
-/* Section 1 */
-
 .right_side_bar {
 
     height: 100vh;
@@ -18,6 +16,10 @@
 
     overflow-y: auto;
 }
+
+
+/* Section 1: Forum Information */
+
 
 .forum_info_container {
 
@@ -101,7 +103,9 @@
     font-style: italic;
 }
 
-/* Section 2 */
+
+/* Section 2: Forum Rules */
+
 
 .rules_container {
 

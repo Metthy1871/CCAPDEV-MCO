@@ -1,3 +1,5 @@
+/* This is the login page of the application. */
+
 import './Login.css';
 
 function Login() {
