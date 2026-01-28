@@ -15,7 +15,7 @@ function Home() {
     
         <>
             {/* Set title of the page */}
-            <title>The Phantom Aficionado Forum</title>
+            <title>The Phantom Forum</title>
         
             {/* Place Nav_Bar component on top */}
             <Nav_Bar/>

@@ -32,7 +32,7 @@ function Nav_Bar(){
 
                     {/* Web app title */}
                     <span className = "logo_text">
-                        The Phantom Aficionado Forum
+                        The Phantom Forum
                     </span>
 
                 </Link>
