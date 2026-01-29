@@ -22,3 +22,4 @@ Welcome! Follow these steps to get the app running on your machine.
 ### 4. Running the Project
 1. Run dev in your terminal (npm run dev)
 2. Follow the link you see in the terminal
+3. If the site doesn't load, terminate and install the react router package (npm react-router-dom) back in the terminal
