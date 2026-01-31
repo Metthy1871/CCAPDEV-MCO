@@ -3,12 +3,14 @@
 import './Profile_Page.css';
 import Nav_Bar from '../components/Nav_Bar';
 import Post from '../components/Post';
-import { users, current_user } from '../data/users';
-import { sample_posts } from '../data/sample_posts';
+import { user_controller } from '../controllers/user_controller';
+import { post_controller } from '../controllers/post_controller';
+import Feed_Filter from '../components/Feed_Filter';
 
 function Profile_Page() {
 
-    const userPosts = sample_posts.slice(0, 2);
+    const current_user = user_controller.getCurrentUser();
+    const userPosts = post_controller.getPostsByUser(current_user.username);
 
     return (
 
@@ -65,17 +67,80 @@ function Profile_Page() {
                         POST HISTORY
                     </h2>
 
+                    <Feed_Filter/>
+
                     <div className = "profile_history_feed">
 
                         {userPosts.map(post => (
-                            <Post key={post.id} {...post} isPreview={true} />
+                            <Post key={post.id} 
+                                {...post} 
+                                isPreview={true} 
+                            />
                         ))}
 
                     </div>
 
                 </div>
 
-             </div>
+            </div>
+
+            {/* Section 4: Profile Side Bar */}
+            <div className = "profile_side_bar_container">
+
+                <div className = "profile_side_bar">
+
+                    <div className="profile_stats_container">
+
+                        <div className="info_header">
+                            Profile Info
+                        </div>
+                    
+                        {/* Profile statistics */}
+                        <div className="stats_grid">
+
+                            <div className="stat_item">
+
+                                <span className="stat_label">
+                                    Posts:
+                                </span>
+
+                                <span className="stat_value">
+                                    {current_user.stats.posts}
+                                </span>
+
+                            </div>
+
+                            <div className="stat_item">
+
+                                <span className="stat_label">
+                                    Karma:
+                                </span>
+
+                                <span className="stat_value highlight">
+                                    {current_user.stats.karma}
+                                </span>
+
+                            </div>
+
+                            <div className="stat_item">
+
+                                <span className="stat_label">
+                                    Joined on:
+                                </span>
+
+                                <span className="stat_value">
+                                    {current_user.joinDate}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
     );

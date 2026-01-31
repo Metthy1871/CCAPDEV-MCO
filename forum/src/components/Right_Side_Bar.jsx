@@ -12,24 +12,47 @@ function Right_Side_Bar() {
             {/* Section 1: Forum Information */}
             <div className="forum_info_container">
 
-                <div className="info_header">Forum Info</div>
+                <div className="info_header">
+                    Forum Info
+                </div>
                 
                 {/* Forum statistics */}
                 <div className="stats_grid">
 
                     <div className="stat_item">
-                        <span className="stat_label">Members</span>
-                        <span className="stat_value">12,405</span>
+
+                        <span className="stat_label">
+                            Members:
+                        </span>
+
+                        <span className="stat_value">
+                            12,405:
+                        </span>
+
                     </div>
 
                     <div className="stat_item">
-                        <span className="stat_label">Active</span>
-                        <span className="stat_value highlight">892</span>
+
+                        <span className="stat_label">
+                            Active:
+                        </span>
+
+                        <span className="stat_value highlight">
+                            892
+                        </span>
+
                     </div>
 
                     <div className="stat_item">
-                        <span className="stat_label">Founding Date</span>
-                        <span className="stat_value">04/04/2016</span>
+
+                        <span className="stat_label">
+                            Formed on:
+                        </span>
+
+                        <span className="stat_value">
+                            April 4, 2016
+                        </span>
+
                     </div>
 
                 </div>

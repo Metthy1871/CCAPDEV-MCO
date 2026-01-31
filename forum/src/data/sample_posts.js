@@ -1,16 +1,16 @@
-{/* Sampe posts */}
+{/* Sample posts */}
 export const sample_posts = [
 
     {
         id: 1,
         title: "The Phantom Thieves Strike Again!",
-        author: "Joker",
+        author: "Morgana",
         date: "3 hours ago",
         content: "Did anyone else see the calling card on the news? Kamoshida is done for.",
         votes: 1205,
         comments: [
             {
-                user: "Morgana", 
+                user: "Joker", 
                 date: "2 hour ago", 
                 content: "Go to sleep",
                 votes: 67,
@@ -29,7 +29,7 @@ export const sample_posts = [
     {
         id: 2,
         title: "Is the Metaverse Real?",
-        author: "Mishima",            
+        author: "Morgana",            
         date: "5 hours ago",
         content: "I have a theory that cognitive psience is actually based on Jungian psychology...",
         votes: 85,

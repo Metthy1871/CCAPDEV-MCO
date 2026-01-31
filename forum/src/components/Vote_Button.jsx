@@ -3,6 +3,7 @@
 import './Vote_Button.css';
 import { useState } from 'react';
 
+/* Temporary backend */
 function Vote_Button({initialScore}) {
 
     /* State to track the score locally */
