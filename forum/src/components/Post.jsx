@@ -6,9 +6,12 @@ import './Post.css';
 import Pill_Button from './Pill_Button';
 import Vote_Button from './Vote_Button';
 import Comment from './Comment';
+import { user_controller } from '../controllers/user_controller';
 
-function Post({id, title, author, date, content, votes, isPreview, comments}) {
+function Post({id, title, user, date, content, votes, isPreview, comments}) {
     
+    const author = user_controller.getUserByName(user);
+
     /* If we are in Preview (Home), hide comments. If Full Page, show them */
     const [showComments, setShowComments] = useState(!isPreview);
 
@@ -42,16 +45,25 @@ function Post({id, title, author, date, content, votes, isPreview, comments}) {
                 {/* Section 1: Post Header */}
                 <div className = 'post_header'>
 
-                    {/* Post author */}
-                    <span className = "post_author"> 
-                        @{author}
-                    </span>
+                    <img 
+                        src = {author.avatar}
+                        className = "post_avatar"
+                    />
 
-                    {/* Post date */}
-                    <span className = "post_date">
-                        • {date}
-                    </span>
+                    <div className = "post_info">
 
+                        {/* Post author */}
+                        <span className = "post_author"> 
+                            @{user}
+                        </span>
+
+                        {/* Post date */}
+                        <span className = "post_date">
+                            • {date}
+                        </span>
+
+                    </div>
+                    
                 </div>
 
                 {/* Post title */}

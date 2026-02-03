@@ -10,7 +10,7 @@ import Feed_Filter from '../components/Feed_Filter';
 function Profile_Page() {
 
     const current_user = user_controller.getCurrentUser();
-    const userPosts = post_controller.getPostsByUser(current_user.username);
+    const user_posts = post_controller.getPostsByUser(current_user.username);
 
     return (
 
@@ -71,7 +71,7 @@ function Profile_Page() {
 
                     <div className = "profile_history_feed">
 
-                        {userPosts.map(post => (
+                        {user_posts.map(post => (
                             <Post key={post.id} 
                                 {...post} 
                                 isPreview={true} 

@@ -40,7 +40,7 @@ function Home() {
                             key={post.id}
                             id={post.id}
                             title={post.title}
-                            author={post.author}
+                            user={post.user}
                             date={post.date}
                             content={post.content}
                             votes={post.votes}

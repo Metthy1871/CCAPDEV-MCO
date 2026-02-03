@@ -9,7 +9,7 @@ export const post_controller = {
 
     getPostsByUser(username) {
 
-        return sample_posts.filter(p => p.author === username);
+        return sample_posts.filter(p => p.user === username);
     },
 
     getPostById(id) {

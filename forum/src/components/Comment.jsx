@@ -4,9 +4,11 @@ import { useState } from 'react';
 import './Comment.css';
 import Vote_Button from './Vote_Button';
 import Pill_Button from './Pill_Button';
+import { user_controller } from '../controllers/user_controller';
 
 function Comment({user, date, content, votes, comments}) {
 
+    const author = user_controller.getUserByName(user);
     const [showComments, setShowComments] = useState(true);
     const nestedComments = comments || [];
 
@@ -19,16 +21,25 @@ function Comment({user, date, content, votes, comments}) {
                 {/* Section 1: Comment Header */}
                 <div className = "comment_header">
 
-                    {/* Comment author */}
-                    <span className = "comment_user">
-                         @{user} 
-                    </span>
+                    <img 
+                        src = {author.avatar}
+                        className = "post_avatar"
+                    />
 
-                    {/* Comment date */}
-                    <span className = "comment_date"> 
-                        • {date} 
-                    </span>
+                    <div className = "post_info">
 
+                        {/* Comment author */}
+                        <span className = "comment_user">
+                            @{user} 
+                        </span>
+
+                        {/* Comment date */}
+                        <span className = "comment_date"> 
+                            • {date} 
+                        </span>
+
+                    </div>
+                    
                 </div>
 
                 {/* Comment content */}

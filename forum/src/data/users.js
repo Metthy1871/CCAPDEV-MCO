@@ -29,7 +29,7 @@ export const current_user = {
     avatar: users["Morgana"].avatar, 
     
     background: "#222",
-    bio: "Mission Complete",
+    bio: "Meow",
     joinDate: "April 09, 2016",
     stats: { 
         posts: 12, 
