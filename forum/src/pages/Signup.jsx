@@ -1,4 +1,5 @@
 /* This is the signup page of the application. */
+
 import { useState } from 'react';
 import './Signup.css';
 import phantom_logo from '../media/phantom_logo.png';

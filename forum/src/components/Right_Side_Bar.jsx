@@ -26,7 +26,7 @@ function Right_Side_Bar() {
                         </span>
 
                         <span className="stat_value">
-                            12,405:
+                            12,405
                         </span>
 
                     </div>

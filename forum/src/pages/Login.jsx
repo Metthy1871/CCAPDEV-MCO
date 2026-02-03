@@ -1,4 +1,5 @@
 /* This is the login page of the application. */
+
 import { useState } from 'react';
 import './Login.css';
 import phantom_logo from '../media/phantom_logo.png';
