@@ -1,14 +1,12 @@
 /* This is the home page of the application. */
 
 import './Home.css';
-import { useState, useEffect } from 'react';
 import { sample_posts } from '../data/sample_posts.js';
 import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
 import Nav_Bar from '../components/Nav_Bar.jsx';
 import Right_Side_Bar from '../components/Right_Side_Bar.jsx'
 import Post from '../components/Post.jsx';
 import Feed_Filter from '../components/Feed_Filter.jsx';
-import CreatePostModal from '../components/CreatePostModal';
 
 
 function Home() {

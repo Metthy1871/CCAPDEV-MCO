@@ -4,7 +4,7 @@ import './Left_Side_Bar.css';
 import { useState, useEffect } from 'react';
 import Pill_Button from '../components/Pill_Button.jsx'
 import Trending_Topics from './Trending_Topics.jsx';
-import CreatePostModal from '../components/CreatePostModal';
+import Create_Post from './Create_Post.jsx';
 
 function Left_Side_Bar() {
 
@@ -22,7 +22,7 @@ function Left_Side_Bar() {
                 onClick={() => setIsModalOpen(true)}>
             </Pill_Button>
 
-            <CreatePostModal 
+            <Create_Post
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
             />

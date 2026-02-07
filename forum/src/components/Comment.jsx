@@ -49,7 +49,7 @@ function Comment({user, date, content, votes, comments}) {
                             className = "delete_button"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                alert("You clicked delete! (Functionality coming soon)");
+                                alert("Backend WIP");
                             }}
                         >
                             🗑

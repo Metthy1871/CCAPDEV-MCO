@@ -17,6 +17,7 @@
 
 .modal_card {
 
+    
     /* Experimental */
     background:
     /* Halftone pattern (dots) */
@@ -27,43 +28,60 @@
     background-size: 10px 10px, 10px 10px, cover;
     background-blend-mode: overlay, overlay, normal;
 
+    background: transparent;
     width: 90%;
     max-width: 500px;
     padding: 20px;
     
-    border: 3px solid #000;
-    box-shadow: 10px 10px 0px #d32f2f; 
+    border: 3px solid var(--p5-red);
 }
 
 .modal_header {
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #000;
-    padding-bottom: 10px;
+    position: relative;
+    height: 20px;
     margin-bottom: 20px;
+    border: none;
 }
 
 .modal_title {
 
-    font-family: 'Arial Black', sans-serif;
+    position: absolute;
+    top: -30px;
+    left: -30px;
+
+    background-color: var(--p5-red);
     color: white;
-    margin: 0;
-    font-size: 1.8rem;
+    padding: 5px 25px;
+    
+    font-weight: bold;
+    font-size: 2rem;
+    font-family: 'Arial Black', sans-serif;
+    
+    border: 3px solid black; 
+    box-shadow: 3px 3px 0 black;
+    
+    transform: skew(-10deg);
 }
 
 .close_icon {
 
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    
     background: transparent;
+    color: white;
     border: none;
-    font-size: 1.5rem;
+    width: 30px;
+    height: 30px;
     font-weight: bold;
     cursor: pointer;
 }
 
 .close_icon:hover {
 
+    color: var(--p5-red);
     transform: scale(1.1);
 }
 
@@ -76,24 +94,31 @@
 
     width: 100%;
     padding: 10px;
-    border: 2px solid #ccc;
-    font-family: 'Courier New', monospace;
+    border: 2px solid black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 1rem;
     outline: none;
-    background: #f4f4f4;
-    color: black;
+    background: var(--p5-red);
+    color: white;
 }
 
 .modal_input:focus, .modal_textarea:focus {
 
-    border-color: #d32f2f;
-    background: #fff;
+    border-color: white;
+    background: var(--p5-red);
+}
+
+.modal_input::placeholder, .modal_textarea::placeholder {
+
+    color: white;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .modal_footer {
 
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 10px;
     margin-top: 10px;
 }

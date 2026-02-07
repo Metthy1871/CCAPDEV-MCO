@@ -72,7 +72,7 @@ function Post({id, title, user, date, content, votes, isPreview, comments}) {
                             className = "delete_button"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                alert("You clicked delete! (Functionality coming soon)");
+                                alert("Backend WIP");
                             }}
                         >
                             🗑

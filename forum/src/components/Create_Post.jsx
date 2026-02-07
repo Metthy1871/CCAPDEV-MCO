@@ -1,7 +1,7 @@
-import './CreatePostModal.css';
+import './Create_Post.css';
 import Pill_Button from './Pill_Button';
 
-function CreatePostModal({ isOpen, onClose }) {
+function Create_Post({ isOpen, onClose }) {
     
     /* If not open, don't render */
     if (!isOpen) 
@@ -9,15 +9,15 @@ function CreatePostModal({ isOpen, onClose }) {
 
     return (
 
-        <div className="modal_overlay" onClick={onClose}>
+        <div className = "modal_overlay" onClick = {onClose}>
             
-            <div className="modal_card" onClick={(e) => e.stopPropagation()}>
+            <div className = "modal_card" onClick={(e) => e.stopPropagation()}>
                 
                 {/* Header */}
-                <div className="modal_header">
+                <div className = "modal_header">
 
-                    <h2 className="modal_title">
-                        SEND CALLING CARD
+                    <h2 className = "modal_title">
+                        Create Post
                     </h2>
 
                     <button 
@@ -35,38 +35,38 @@ function CreatePostModal({ isOpen, onClose }) {
 
                         <input 
                             type = "text" 
-                            placeholder = "Title" 
+                            placeholder = "Title..." 
                             className = "modal_input" 
                         />
 
                     </div>
 
-                    <div className="input_group">
+                    <div className = "input_group">
 
                         <textarea 
-                            placeholder = "Content" 
+                            placeholder = "Content..." 
                             className = "modal_textarea"
-                            rows="5"
+                            rows = "5"
                         />
 
                     </div>
 
                 </div>
 
-                {/* Footer Buttons */}
-                <div className="modal_footer">
+                {/* Footer */}
+                <div className = "modal_footer">
 
                     <Pill_Button 
-                        text="CANCEL" 
-                        onClick={onClose} 
-                        className="cancel_btn"
+                        text = "CANCEL" 
+                        onClick = {onClose} 
+                        className = "cancel_button"
                     />
 
                     <Pill_Button 
-                        text="SEND CARD" 
-                        icon="🪶"
-                        onClick={() => alert("Animation playing... (Logic coming soon)")} 
-                        className="send_btn"
+                        text = "POST" 
+                        icon = "🪶"
+                        onClick ={() => alert("Backend WIP")} 
+                        className = "send_button"
                     />
 
                 </div>
@@ -76,4 +76,4 @@ function CreatePostModal({ isOpen, onClose }) {
     );
 }
 
-export default CreatePostModal;
+export default Create_Post;
