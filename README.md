@@ -1,6 +1,4 @@
-# 🎭 The Phantom Aficionado Forum (Frontend)
-
-Welcome! Follow these steps to get the app running on your machine.
+# The Phantom Forum
 
 ## How to Run the Project
 
