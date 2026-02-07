@@ -9,6 +9,9 @@ import { user_controller } from '../controllers/user_controller';
 function Comment({user, date, content, votes, comments}) {
 
     const author = user_controller.getUserByName(user);
+    const current_user = user_controller.getCurrentUser();
+    const isAuthor = current_user.username === user;
+
     const [showComments, setShowComments] = useState(true);
     const nestedComments = comments || [];
 
@@ -39,6 +42,19 @@ function Comment({user, date, content, votes, comments}) {
                         </span>
 
                     </div>
+
+                    {/* Delete Button */}
+                    {isAuthor && (
+                        <button 
+                            className = "delete_button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                alert("You clicked delete! (Functionality coming soon)");
+                            }}
+                        >
+                            🗑
+                        </button>
+                    )}
                     
                 </div>
 

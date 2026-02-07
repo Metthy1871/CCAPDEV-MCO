@@ -11,6 +11,8 @@ import { user_controller } from '../controllers/user_controller';
 function Post({id, title, user, date, content, votes, isPreview, comments}) {
     
     const author = user_controller.getUserByName(user);
+    const current_user = user_controller.getCurrentUser();
+    const isAuthor = current_user.username === user;
 
     /* If we are in Preview (Home), hide comments. If Full Page, show them */
     const [showComments, setShowComments] = useState(!isPreview);
@@ -63,6 +65,19 @@ function Post({id, title, user, date, content, votes, isPreview, comments}) {
                         </span>
 
                     </div>
+
+                    {/* Delete Button */}
+                    {isAuthor && (
+                        <button 
+                            className = "delete_button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                alert("You clicked delete! (Functionality coming soon)");
+                            }}
+                        >
+                            🗑
+                        </button>
+                    )}
                     
                 </div>
 

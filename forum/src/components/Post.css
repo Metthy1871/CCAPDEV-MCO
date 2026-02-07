@@ -71,6 +71,28 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+.delete_button {
+
+    margin-left: auto; 
+    
+    background: transparent;
+    border: none;
+    color: #999;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.delete_button:hover {
+
+    color: #d32f2f;
+    background-color: rgba(211, 47, 47, 0.1);
+    transform: scale(1.1);
+}
+
 .post_title {
 
     font-size: 20px;
