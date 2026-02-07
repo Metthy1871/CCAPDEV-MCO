@@ -7,7 +7,8 @@
     height: 100vh;
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(3px);
-    z-index: 1000;
+    
+    z-index: 9999;
     
     display: flex;
     justify-content: center;
@@ -17,24 +18,26 @@
 
 .modal_card {
 
-    
-    /* Experimental */
-    background:
-    /* Halftone pattern (dots) */
-    radial-gradient(circle at 0 0, rgba(0, 0, 0, 0.4) 2px, transparent 2px) 0 0,
-    radial-gradient(circle at 0 0, rgba(0, 0, 0, 0.4) 2px, transparent 2px) 5px 5px,
-    /* Grunge texture gradient */
-    linear-gradient(135deg, #3e0000 0%, #a50000 50%, #730000 100%);
     background-size: 10px 10px, 10px 10px, cover;
     background-blend-mode: overlay, overlay, normal;
+    border-radius: 20px;
 
-    background: transparent;
+    background: var(--bg);
     width: 90%;
     max-width: 500px;
     padding: 20px;
-    
-    border: 3px solid var(--p5-red);
+    transition: all 0.1s;
+    border: 3px solid black;
 }
+
+.modal_card:hover {
+
+    border: 2px solid var(--p5-red);
+}
+
+
+/* Section 1: Modal Header */
+
 
 .modal_header {
 
@@ -61,7 +64,7 @@
     border: 3px solid black; 
     box-shadow: 3px 3px 0 black;
     
-    transform: skew(-10deg);
+    transform: skew(-5deg);
 }
 
 .close_icon {
@@ -85,6 +88,10 @@
     transform: scale(1.1);
 }
 
+
+/* Section 2: Modal Body */
+
+
 .input_group {
 
     margin-bottom: 15px;
@@ -100,6 +107,8 @@
     outline: none;
     background: var(--p5-red);
     color: white;
+    border-radius: 20px;
+    resize: none;
 }
 
 .modal_input:focus, .modal_textarea:focus {
@@ -114,6 +123,10 @@
     font-weight: bold;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
+
+/* Section 3: Modal Footer */
+
 
 .modal_footer {
 

@@ -1,3 +1,5 @@
+/* This component contains the post creation menu. */
+
 import './Create_Post.css';
 import Pill_Button from './Pill_Button';
 
@@ -13,7 +15,7 @@ function Create_Post({ isOpen, onClose }) {
             
             <div className = "modal_card" onClick={(e) => e.stopPropagation()}>
                 
-                {/* Header */}
+                {/* Section 1: Modal Header */}
                 <div className = "modal_header">
 
                     <h2 className = "modal_title">
@@ -28,7 +30,7 @@ function Create_Post({ isOpen, onClose }) {
 
                 </div>
 
-                {/* Form Body */}
+                {/* Section 2: Modal Body */}
                 <div className = "modal_body">
                     
                     <div className = "input_group">
@@ -53,7 +55,7 @@ function Create_Post({ isOpen, onClose }) {
 
                 </div>
 
-                {/* Footer */}
+                {/* Section 3: Modal Footer */}
                 <div className = "modal_footer">
 
                     <Pill_Button 

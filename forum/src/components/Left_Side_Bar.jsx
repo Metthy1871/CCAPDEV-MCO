@@ -4,9 +4,8 @@ import './Left_Side_Bar.css';
 import { useState, useEffect } from 'react';
 import Pill_Button from '../components/Pill_Button.jsx'
 import Trending_Topics from './Trending_Topics.jsx';
-import Create_Post from './Create_Post.jsx';
 
-function Left_Side_Bar() {
+function Left_Side_Bar({ onOpenModal }) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,13 +18,8 @@ function Left_Side_Bar() {
                 icon = "" 
                 text = "Post" 
                 className = "post_button"
-                onClick={() => setIsModalOpen(true)}>
+                onClick = {onOpenModal}>
             </Pill_Button>
-
-            <Create_Post
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
-            />
 
             <hr className="separator" />
 
