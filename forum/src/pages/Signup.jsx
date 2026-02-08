@@ -22,7 +22,17 @@ function Signup() {
     return (
         <div className="signup_page">
             <form className="signup_card" onSubmit={handleSubmit}>
-                <img src={phantom_logo} alt="failed to load images" className="logo"/>
+                {/* Links to home page */}
+                <Link to = "/" className = "nav_link">
+
+                    {/* Web app logo */}
+                    <img
+                        src = {phantom_logo}
+                        alt = "failed to load images"
+                        className = "logo"
+                    />
+
+                </Link>
                 <h1 className="signup_title">Create Account</h1>
                 <p className="signup_subtitle">Sign up to join The Phantom Forum</p>
                 <label>
