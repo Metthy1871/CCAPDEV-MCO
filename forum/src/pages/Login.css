@@ -2,6 +2,11 @@
     --red: #c70e0e;
 }
 
+.link{
+    text-decoration: none;
+    color: inherit;
+}
+
 .login_page{
     background-color: #2d2d2d;
     min-height: 100vh;

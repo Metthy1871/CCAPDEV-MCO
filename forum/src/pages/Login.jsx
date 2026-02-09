@@ -16,8 +16,27 @@ function Login() {
     return (
         <div className="login_page">
             <form className="login_card" onSubmit={handleSubmit}>
-                <img src={phantom_logo} alt="failed to load images" className="logo"/>
-                <h1 className="login_title">The Phantom Forum</h1>
+                {/* Links to home page */}
+                <Link to = "/">
+
+                    {/* Web app logo */}
+                    <img
+                        src = {phantom_logo}
+                        alt = "failed to load images"
+                        className = "logo"
+                    />
+
+                </Link>
+
+                {/* Links to home page */}
+                <Link to = "/" className="link">
+
+                    {/* Web app title */}
+                    <h1 className = "login_title">
+                        The Phantom Forum
+                    </h1>
+
+                </Link>
                 <p className="login_subtitle">Log in to continue</p>
                 <label>
                     Email
