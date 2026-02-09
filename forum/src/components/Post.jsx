@@ -91,6 +91,8 @@ function Post({id, title, user, date, content, votes, isPreview, comments}) {
                     {content}
                 </p>
 
+
+                {/* Reply would be here */}
                 {/* Section 2: Post Footer */}
                 <div className = "post_footer">
 

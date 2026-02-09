@@ -63,6 +63,7 @@ function Comment({user, date, content, votes, comments}) {
                     {content} 
                 </p>
 
+                {/* Reply would be here */}
                 {/* Section 2: Comment Footer */}
                 <div className = "comment_footer">
 
