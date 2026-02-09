@@ -27,12 +27,6 @@
     max-width: 500px;
     padding: 20px;
     transition: all 0.1s;
-    border: 3px solid black;
-}
-
-.modal_card:hover {
-
-    border: 2px solid var(--p5-red);
 }
 
 

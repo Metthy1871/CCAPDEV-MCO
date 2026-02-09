@@ -52,13 +52,15 @@
 .search_input {
 
     flex: 1;
-    min-width: 600px;
+    width: 100%;
+    max-width: 1000px;
+    min-width: 500px;
     color: white;
     background-color: var(--p5-red);
     border-radius: 9999px;
     padding: 0 15px;
     height: 50px;
-    width: 100%;
+    
     outline: none;
     border: none;
     font-size: 15px;

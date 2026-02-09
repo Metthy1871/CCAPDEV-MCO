@@ -27,12 +27,6 @@ function Post_Page() {
 
             <div className="post_page_container">
 
-                <div className = "left_side_container">
-
-                    <Left_Side_Bar/>
-                    
-                </div>
-
                 <div className = "post_page_view">
 
                     <Post 

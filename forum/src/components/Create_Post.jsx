@@ -44,7 +44,7 @@ function Create_Post({ isOpen, onClose }) {
                     </div>
 
                     <div className = "input_group">
-
+                   
                         <textarea 
                             placeholder = "Content..." 
                             className = "modal_textarea"

@@ -5,12 +5,15 @@ import Nav_Bar from '../components/Nav_Bar';
 import Post from '../components/Post';
 import { user_controller } from '../controllers/user_controller';
 import { post_controller } from '../controllers/post_controller';
+import { useState } from 'react';
 import Feed_Filter from '../components/Feed_Filter';
+import Edit_Profile from '../components/Edit_Profile';
 
 function Profile_Page() {
 
     const current_user = user_controller.getCurrentUser();
     const user_posts = post_controller.getPostsByUser(current_user.username);
+    const [isEditOpen, setIsEditOpen] = useState(false);
 
     return (
 
@@ -57,6 +60,13 @@ function Profile_Page() {
                         </div>
 
                     </div>
+
+                    <button 
+                        className="edit_profile_button" 
+                        onClick={() => setIsEditOpen(true)}
+                    >
+                        ⚙ EDIT
+                    </button>
 
                 </div>
 
@@ -141,6 +151,12 @@ function Profile_Page() {
                 </div>
 
             </div>
+
+            <Edit_Profile 
+                isOpen = {isEditOpen} 
+                onClose = {() => setIsEditOpen(false)}
+                current_user = {current_user}
+            />
 
         </div>
     );

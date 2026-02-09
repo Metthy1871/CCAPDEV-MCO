@@ -66,7 +66,7 @@ export const sample_posts = [
         user: "Yusuke",
         date: "3 days ago",
         content: "I went to the beach recently and caught over 100 lobsters",
-        votes: 1100,
+        votes: 47,
         comments: [
             {
                 user: "Morgana",
@@ -137,6 +137,30 @@ export const sample_posts = [
                         comments: []
                     }
                 ]
+            }
+        ]
+    },
+    {
+        id: 6,
+        title: "Why do ice cream prices keep going up",
+        user: "Ann",
+        date: "7 days ago",
+        content: "I swear it used to be 200 yen. Why is it almost 400 now",
+        votes: 420,
+        comments: [
+            {
+                user: "Haru",
+                date: "6 day ago",
+                content: "Capitalism...",
+                votes: 67,
+                comments: []
+            },
+            {
+                user: "Joker",
+                date: "3 day ago",
+                content: "Are you sure you should be eating ice cream? Careful of your weight",
+                votes: -100,
+                comments: []
             }
         ]
     },

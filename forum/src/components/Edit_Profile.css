@@ -1,0 +1,61 @@
+.profile_edit_card {
+
+    background: var(--bg);
+}
+
+.p5_label {
+
+    display: block;
+    color: var(--p5-red, #d32f2f);
+    font-family: 'Arial Black', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    transform: rotate(-1deg);
+}
+
+.modal_avatar_ {
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    
+    border-bottom: 2px dashed #444; 
+}
+
+.avatar_preview_wrapper {
+
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.avatar_preview_img {
+
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; 
+    border: 3px solid black;
+    object-fit: cover;
+    background: #000;
+}
+
+.preview_label {
+
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background: black;
+    color: white;
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    white-space: nowrap;
+    border: 1px solid white;
+    font-family: 'Impact', sans-serif;
+}
+
