@@ -29,7 +29,7 @@ export const sample_posts = [
     {
         id: 2,
         title: "Is the Metaverse Real?",
-        user: "Morgana",            
+        user: "Mishima",            
         date: "5 hours ago",
         content: "I have a theory that cognitive psience is actually based on Jungian psychology...",
         votes: 85,
@@ -52,7 +52,7 @@ export const sample_posts = [
         votes: 42,
         comments: [
             {
-                user: "Mishima",
+                user: "Joker",
                 date: "14 hours ago",
                 content: "Working conditions there are horrid",
                 votes: 67,
@@ -62,20 +62,81 @@ export const sample_posts = [
     },
     {
         id: 4,
-        title: "Anyone see what happened in Yuchengko?",
-        user: "Mishima",
+        title: "BEACH IS FULL LOBSTERS",
+        user: "Yusuke",
         date: "3 days ago",
-        content: "Is it something in the air, the water, or whatever cursed potion is brewing inside their vape juice? I genuinely cannot comprehend why some of my fellow Lasallians are perpetually in heat, as if the campus operates on a year-round mating season, nor why public spaces seem to be their venue of choice." +
-        "During a vacancy, I decided to stroll around campus to kill time. I passed by SJ, LS, then Yuch. While walking through the halls, I heard a faint rhythmic thumping. To my surprise, it was a conyo Neanderthal enthusiastically treating an empty classroom like a discount motel, stuffing his girlfriend like a Thanksgiving turkey with zero shame and even less rhythm. Traumatized, I fled to the library to cleanse my soul, only to spot another couple in my peripheral vision aggressively sampling each other’s necks in a so-called blind spot." +
-        "When did Yuch and the library turn into SOGO? If you cannot get a room, at least have the human decency to remember that desks are for studying, not a canvas to leave your jizz. SMH.",
+        content: "I went to the beach recently and caught over 100 lobsters",
         votes: 1100,
         comments: [
             {
-                user: "Ann",
+                user: "Morgana",
                 date: "1 day ago",
-                content: "More funding for mental health please!",
+                content: "(,,> ᴗ <,,)",
                 votes: 67,
                 comments: []
+            },
+            {
+                user: "Futaba",
+                date: "1 day ago",
+                content: "No one cares Inari",
+                votes: 100,
+                comments: []
+            }
+        ]
+    },
+    {
+        id: 5,
+        title: "Looking for book recommendations",
+        user: "Makoto",
+        date: "6 days ago",
+        content: "As the title suggests.",
+        votes: 1100,
+        comments: [
+            {
+                user: "Haru",
+                date: "4 days ago",
+                content: "What genres are you interested in?",
+                votes: 67,
+                comments: [
+                    {
+                        user: "Makoto",
+                        date: "4 days ago",
+                        content: "Hmm I want one that'll move me to tears",
+                        votes: 35,
+                        comments: [
+                            {
+                                user: "Haru",
+                                date: "4 days ago",
+                                content: "All Quiet on the Western Front. War never changes.",
+                                votes: 26,
+                                comments: []
+                            },
+                            {
+                                user: "Futaba",
+                                date: "4 days ago",
+                                content: "Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein " +
+                                    "https://www.goodreads.com/book/show/108986.Introduction_to_Algorithms",
+                                votes: -4,
+                                comments: []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                user: "Joker",
+                date: "2 day ago",
+                content: "Why are you posting here? Just go to the library",
+                votes: -1000,
+                comments: [
+                    {
+                        user: "Ryuji",
+                        date: "1 days ago",
+                        content: "Get ratio'd",
+                        votes: 89,
+                        comments: []
+                    }
+                ]
             }
         ]
     },

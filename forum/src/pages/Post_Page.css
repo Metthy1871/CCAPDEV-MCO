@@ -2,12 +2,13 @@
 
     background-color: var(--bg);
     display: flex;
-    height: 100vh;
+    justify-content: center;
 }
 
 .post_page_view {
 
-    flex: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
     max-width: 1000px; 
     margin: 0 auto;
     padding: 40px 20px;

@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 import phantom_logo from '../media/phantom_logo.png';
 import Pill_Button from './Pill_Button';
 import Profile_Icon from './Profile_Icon';
+import { user_controller } from '../controllers/user_controller';
+
 
 function Nav_Bar(){
+
+    const current_user = user_controller.getCurrentUser();
 
     return (
 
@@ -86,7 +90,7 @@ function Nav_Bar(){
                 <Link to = "/profile" className = 'nav_link'>
                 
                     {/* Profile icon */}
-                    <Profile_Icon/>
+                    <Profile_Icon user = {current_user}/>
 
                 </Link>
 
