@@ -141,3 +141,46 @@
     border-left: 2px solid var(--p5-red); 
 }
 
+/* Section 4: Reply Section */
+.reply_box {
+    margin-top: 15px;
+    padding: 10px;
+    border-left: 2px solid var(--p5-red);
+    animation: slideIn 0.3s ease-out;
+}
+
+.reply_box textarea {
+    width: 100%;
+    min-height: 80px;
+    overflow: hidden;
+    resize: none;
+
+    background: var(--hover-color);
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 15px;
+    font-family: 'Arial Black', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    outline: none;
+    resize: none;
+    
+    clip-path: polygon(2% 0%, 100% 0%, 98% 95%, 0% 100%);
+    transition: all 0.2s ease-in-out;
+
+    margin-bottom: 20px;
+}
+
+.reply_box textarea:focus {
+    background: #222;
+    border-color: var(--p5-red);
+    transform: scale(1.01) rotate(-0.5deg);
+    box-shadow: 10px 10px 0px var(--p5-red);
+}
+
+.reply_box textarea::placeholder {
+    color: #555;
+    font-style: italic;
+    text-transform: uppercase;
+}
+

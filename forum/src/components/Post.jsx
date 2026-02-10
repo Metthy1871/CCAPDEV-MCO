@@ -38,6 +38,24 @@ function Post({id, title, user, date, content, votes, isPreview, comments}) {
         setShowComments(!showComments);
     };
 
+    /* Reply */
+    const [isReplying, setIsReplying] = useState(false);
+    const [allComments, setAllComments] = useState(comments);
+
+    const handleAddComment = (text) =>{ 
+        if (!text.trim()) return;
+        
+        const newComment = {
+            user: current_user.username,
+            date: "Just now",
+            content: text,
+            votes: 0,
+            comments: []
+        }
+        setAllComments([...allComments, newComment]);
+        setIsReplying(false);
+    }
+
     return (
         
         <div className = {`post_container ${isPreview ? 'clickable_post' : ''}`} onClick={handlePostClick}>
@@ -93,6 +111,37 @@ function Post({id, title, user, date, content, votes, isPreview, comments}) {
 
 
                 {/* Reply would be here */}
+                <Pill_Button 
+                    icon="✍️" 
+                    text="Reply" 
+                    onClick={(e) => {
+                        e.stopPropagation(); // Prevent navigating to post page if clicking here
+                        setIsReplying(!isReplying);
+                    }} 
+                />
+                
+                {isReplying && (
+                    <div className="reply_box" onClick={(e) => e.stopPropagation()}>
+                        <textarea
+                            placeholder="What are your thoughts?" 
+                            id="post-reply"
+                            onChange={(e) =>{
+                                e.target.style.height = 'auto';
+                                e.target.style.height = `${e.target.scrollHeight}px`;
+                            }}
+                        />
+                        <div class="post-comment-button">
+                            <Pill_Button 
+                                icon="🔪"
+                                text="Post Comment"
+                                onClick={() => 
+                                    handleAddComment(document.getElementById("post-reply").value)
+                                }
+                            />
+                        </div>
+                    </div>
+                )}
+
                 {/* Section 2: Post Footer */}
                 <div className = "post_footer">
 
@@ -120,7 +169,7 @@ function Post({id, title, user, date, content, votes, isPreview, comments}) {
             {/* Section 3: Comment Section */}
             {showComments && (
                     <div className="comment_section_container">
-                        {comments.map((commentData, index) => (
+                        {allComments.map((commentData, index) => (
                             <Comment 
                                 key={index} 
                                 user={commentData.user} 

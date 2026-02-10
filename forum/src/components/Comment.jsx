@@ -13,7 +13,24 @@ function Comment({user, date, content, votes, comments}) {
     const isAuthor = current_user.username === user;
 
     const [showComments, setShowComments] = useState(true);
-    const nestedComments = comments || [];
+
+    /* Reply */
+    const [isReplying, setIsReplying] = useState(false);
+    const [allNestedComments, setAllNestedComments] = useState(comments) || [];
+
+    const handleReply = (text) =>{ 
+        if (!text.trim()) return;
+
+        const newReply = {
+            user: current_user.username,
+            date: "Just now",
+            content: text,
+            votes: 0,
+            comments: []
+        }
+        setAllNestedComments([...allNestedComments, newReply]);
+        setIsReplying(false);
+    }
 
     return (
 
@@ -64,6 +81,37 @@ function Comment({user, date, content, votes, comments}) {
                 </p>
 
                 {/* Reply would be here */}
+                <Pill_Button 
+                    icon="✍️" 
+                    text="Reply" 
+                    onClick={(e) => {
+                        e.stopPropagation(); // Prevent navigating to post page if clicking here
+                        setIsReplying(!isReplying);
+                    }} 
+                />
+                
+                {isReplying && (
+                    <div className="reply_box">
+                        <textarea
+                            placeholder="What are your thoughts?" 
+                            id="comment-reply"
+                            onChange={(e) =>{
+                                e.target.style.height = 'auto';
+                                e.target.style.height = `${e.target.scrollHeight}px`;
+                            }}
+                        />
+                        <div class="post-comment-button">
+                            <Pill_Button 
+                                icon="🔪"
+                                text="Post Comment"
+                                onClick={() => 
+                                    handleReply(document.getElementById("comment-reply").value)
+                                }
+                            />
+                        </div>
+                    </div>
+                )}
+
                 {/* Section 2: Comment Footer */}
                 <div className = "comment_footer">
 
@@ -73,7 +121,7 @@ function Comment({user, date, content, votes, comments}) {
                     </Vote_Button>
 
                     {/* Comment Button */}
-                    {nestedComments.length > 0 && (
+                    {allNestedComments.length > 0 && (
                         <Pill_Button 
                             className = "comment_button"
                             icon = "💬"
@@ -88,9 +136,9 @@ function Comment({user, date, content, votes, comments}) {
             </div>
 
             {/* Section 3: Comment Section */}
-            {showComments && nestedComments.length > 0 && (
+            {showComments && allNestedComments.length > 0 && (
                 <div className="nested_thread_container">
-                    {nestedComments.map((commentData, index) => (
+                    {allNestedComments.map((commentData, index) => (
                         <Comment 
                             key={index} 
                             {...commentData} 
