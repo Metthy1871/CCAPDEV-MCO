@@ -127,7 +127,7 @@ function Comment({user, date, content, votes, comments}) {
                             icon = "💬"
                             text = {showComments ? "Hide Comments" : `Comments (${comments.length})`}
                             onClick = {() => setShowComments(!showComments)}>
-                                {showComments ? "[-]" : `[+] ${allNestedComments.length} replies`}
+                                {showComments ? "[-]" : `[+] ${nestedComments.length} replies`}
                         </Pill_Button>
                     )}
                     
