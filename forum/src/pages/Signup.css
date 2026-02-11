@@ -1,8 +1,5 @@
-:root{
-    --red: #c70e0e;
-}
-
 .signup_page{
+
     background-color: #2d2d2d;
     min-height: 100vh;
     display: flex;
@@ -11,6 +8,7 @@
 }
 
 .signup_card {
+
     background-color: #3a3a3a;
     padding: 40px 30px;
     border-radius: 12px;
@@ -22,6 +20,7 @@
 }
 
 .signup_title {
+
     color: white;
     font-size: 25px;
     margin: 0 0 10px 0;
@@ -30,6 +29,7 @@
 }
 
 .signup_subtitle {
+
     color: #ccc;
     font-size: 13px;
     margin-bottom: 30px;
@@ -37,6 +37,7 @@
 }
 
 label{
+
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -46,6 +47,7 @@ label{
 }
 
 input {
+
     margin-top: 8px;
     padding: 13px 15px;
     border-radius: 9999px;
@@ -56,6 +58,7 @@ input {
 }
 
 input:focus {
+
     outline: none;
     transform: skew(-5deg) translate(1px, 1px);
     border: 2px solid var(--red);
@@ -63,6 +66,7 @@ input:focus {
 }
 
 .signup_button {
+
     width: 100%;
     padding: 13px 15px;
     border-radius: 9999px;
@@ -83,16 +87,20 @@ input:focus {
 }
 
 .signup_button:hover {
+
     transform: skew(-5deg) translate(1px, 1px);
     border: 2px solid black;
     box-shadow: 3px 3px black;
 }
 
 .signup_button:active {
+
     border-color: white; 
     box-shadow: 2px 2px 0 black;
 }
+
 .signup_footer {
+
     color: #ccc;
     text-align: center;
     margin-top: 16px;
@@ -100,16 +108,19 @@ input:focus {
 }
 
 .login_link {
+
     color: var(--red);
     cursor: pointer;
     font-weight: bold;
 }
 
 .login_link:hover {
+
     color: #a50b0b;
 }
 
 .logo{
+    
     height: 70px;
     width: 70px;
     margin-bottom: 15px;

@@ -1,11 +1,12 @@
 /* This is the signup page of the application. */
 
 import { useState } from 'react';
-import './Signup.css';
-import phantom_logo from '../media/phantom_logo.png';
 import { Link } from 'react-router-dom';
+import phantom_logo from '../media/phantom_logo.png';
+import './Signup.css';
 
 function Signup() {
+
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,8 +21,11 @@ function Signup() {
     }
 
     return (
-        <div className="signup_page">
-            <form className="signup_card" onSubmit={handleSubmit}>
+
+        <div className = "signup_page">
+
+            <form className = "signup_card" onSubmit={handleSubmit}>
+
                 {/* Links to home page */}
                 <Link to = "/" className = "nav_link">
 
@@ -33,8 +37,10 @@ function Signup() {
                     />
 
                 </Link>
+
                 <h1 className="signup_title">Create Account</h1>
                 <p className="signup_subtitle">Sign up to join The Phantom Forum</p>
+
                 <label>
                     Username
                     <input 
@@ -75,11 +81,16 @@ function Signup() {
                     />
                 </label>
 
-                <button type="submit" className="signup_button">Sign Up</button>
+                <button type="submit" className="signup_button">
+                    Sign Up
+                </button>
+
                 <p className="signup_footer">
                     Already have an account? <Link to="/login" className="login_link">Log In</Link>
                 </p>
+
             </form>
+
         </div>
     );
 }

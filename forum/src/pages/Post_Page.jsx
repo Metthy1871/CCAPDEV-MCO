@@ -1,12 +1,11 @@
 /* Renders a page dedicated to a single post and its comments. */
 
-import './Post_Page.css';
-import { sample_posts } from '../data/sample_posts.js';
-import { useParams } from 'react-router-dom';
 import Nav_bar from '../components/Nav_Bar.jsx';
-import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
 import Right_Side_Bar from '../components/Right_Side_Bar.jsx';
 import Post from '../components/Post.jsx';
+import { sample_posts } from '../data/sample_posts.js';
+import { useParams } from 'react-router-dom';
+import './Post_Page.css';
 
 function Post_Page() {
 

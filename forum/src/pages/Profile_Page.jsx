@@ -1,13 +1,13 @@
 /* This page renders a users profile picture and information. */
 
-import './Profile_Page.css';
+import { useState } from 'react';
 import Nav_Bar from '../components/Nav_Bar';
 import Post from '../components/Post';
-import { user_controller } from '../controllers/user_controller';
-import { post_controller } from '../controllers/post_controller';
-import { useState } from 'react';
 import Feed_Filter from '../components/Feed_Filter';
 import Edit_Profile from '../components/Edit_Profile';
+import { user_controller } from '../controllers/user_controller';
+import { post_controller } from '../controllers/post_controller';
+import './Profile_Page.css';
 
 function Profile_Page() {
 
@@ -154,6 +154,7 @@ function Profile_Page() {
 
                 </div>
 
+                {/* Edit Profile Modal */}
                 <Edit_Profile 
                     isOpen = {isEditOpen} 
                     onClose = {() => setIsEditOpen(false)}

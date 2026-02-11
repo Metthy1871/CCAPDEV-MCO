@@ -1,3 +1,4 @@
+{/* Available users */}
 export const users = {
 
     "default": {
@@ -143,4 +144,5 @@ export const users = {
     
 };
 
+/* Set current user */
 export const current_user = users["Morgana"]

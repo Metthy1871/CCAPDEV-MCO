@@ -1,14 +1,14 @@
 /* This is the home page of the application. */
 
-import './Home.css';
-import { sample_posts } from '../data/sample_posts.js';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
 import Nav_Bar from '../components/Nav_Bar.jsx';
 import Right_Side_Bar from '../components/Right_Side_Bar.jsx'
 import Post from '../components/Post.jsx';
 import Feed_Filter from '../components/Feed_Filter.jsx';
 import Create_Post from '../components/Create_Post.jsx';
+import { sample_posts } from '../data/sample_posts.js';
+import './Home.css';
 
 function Home() {
 
@@ -65,6 +65,7 @@ function Home() {
 
             </div>
 
+            {/* Create Post Modal */}
             <Create_Post 
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
