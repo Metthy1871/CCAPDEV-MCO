@@ -69,27 +69,8 @@
     justify-content: space-between;
 }
 
-
-/* Section 3: Comment Section */
-
-
-.nested_thread_container {
-
-    margin-left: 10px;
-    padding-left: 15px;
-    
-    border-left: 2px solid transparent;
-    
-    transition: border-color 0.2s;
-}
-
-.nested_thread_container:hover {
-
-    border-left: 2px solid var(--p5-red); 
-}
-
-/* Section 4: Reply Section */
 .reply_box {
+
     margin-top: 15px;
     padding: 10px;
     border-left: 2px solid var(--p5-red);
@@ -97,6 +78,7 @@
 }
 
 .reply_box textarea {
+
     width: 100%;
     min-height: 80px;
     overflow: hidden;
@@ -119,6 +101,7 @@
 }
 
 .reply_box textarea:focus {
+
     background: #222;
     border-color: var(--p5-red);
     transform: scale(1.01) rotate(-0.5deg);
@@ -126,7 +109,33 @@
 }
 
 .reply_box textarea::placeholder {
+
     color: #555;
     font-style: italic;
     text-transform: uppercase;
+}
+
+.reply_box_footer {
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+/* Section 3: Comment Section */
+
+
+.nested_thread_container {
+
+    margin-left: 10px;
+    padding-left: 15px;
+    
+    border-left: 2px solid transparent;
+    
+    transition: border-color 0.2s;
+}
+
+.nested_thread_container:hover {
+
+    border-left: 2px solid var(--p5-red); 
 }

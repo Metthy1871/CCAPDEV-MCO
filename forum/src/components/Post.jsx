@@ -109,39 +109,6 @@ function Post({id, title, user, date, content, votes, isPreview, comments}) {
                     {content}
                 </p>
 
-
-                {/* Reply would be here */}
-                <Pill_Button 
-                    icon="✍️" 
-                    text="Reply" 
-                    onClick={(e) => {
-                        e.stopPropagation(); // Prevent navigating to post page if clicking here
-                        setIsReplying(!isReplying);
-                    }} 
-                />
-                
-                {isReplying && (
-                    <div className="reply_box" onClick={(e) => e.stopPropagation()}>
-                        <textarea
-                            placeholder="What are your thoughts?" 
-                            id="post-reply"
-                            onChange={(e) =>{
-                                e.target.style.height = 'auto';
-                                e.target.style.height = `${e.target.scrollHeight}px`;
-                            }}
-                        />
-                        <div class="post-comment-button">
-                            <Pill_Button 
-                                icon="🔪"
-                                text="Post Comment"
-                                onClick={() => 
-                                    handleAddComment(document.getElementById("post-reply").value)
-                                }
-                            />
-                        </div>
-                    </div>
-                )}
-
                 {/* Section 2: Post Footer */}
                 <div className = "post_footer">
 

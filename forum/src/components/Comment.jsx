@@ -80,38 +80,6 @@ function Comment({user, date, content, votes, comments}) {
                     {content} 
                 </p>
 
-                {/* Reply would be here */}
-                <Pill_Button 
-                    icon="✍️" 
-                    text="Reply" 
-                    onClick={(e) => {
-                        e.stopPropagation(); // Prevent navigating to post page if clicking here
-                        setIsReplying(!isReplying);
-                    }} 
-                />
-                
-                {isReplying && (
-                    <div className="reply_box">
-                        <textarea
-                            placeholder="What are your thoughts?" 
-                            id="comment-reply"
-                            onChange={(e) =>{
-                                e.target.style.height = 'auto';
-                                e.target.style.height = `${e.target.scrollHeight}px`;
-                            }}
-                        />
-                        <div class="post-comment-button">
-                            <Pill_Button 
-                                icon="🔪"
-                                text="Post Comment"
-                                onClick={() => 
-                                    handleReply(document.getElementById("comment-reply").value)
-                                }
-                            />
-                        </div>
-                    </div>
-                )}
-
                 {/* Section 2: Comment Footer */}
                 <div className = "comment_footer">
 
@@ -120,19 +88,51 @@ function Comment({user, date, content, votes, comments}) {
                         initialScore = {votes}>
                     </Vote_Button>
 
-                    {/* Comment Button */}
-                    {allNestedComments.length > 0 && (
-                        <Pill_Button 
-                            className = "comment_button"
-                            icon = "💬"
-                            text = {showComments ? "Hide Comments" : `Comments (${comments.length})`}
-                            onClick = {() => setShowComments(!showComments)}>
-                                {showComments ? "[-]" : `[+] ${allNestedComments.length} replies`}
-                        </Pill_Button>
-                    )}
-                    
+                    {/* Reply Button */}
+                    <Pill_Button 
+                        icon="✍️" 
+                        text="Reply" 
+                        onClick={(e) => {
+                            e.stopPropagation(); // Prevent navigating to post page if clicking here
+                            setIsReplying(!isReplying);
+                        }} 
+                    />
                 </div>
 
+                {isReplying && (
+
+                        <div className="reply_box">
+                            <textarea
+                                placeholder="What are your thoughts?" 
+                                id="comment-reply"
+                                onChange={(e) =>{
+                                    e.target.style.height = 'auto';
+                                    e.target.style.height = `${e.target.scrollHeight}px`;
+                                }}
+                            />
+                            
+                            <div class = "reply_box_footer">
+                                
+                                <Pill_Button
+                                    icon = ""
+                                    text = "Cancel"
+                                    onClick = {() =>
+                                        setIsReplying(false)
+                                    }
+                                />
+
+                                <Pill_Button 
+                                    icon = ""
+                                    text = "Comment"
+                                    onClick = {() => 
+                                        handleReply(document.getElementById("comment-reply").value)
+                                    }
+                                />
+
+                            </div>
+
+                        </div>
+                    )}
             </div>
 
             {/* Section 3: Comment Section */}

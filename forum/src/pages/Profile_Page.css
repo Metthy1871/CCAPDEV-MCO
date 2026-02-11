@@ -2,13 +2,15 @@
 
     background-color: var(--bg); 
     min-height: 100vh;
+    display: flex;
+    justify-content: center;
 }
 
 .profile_content {
 
     margin-top: 25px;
+    width: 100%;
     max-width: 800px;
-    margin: 0 auto;
     padding: 40px 20px;
 }
 
