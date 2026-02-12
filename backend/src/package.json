@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "RESTful API backend for a modern web forum, handling user authentication, posts, comments, trending topics, and profile management.",
+  "homepage": "https://github.com/Metthy1871/CCAPDEV-MCO#readme",
+  "bugs": {
+    "url": "https://github.com/Metthy1871/CCAPDEV-MCO/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Metthy1871/CCAPDEV-MCO.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "mongoose": "^9.2.1",
+    "morgan": "^1.10.1",
+    "nodemon": "^3.1.11"
+  }
+}
