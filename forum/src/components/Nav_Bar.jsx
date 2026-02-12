@@ -1,6 +1,6 @@
 /* This component provides global navigation for the application. */
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Pill_Button from './Pill_Button';
 import Profile_Icon from './Profile_Icon';
 import { user_controller } from '../controllers/user_controller';
@@ -10,6 +10,8 @@ import './Nav_Bar.css';
 function Nav_Bar(){
 
     const current_user = user_controller.getCurrentUser();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     return (
 
@@ -73,17 +75,31 @@ function Nav_Bar(){
 
                 </Link>
 
-                {/* Link to login page */}
-                <Link to = "/login" className = 'nav_link'>
-
-                    {/* Log In Button */}
+                {current_user ? (
+                    
+                    /* If logged in: Show Logout */
                     <Pill_Button 
+                        text="Logout" 
+                        icon=""
                         className = "log_in_button"
-                        icon = ""
-                        text = "Log In"> 
-                    </Pill_Button>
+                        onClick={() => {
+                            user_controller.logoutUser();
+                            navigate('/login');
+                        }}
+                    />
 
-                </Link>
+                ) : (
+
+                    /* If logged out: Show Login */
+                    <Link to = "/login" style={{textDecoration: 'none'}}>
+                        <Pill_Button 
+                            text="Login" 
+                            icon=""
+                            className = "log_in_button" 
+                        />
+                    </Link>
+
+                )}
                     
                 {/* Link to profile page */}
                 <Link to = {`/profile/${current_user.username}`} className = 'nav_link'>

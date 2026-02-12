@@ -1,17 +1,27 @@
 /* This is the login page of the application. */
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { user_controller } from '../controllers/user_controller';
 import phantom_logo from '../media/phantom_logo.png';
 import './Login.css';
 
 function Login() {
 
-    const [email, setEmail] = useState('');
+    const navigate = useNavigate();
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const success = user_controller.loginUser(username, password);
+
+        if (success) 
+            navigate("/"); // Redirect to Home
+        else 
+            setError("Authentication Failed: User not found.");
+        
     }
 
     return (
@@ -47,11 +57,11 @@ function Login() {
                 </p>
 
                 <label>
-                    Email
+                    Username
                     <input 
-                        type = "email" 
-                        value = {email} 
-                        onChange={(e) => setEmail(e.target.value)} 
+                        type = "text" 
+                        value = {username} 
+                        onChange={(e) => setUsername(e.target.value)} 
                         required
                     />
                 </label>

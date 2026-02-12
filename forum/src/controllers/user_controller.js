@@ -1,4 +1,6 @@
-import { users, current_user } from "../data/users";
+import { users } from "../data/users";
+
+let current_user = users["Morgana"];
 
 export const user_controller = {
 
@@ -10,5 +12,23 @@ export const user_controller = {
     getUserByName(username) {
 
         return users[username];
+    },
+
+    loginUser(username, password){
+
+        const user = Object.values(users).find(u => 
+        u.username.toLowerCase() === username.toLowerCase() || 
+        u.handle.toLowerCase() === username.toLowerCase()
+        );
+        
+        if (user) {
+            current_user = user; // Update the session variable
+            return true;
+        }
+        return false;
+    },
+
+    logoutUser(){
+        current_user = null;
     }
 }
