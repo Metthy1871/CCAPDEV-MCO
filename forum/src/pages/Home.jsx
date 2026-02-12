@@ -7,12 +7,34 @@ import Right_Side_Bar from '../components/Right_Side_Bar.jsx'
 import Post from '../components/Post.jsx';
 import Feed_Filter from '../components/Feed_Filter.jsx';
 import Create_Post from '../components/Create_Post.jsx';
+import { user_controller } from '../controllers/user_controller.js';
 import { sample_posts } from '../data/sample_posts.js';
 import './Home.css';
 
 function Home() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [posts, setPosts] = useState(sample_posts);
+    const current_user = user_controller.getCurrentUser();
+
+    const handleCreatePost = (title, content) =>{ 
+
+        if (!title.trim() || !content.trim()) return;
+
+        const newPost = {
+            id: Date.now(),
+            title: title,
+            user: current_user.username,
+            date: "Just now",
+            content: content,
+            votes: 0,
+            comments: []
+        };
+
+        setPosts([newPost, ...posts]); 
+        
+        setIsModalOpen(false);
+    }
 
     return (
     
@@ -40,7 +62,7 @@ function Home() {
                     <Feed_Filter/>
 
                     {/* Place all posts below the Feed_Filter */}
-                    {sample_posts.map((post) => (
+                    {posts.map((post) => (
                         <Post 
                             key={post.id}
                             id={post.id}
@@ -67,8 +89,9 @@ function Home() {
 
             {/* Create Post Modal */}
             <Create_Post 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
+                isOpen = {isModalOpen} 
+                onClose = {() => setIsModalOpen(false)}
+                onCreate = {handleCreatePost}
             />
         
         </>

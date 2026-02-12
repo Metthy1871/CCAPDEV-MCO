@@ -1,6 +1,6 @@
 /* This component allows the user to filter posts on the feed. */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Feed_Filter.css';
 
 function Feed_Filter() {

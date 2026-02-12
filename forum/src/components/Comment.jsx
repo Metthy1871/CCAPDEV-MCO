@@ -1,10 +1,10 @@
 /* This component renders a single comment to a post. */
 
 import { useState } from 'react';
-import './Comment.css';
 import Vote_Button from './Vote_Button';
 import Pill_Button from './Pill_Button';
 import { user_controller } from '../controllers/user_controller';
+import './Comment.css';
 
 function Comment({user, date, content, votes, comments}) {
 
@@ -19,7 +19,8 @@ function Comment({user, date, content, votes, comments}) {
     const [allNestedComments, setAllNestedComments] = useState(comments) || [];
 
     const handleReply = (text) =>{ 
-        if (!text.trim()) return;
+        if (!text.trim()) 
+            return;
 
         const newReply = {
             user: current_user.username,
@@ -28,6 +29,7 @@ function Comment({user, date, content, votes, comments}) {
             votes: 0,
             comments: []
         }
+        
         setAllNestedComments([...allNestedComments, newReply]);
         setIsReplying(false);
     }
@@ -60,18 +62,35 @@ function Comment({user, date, content, votes, comments}) {
 
                     </div>
 
-                    {/* Delete Button */}
-                    {isAuthor && (
-                        <button 
-                            className = "delete_button"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                alert("Backend WIP");
-                            }}
-                        >
-                            🗑
-                        </button>
-                    )}
+                    <span className = "modify_post_container">
+
+                        {/* Edit Button */}
+                        {isAuthor && (
+                            <button 
+                                className = "edit_button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    alert("Backend WIP");
+                                }}
+                            >
+                                ✎
+                            </button>
+                        )}
+
+                        {/* Delete Button */}
+                        {isAuthor && (
+                            <button 
+                                className = "delete_button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    alert("Backend WIP");
+                                }}
+                            >
+                                🗑
+                            </button>
+                        )}
+
+                    </span>
                     
                 </div>
 
@@ -90,9 +109,9 @@ function Comment({user, date, content, votes, comments}) {
 
                     {/* Reply Button */}
                     <Pill_Button 
-                        icon="✍️" 
-                        text="Reply" 
-                        onClick={(e) => {
+                        icon = "✍️" 
+                        text = "Reply" 
+                        onClick = {(e) => {
                             e.stopPropagation(); // Prevent navigating to post page if clicking here
                             setIsReplying(!isReplying);
                         }} 
@@ -101,11 +120,11 @@ function Comment({user, date, content, votes, comments}) {
 
                 {isReplying && (
 
-                        <div className="reply_box">
+                        <div className = "reply_box">
                             <textarea
-                                placeholder="What are your thoughts?" 
-                                id="comment-reply"
-                                onChange={(e) =>{
+                                placeholder = "What are your thoughts?" 
+                                id = "comment-reply"
+                                onChange = {(e) =>{
                                     e.target.style.height = 'auto';
                                     e.target.style.height = `${e.target.scrollHeight}px`;
                                 }}
@@ -137,10 +156,10 @@ function Comment({user, date, content, votes, comments}) {
 
             {/* Section 3: Comment Section */}
             {showComments && allNestedComments.length > 0 && (
-                <div className="nested_thread_container">
+                <div className = "nested_thread_container">
                     {allNestedComments.map((commentData, index) => (
                         <Comment 
-                            key={index} 
+                            key = {index} 
                             {...commentData} 
                         />
                     ))}

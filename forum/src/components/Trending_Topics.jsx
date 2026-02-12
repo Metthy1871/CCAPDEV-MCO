@@ -1,7 +1,7 @@
 /* This component renders the trending topics. */
 
-import './Trending_Topics.css';
 import { trending_topics } from '../data/trending_topics';
+import './Trending_Topics.css';
 
 function Trending_Topics() {
 

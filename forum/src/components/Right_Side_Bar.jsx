@@ -1,7 +1,7 @@
 /* This component displays the forum information and rules. */
 
-import './Right_Side_Bar.css';
 import { forum_rules } from '../data/forum_rules.js';
+import './Right_Side_Bar.css';
 
 function Right_Side_Bar() {
 

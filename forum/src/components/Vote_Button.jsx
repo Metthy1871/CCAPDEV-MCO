@@ -1,7 +1,7 @@
 /* This component renders the voting button for posts and comments. */
 
-import './Vote_Button.css';
 import { useState } from 'react';
+import './Vote_Button.css';
 
 /* Temporary backend */
 function Vote_Button({initialScore}) {

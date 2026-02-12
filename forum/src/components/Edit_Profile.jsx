@@ -1,9 +1,9 @@
 /* This component contains the edit profile menu. */
 
-import './Create_Post.css';
-import './Edit_Profile.css';
 import { useState, useEffect } from 'react';
 import Pill_Button from './Pill_Button';
+import './Create_Post.css';
+import './Edit_Profile.css';
 
 function Edit_Profile({ isOpen, onClose, current_user }) {
 

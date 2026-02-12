@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Post.css';
 import Pill_Button from './Pill_Button';
 import Vote_Button from './Vote_Button';
 import Comment from './Comment';
 import { user_controller } from '../controllers/user_controller';
+import './Post.css';
 
 function Post({id, title, user, date, content, votes, isPreview, comments}) {
     
@@ -84,19 +84,36 @@ function Post({id, title, user, date, content, votes, isPreview, comments}) {
 
                     </div>
 
-                    {/* Delete Button */}
-                    {isAuthor && (
-                        <button 
-                            className = "delete_button"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                alert("Backend WIP");
-                            }}
-                        >
-                            🗑
-                        </button>
-                    )}
-                    
+                    <span className = "modify_post_container">
+
+                        {/* Edit Button */}
+                        {isAuthor && (
+                            <button 
+                                className = "edit_button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    alert("Backend WIP");
+                                }}
+                            >
+                                ✎
+                            </button>
+                        )}
+
+                        {/* Delete Button */}
+                        {isAuthor && (
+                            <button 
+                                className = "delete_button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    alert("Backend WIP");
+                                }}
+                            >
+                                🗑
+                            </button>
+                        )}
+
+                    </span>
+
                 </div>
 
                 {/* Post title */}

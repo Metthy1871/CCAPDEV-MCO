@@ -1,9 +1,13 @@
 /* This component contains the post creation menu. */
 
-import './Create_Post.css';
+import { useState } from 'react';
 import Pill_Button from './Pill_Button';
+import './Create_Post.css';
 
-function Create_Post({ isOpen, onClose }) {
+function Create_Post({ isOpen, onClose, onCreate }) {
+    
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
     
     /* If not open, don't render */
     if (!isOpen) 
@@ -38,7 +42,9 @@ function Create_Post({ isOpen, onClose }) {
                         <input 
                             type = "text" 
                             placeholder = "Title..." 
+                            value = {title}
                             className = "modal_input" 
+                            onChange={(e) => setTitle(e.target.value)}
                         />
 
                     </div>
@@ -48,7 +54,9 @@ function Create_Post({ isOpen, onClose }) {
                         <textarea 
                             placeholder = "Content..." 
                             className = "modal_textarea"
+                            value = {content}
                             rows = "5"
+                            onChange={(e) => setContent(e.target.value)}
                         />
 
                     </div>
@@ -67,7 +75,7 @@ function Create_Post({ isOpen, onClose }) {
                     <Pill_Button 
                         text = "POST" 
                         icon = "🪶"
-                        onClick ={() => alert("Backend WIP")} 
+                        onClick ={() => onCreate(title, content)} 
                         className = "send_button"
                     />
 

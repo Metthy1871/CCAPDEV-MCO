@@ -1,12 +1,11 @@
 /* This component provides global navigation for the application. */
 
-import './Nav_Bar.css';
 import { Link } from 'react-router-dom';
-import phantom_logo from '../media/phantom_logo.png';
 import Pill_Button from './Pill_Button';
 import Profile_Icon from './Profile_Icon';
 import { user_controller } from '../controllers/user_controller';
-
+import phantom_logo from '../media/phantom_logo.png';
+import './Nav_Bar.css';
 
 function Nav_Bar(){
 

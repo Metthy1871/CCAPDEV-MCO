@@ -71,7 +71,12 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-.delete_button {
+.modify_post_container {
+
+    margin-left: auto;
+}
+
+.edit_button, .delete_button {
 
     margin-left: auto; 
     
@@ -86,7 +91,7 @@
     transition: all 0.2s ease;
 }
 
-.delete_button:hover {
+.edit_button:hover, .delete_button:hover {
 
     color: #d32f2f;
     background-color: rgba(211, 47, 47, 0.1);

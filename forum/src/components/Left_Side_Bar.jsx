@@ -1,9 +1,9 @@
 /* This component contains the post button and the Trending_Topics component. */
 
-import './Left_Side_Bar.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Pill_Button from '../components/Pill_Button.jsx'
 import Trending_Topics from './Trending_Topics.jsx';
+import './Left_Side_Bar.css';
 
 function Left_Side_Bar({ onOpenModal }) {
 

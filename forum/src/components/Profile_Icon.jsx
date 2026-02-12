@@ -2,7 +2,6 @@
 
 import './Profile_Icon.css';
 
-
 function Profile_Icon({user}) {
 
     return (
