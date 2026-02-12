@@ -17,6 +17,10 @@ function Post({id, title, user, date, content, votes, isPreview, comments = []})
     /* If we are in Preview (Home), hide comments. If Full Page, show them */
     const [showComments, setShowComments] = useState(!isPreview);
 
+    /* Reply */
+    const [isReplying, setIsReplying] = useState(false);
+    const [allComments, setAllComments] = useState(comments);
+
     const navigate = useNavigate();
 
     /* Navigates to the specific post page */
@@ -27,32 +31,19 @@ function Post({id, title, user, date, content, votes, isPreview, comments = []})
         }
     };
 
-    /* Displays post comments*/
-    const handleCommentButtonClick = () => {
-
-        /* If we are on the Home page (Preview), don't toggle! */
-        if (isPreview) 
+    const handleReply = (text) =>{ 
+        if (!text.trim()) 
             return;
 
-        /* If we are on the Post Page, toggle the visibility. */
-        setShowComments(!showComments);
-    };
-
-    /* Reply */
-    const [isReplying, setIsReplying] = useState(false);
-    const [allComments, setAllComments] = useState(comments);
-
-    const handleAddComment = (text) =>{ 
-        if (!text.trim()) return;
-        
-        const newComment = {
+        const newReply = {
             user: current_user.username,
             date: "Just now",
             content: text,
             votes: 0,
             comments: []
         }
-        setAllComments([...allComments, newComment]);
+        
+        setAllComments([...allComments, newReply]);
         setIsReplying(false);
     }
 
@@ -143,18 +134,60 @@ function Post({id, title, user, date, content, votes, isPreview, comments = []})
 
                     </div>
 
-                    {/* Comment Button */}
+                    {/* Reply Button */}
                     <Pill_Button 
-                        className = "comment_button"
-                        icon = "💬"
-                        text = {showComments ? "Hide Comments" : `Comments (${comments.length})`}
-                        onClick = {handleCommentButtonClick}>
-                    </Pill_Button>
+                        icon = "✍️" 
+                        text = "Reply" 
+                        onClick = {(e) => {
+                            e.stopPropagation(); // Prevent navigating to post page if clicking here
+                            
+                            if (isPreview)
+                                navigate(`/post/${id}`)
+                            
+                            else
+                                setIsReplying(!isReplying);
+                        }} 
+                    />
                     
                 </div>
                 
-            </div>
+                {isReplying && (
 
+                        <div className = "reply_box">
+                            <textarea
+                                placeholder = "What are your thoughts?" 
+                                id = "comment-reply"
+                                onChange = {(e) =>{
+                                    e.target.style.height = 'auto';
+                                    e.target.style.height = `${e.target.scrollHeight}px`;
+                                }}
+                            />
+                            
+                            <div class = "reply_box_footer">
+                                
+                                <Pill_Button
+                                    icon = ""
+                                    text = "Cancel"
+                                    onClick = {() =>
+                                        setIsReplying(false)
+                                    }
+                                />
+
+                                <Pill_Button 
+                                    icon = ""
+                                    text = "Comment"
+                                    onClick = {() => 
+                                        handleReply(document.getElementById("comment-reply").value)
+                                    }
+                                />
+
+                            </div>
+
+                        </div>
+                    )}
+
+            </div>
+            
             {/* Section 3: Comment Section */}
             {showComments && (
                     <div className="comment_section_container">

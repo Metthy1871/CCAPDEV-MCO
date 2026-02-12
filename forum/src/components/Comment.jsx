@@ -1,6 +1,7 @@
 /* This component renders a single comment to a post. */
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom'
 import Vote_Button from './Vote_Button';
 import Pill_Button from './Pill_Button';
 import { user_controller } from '../controllers/user_controller';
@@ -43,10 +44,15 @@ function Comment({user, date, content, votes, comments}) {
                 {/* Section 1: Comment Header */}
                 <div className = "comment_header">
 
-                    <img 
-                        src = {author.avatar}
-                        className = "post_avatar"
-                    />
+                    <Link 
+                        to = {`/profile/${user}`}
+                        onClick = {(e) => e.stopPropagation()}>
+
+                        <img 
+                            src = {author.avatar}
+                            className = "post_avatar"
+                        />
+                    </Link>
 
                     <div className = "post_info">
 
