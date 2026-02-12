@@ -86,7 +86,7 @@ function Nav_Bar(){
                 </Link>
                     
                 {/* Link to profile page */}
-                <Link to = "/profile" className = 'nav_link'>
+                <Link to = {`/profile/${current_user.username}`} className = 'nav_link'>
                 
                     {/* Profile icon */}
                     <Profile_Icon user = {current_user}/>

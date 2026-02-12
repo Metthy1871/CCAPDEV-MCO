@@ -1,6 +1,7 @@
 /* This page renders a users profile picture and information. */
 
 import { useState } from 'react';
+import { useParams } from 'react-router-dom'
 import Nav_Bar from '../components/Nav_Bar';
 import Post from '../components/Post';
 import Feed_Filter from '../components/Feed_Filter';
@@ -11,8 +12,11 @@ import './Profile_Page.css';
 
 function Profile_Page() {
 
+    const { user }= useParams();
     const current_user = user_controller.getCurrentUser();
-    const user_posts = post_controller.getPostsByUser(current_user.username);
+    const viewed_user = user ? user_controller.getUserByName(user) : current_user;
+    const isOwner = current_user.username === viewed_user.username;
+    const user_posts = post_controller.getPostsByUser(viewed_user.username);
     const [isEditOpen, setIsEditOpen] = useState(false);
 
     return (
@@ -35,7 +39,7 @@ function Profile_Page() {
                                 <div className = "profile_picture_mask">
 
                                     <img
-                                        src = {current_user.avatar}
+                                        src = {viewed_user.avatar}
                                         alt = "profile"
                                         className = "profile_picture">
                                     </img>
@@ -48,28 +52,31 @@ function Profile_Page() {
                             <div className = "profile_text_block">
 
                                 <h1 className = "profile_name">
-                                    {current_user.username}
+                                    {viewed_user.username}
                                 </h1>
 
                                 <span className = "profile_handle">
-                                    {current_user.handle}
+                                    {viewed_user.handle}
                                 </span>
 
                                 <p className = "profile_bio">
-                                    {current_user.bio}
+                                    {viewed_user.bio}
                                 </p>
 
                             </div>
 
                         </div>
 
-                        <button 
-                            className="edit_profile_button" 
-                            onClick={() => setIsEditOpen(true)}
-                        >
-                            ⚙ EDIT
-                        </button>
-
+                        {isOwner && (
+                            
+                            <button 
+                                className="edit_profile_button" 
+                                onClick={() => setIsEditOpen(true)}
+                            >
+                                ⚙ EDIT
+                            </button>
+                        )}
+                        
                     </div>
 
                     {/* Section 3: Post History */}
@@ -117,7 +124,7 @@ function Profile_Page() {
                                     </span>
 
                                     <span className="stat_value">
-                                        {current_user.stats.posts}
+                                        {viewed_user.stats.posts}
                                     </span>
 
                                 </div>
@@ -129,7 +136,7 @@ function Profile_Page() {
                                     </span>
 
                                     <span className="stat_value highlight">
-                                        {current_user.stats.karma}
+                                        {viewed_user.stats.karma}
                                     </span>
 
                                 </div>
@@ -141,7 +148,7 @@ function Profile_Page() {
                                     </span>
 
                                     <span className="stat_value">
-                                        {current_user.joinDate}
+                                        {viewed_user.joinDate}
                                     </span>
 
                                 </div>

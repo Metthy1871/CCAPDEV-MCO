@@ -1,14 +1,14 @@
 /* This component renders a single post. */
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Pill_Button from './Pill_Button';
 import Vote_Button from './Vote_Button';
 import Comment from './Comment';
 import { user_controller } from '../controllers/user_controller';
 import './Post.css';
 
-function Post({id, title, user, date, content, votes, isPreview, comments}) {
+function Post({id, title, user, date, content, votes, isPreview, comments = []}) {
     
     const author = user_controller.getUserByName(user);
     const current_user = user_controller.getCurrentUser();
@@ -58,17 +58,22 @@ function Post({id, title, user, date, content, votes, isPreview, comments}) {
 
     return (
         
-        <div className = {`post_container ${isPreview ? 'clickable_post' : ''}`} onClick={handlePostClick}>
+        <div className = "post_container">
 
-            <div className = "post_block">
+            <div className = {`post_block ${isPreview ? 'clickable_post' : ''}`} onClick={handlePostClick}>
 
                 {/* Section 1: Post Header */}
                 <div className = 'post_header'>
 
-                    <img 
-                        src = {author.avatar}
-                        className = "post_avatar"
-                    />
+                    <Link 
+                        to = {`/profile/${user}`}
+                        onClick = {(e) => e.stopPropagation()}>
+
+                        <img 
+                            src = {author.avatar}
+                            className = "post_avatar"
+                        />
+                    </Link>
 
                     <div className = "post_info">
 
