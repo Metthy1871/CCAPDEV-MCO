@@ -4,15 +4,40 @@
 // global error handling
 
 
-// helmet, express-mongo-sanitize, express-rate-limit, morgan
-
 import express from 'express';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import mongoSanitize from 'express-mongo-sanitize';
+import rateLimit from 'express-rate-limit';
+
+import corsOptions from './config/corsOptions.js';
+
+// import routers
+import authRouter from './routes/auth.routes.js';
+import postRouter from './routes/post.routes.js';
+import userRouter from './routes/user.routes.js';
 
 const app = express();
 
-app.use(express.json()); // parse incoming JSON payloads
-app.use(express.urlencoded( { extended: false } )); // parss
+// register middleware
 
+app.use(helmet); // sets HTTP headers to secure the app
+app.use(morgan("dev")); // log HTTP requests to the console
+app.use(cors(corsOptions)); // allows requests from the React frontend and requests with no origin to send HTTP requests
+
+// add rate limiter here
+
+app.use(express.json()); // parse incoming JSON payloads
+app.use(express.urlencoded( { extended: true } )); // parse data sent via standard HTML forms
+app.use(cookieParser()); // read secure HTTP-only coookie containing a user's JWT via req.cookies
+app.use(mongoSanitize()); // prevent MongoDB Operator Injection
+
+
+// define routes
+app.use('/api/auth', authRouter);
+app.use('/api/posts', postRouter); // commentRouter is encapsulated in the postRouter
+app.use('/api/users', userRouter);
 
 export default app;
