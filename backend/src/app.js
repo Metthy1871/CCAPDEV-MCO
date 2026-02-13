@@ -10,7 +10,8 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import mongoSanitize from 'express-mongo-sanitize';
-import rateLimit from 'express-rate-limit';
+// import rateLimit from 'express-rate-limit';
+
 
 import corsOptions from './config/corsOptions.js';
 
@@ -34,10 +35,19 @@ app.use(express.urlencoded( { extended: true } )); // parse data sent via standa
 app.use(cookieParser()); // read secure HTTP-only coookie containing a user's JWT via req.cookies
 app.use(mongoSanitize()); // prevent MongoDB Operator Injection
 
-
 // define routes
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postRouter); // commentRouter is encapsulated in the postRouter
 app.use('/api/users', userRouter);
+
+// add error middleware
+
+
+// status check
+app.get('/', (_req, res) => {
+    res.status(200).json({
+        message: "Welcome to the Phantom Aficionado Forum"
+    });
+});
 
 export default app;
