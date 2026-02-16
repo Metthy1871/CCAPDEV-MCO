@@ -47,7 +47,6 @@
     height: 50px;
     border-radius: 50%;  
     object-fit: cover;
-    border: 2px solid #ddd;
 }
 
 .post_info {
@@ -104,6 +103,40 @@
     margin: 0 0 10px 0;
     font-family: 'Arial Black', sans-serif;
     text-transform: uppercase;
+}
+
+.post_tags {
+
+    display: flex;
+    gap: 8px; 
+    margin-bottom: 10px;
+    flex-wrap: wrap; 
+}
+
+.tag_pill {
+
+    background-color: var(--p5-red); 
+    color: white; 
+    padding: 4px 10px;
+    border: 2px solid black;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 black;
+    transition: all 0.2s ease;
+}
+
+.tag_pill:hover {
+    
+    transform: skew(-5deg) translate(1px, 1px);
+    background-color: #ff3333;
+    color: white;
+}
+
+.tag_pill:active {
+
+    border-color: white;
 }
 
 .post_content {

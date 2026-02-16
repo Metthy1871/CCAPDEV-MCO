@@ -8,7 +8,7 @@ import Comment from './Comment';
 import { user_controller } from '../controllers/user_controller';
 import './Post.css';
 
-function Post({id, title, user, date, content, votes, isPreview, comments = []}) {
+function Post({id, title, user, date, content, votes, isPreview, tags = [], comments = []}) {
     
     const author = user_controller.getUserByName(user);
     const current_user = user_controller.getCurrentUser();
@@ -116,6 +116,20 @@ function Post({id, title, user, date, content, votes, isPreview, comments = []})
                 <h2 className = "post_title">
                     {title}
                 </h2>
+                
+                <div className="post_tags">
+                    {tags.map((tag, index) => (
+                        <span 
+                            key = {index} 
+                            className = "tag_pill"
+                            onClick = {(e) => {
+                                e.stopPropagation();
+                            }}
+                        >
+                            #{tag}
+                        </span>
+                    ))}
+                </div>
 
                 {/* Post content */}
                 <p className = "post_content">

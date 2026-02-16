@@ -8,6 +8,7 @@ export const sample_posts = [
         date: "3 hours ago",
         content: "Did anyone else see the calling card on the news? Kamoshida is done for.",
         votes: 1205,
+        tags: ["news", "phantomthieves", "justice", "kamoshida"],
         comments: [
             {
                 user: "Joker", 
@@ -33,6 +34,7 @@ export const sample_posts = [
         date: "5 hours ago",
         content: "I have a theory that cognitive psience is actually based on Jungian psychology...",
         votes: 85,
+        tags: ["metaverse", "science", "cognition"],
         comments: [
             {
                 user: "Ryuji",
@@ -50,6 +52,7 @@ export const sample_posts = [
         date: "1 day ago",
         content: "Does anyone know if the beef bowl shop is hiring? I need cash for... equipment.",
         votes: 42,
+        tags: ["jobs", "cash"],
         comments: [
             {
                 user: "Joker",
@@ -67,6 +70,7 @@ export const sample_posts = [
         date: "3 days ago",
         content: "I went to the beach recently and caught over 100 lobsters",
         votes: 47,
+        tags: ["lobsters", "beach", "food"],
         comments: [
             {
                 user: "Morgana",
@@ -91,6 +95,7 @@ export const sample_posts = [
         date: "6 days ago",
         content: "As the title suggests.",
         votes: 1100,
+        tags: ["books", "recommendations"],
         comments: [
             {
                 user: "Haru",
@@ -147,6 +152,7 @@ export const sample_posts = [
         date: "7 days ago",
         content: "I swear it used to be 200 yen. Why is it almost 400 now",
         votes: 420,
+        tags: ["food", "icecream", "inflation"],
         comments: [
             {
                 user: "Haru",

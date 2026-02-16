@@ -1,6 +1,7 @@
 /* This is the root of the application */
 
 import { Routes, Route } from 'react-router-dom';
+import TopScroll from './components/TopScroll';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -11,7 +12,9 @@ function App() {
 
     return (
 
-        <div className = "App">
+        <>
+
+            <TopScroll/>
 
             {/* Client-side routes are managed here*/}
             <Routes>
@@ -24,7 +27,7 @@ function App() {
             
             </Routes>
 
-        </div>
+        </>
     );
 }
 

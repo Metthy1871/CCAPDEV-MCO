@@ -29,14 +29,15 @@ function Post_Page() {
                 <div className = "post_page_view">
 
                     <Post 
-                        id={post.id}
-                        title={post.title}
-                        user={post.user}
-                        date={post.date}
-                        content={post.content}
-                        votes={post.votes}
-                        isPreview={false}
-                        comments={post.comments}
+                        id = {post.id}
+                        title = {post.title}
+                        user = {post.user}
+                        date = {post.date}
+                        content = {post.content}
+                        votes = {post.votes}
+                        tags = {post.tags}
+                        isPreview = {false}
+                        comments = {post.comments}
                     />
 
                 </div>

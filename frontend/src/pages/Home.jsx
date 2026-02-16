@@ -64,15 +64,16 @@ function Home() {
                     {/* Place all posts below the Feed_Filter */}
                     {posts.map((post) => (
                         <Post 
-                            key={post.id}
-                            id={post.id}
-                            title={post.title}
-                            user={post.user}
-                            date={post.date}
-                            content={post.content}
-                            votes={post.votes}
-                            isPreview={true}
-                            comments={post.comments}
+                            key = {post.id}
+                            id = {post.id}
+                            title = {post.title}
+                            user = {post.user}
+                            date = {post.date}
+                            content = {post.content}
+                            votes = {post.votes}
+                            tags = {post.tags}
+                            isPreview = {true}
+                            comments = {post.comments}
                         />
                     ))}
                 
