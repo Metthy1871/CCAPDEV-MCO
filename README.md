@@ -14,7 +14,7 @@
 
 ### 3. Install Dependencies
 1. Open the terminal (ctr + `)
-2. Change to src folder (cd forum/src)
+2. Change to src folder (cd frontend/src)
 3. Install dependencies (npm install)
 
 ### 4. Running the Project
