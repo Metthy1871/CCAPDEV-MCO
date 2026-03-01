@@ -34,7 +34,7 @@ const userSchema = new Schema(
         },
         avatar: {
             type: String,
-            default: "frontend/public/avatars/morgana.jpg"
+            default: "https://i.pinimg.com/736x/b7/a9/39/b7a939727d776c17504d41d0c0a08a93.jpg"
         }
     },
     {
