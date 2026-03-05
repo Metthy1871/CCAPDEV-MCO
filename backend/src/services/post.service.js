@@ -6,7 +6,7 @@ const { ObjectId } = mongoose.Types;
 
 
 // default sorting is by most recent
-export const getAllPosts = async (sortBy = SORT_POSTS_OPTIONS.RECENT) => {
+const getAllPosts = async (sortBy = SORT_POSTS_OPTIONS.RECENT) => {
     try {
         switch (sortBy) {
             case SORT_POSTS_OPTIONS.POPULAR_ALL_TIME:
@@ -43,7 +43,7 @@ export const getAllPosts = async (sortBy = SORT_POSTS_OPTIONS.RECENT) => {
 }
 
 // used for dedicated viewing of a post
-export const getPostById = async (postId) => {
+const getPostById = async (postId) => {
     try {
         const post = await Post.findById(postId).populate('author', 'username');
         
@@ -56,7 +56,7 @@ export const getPostById = async (postId) => {
     }
 }
 
-export const getPostsByUser = async (userId, sortBy = SORT_POSTS_OPTIONS.RECENT) => {
+const getPostsByUser = async (userId, sortBy = SORT_POSTS_OPTIONS.RECENT) => {
     try {
 
         // cast the string Id to a MongoDB ObjectId for aggregate pipelines
@@ -102,7 +102,7 @@ export const getPostsByUser = async (userId, sortBy = SORT_POSTS_OPTIONS.RECENT)
 }
 
 // postData is an object containing the title, content, author, and tags
-export const createPost = async ({ title, content, userId }) => {
+const createPost = async ({ title, content, userId }) => {
     try {
         const newPost = await Post.create({
             title,
@@ -117,7 +117,7 @@ export const createPost = async ({ title, content, userId }) => {
     }
 }
 
-export const updatePost = async ({ postId, userId, title, content }) => {
+const updatePost = async ({ postId, userId, title, content }) => {
     try {
         const updatedPost = await Post.findOneAndUpdate(
             { _id: postId, author: userId },
@@ -133,7 +133,7 @@ export const updatePost = async ({ postId, userId, title, content }) => {
     }
 }
 
-export const deletePost = async ({ postId, userId }) => {
+const deletePost = async ({ postId, userId }) => {
     try {
         // only find and delete a post if both the ID and author match
         const deletedPost = await Post.findOneAndDelete({ _id: postId, author: userId });
@@ -144,7 +144,7 @@ export const deletePost = async ({ postId, userId }) => {
 
 }
 
-export const togglePostVote = async ({ postId, userId }) => {
+const togglePostVote = async ({ postId, userId }) => {
     try {
         // check if user has already voted for the post
         const post = await Post.findById(postId);
@@ -152,7 +152,6 @@ export const togglePostVote = async ({ postId, userId }) => {
         // safety check
         if (!post) {
             throw new Error("Post not found");
-            return post;
         }
 
         // compare stringified Object IDs
@@ -176,3 +175,13 @@ export const togglePostVote = async ({ postId, userId }) => {
         throw error;
     }
 }
+
+export default {
+  getAllPosts,
+  getPostById,
+  getPostsByUser,
+  createPost,
+  updatePost,
+  deletePost,
+  togglePostVote
+};

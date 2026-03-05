@@ -6,7 +6,7 @@ const { ObjectId } = mongoose.Types;
 
 
 // default sorting is by oldest, only top-level comments will be sorted
-export const getCommentsByPost = async (postId, sortBy = SORT_COMMENTS_OPTIONS.OLDEST) => {
+const getCommentsByPost = async (postId, sortBy = SORT_COMMENTS_OPTIONS.OLDEST) => {
     try {
 
         // cast the string Id to a MongoDB ObjectId for aggregate pipelines
@@ -35,7 +35,7 @@ export const getCommentsByPost = async (postId, sortBy = SORT_COMMENTS_OPTIONS.O
     }
 }
 
-export const createComment = async ({ content, userId, postId, parentComment}) => {
+const createComment = async ({ content, userId, postId, parentComment}) => {
     try {
         const newComment = await Comment.create({
             content,
@@ -51,7 +51,7 @@ export const createComment = async ({ content, userId, postId, parentComment}) =
     }
 }
 
-export const updateComment = async ({ commentId, userId, newContent, isDeleted }) => {
+const updateComment = async ({ commentId, userId, newContent }) => {
     try {
         const updatedComment = await Comment.findOneAndUpdate(
             // check if comment is not deleted
@@ -74,7 +74,7 @@ export const updateComment = async ({ commentId, userId, newContent, isDeleted }
 }
 
 // does a soft delete instead of a hard delete
-export const deleteComment = async ({ commentId, userId }) => {
+const deleteComment = async ({ commentId, userId }) => {
     try {
         // update the content of a comment to indicate that is has been deleted
         const deletedComment = await Comment.findOneAndUpdate(
@@ -88,7 +88,7 @@ export const deleteComment = async ({ commentId, userId }) => {
     }
 }
 
-export const toggleCommentVote = async ({ commentId, userId, isDeleted }) => {
+const toggleCommentVote = async ({ commentId, userId}) => {
     try {
         // check if user has already voted for the comment
         const comment = await Comment.findById(commentId);
@@ -124,3 +124,11 @@ export const toggleCommentVote = async ({ commentId, userId, isDeleted }) => {
         throw error;
     }
 }
+
+export default {
+  getCommentsByPost,
+  createComment,
+  updateComment,
+  deleteComment,
+  toggleCommentVote
+};
