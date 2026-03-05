@@ -3,7 +3,7 @@ import catchAsync from '../utils/catchAsync.js';
 
 
 const getCommentsByPost = catchAsync(async (req, res) => {
-    const postId = req.params.id;
+    const postId = req.params.postId;
     const { sortBy } = req.query;
 
     const comments = await commentService.getCommentsByPost(postId, sortBy);
@@ -14,7 +14,7 @@ const getCommentsByPost = catchAsync(async (req, res) => {
 const createComment = catchAsync(async (req, res) => {
     const content = req.body.content;
     const userId = req.user._id;
-    const postId = req.params.id;
+    const postId = req.params.postId;
     const parentComment = req.body.parentComment;
 
     const comment = await commentService.createComment({ content, userId, postId, parentComment });
@@ -23,7 +23,7 @@ const createComment = catchAsync(async (req, res) => {
 });
 
 const updateComment = catchAsync(async (req, res) => {
-    const commentId = req.params.id;
+    const commentId = req.params.commentId;
     const userId = req.user._id;
     const newContent = req.body.content;
 
@@ -36,7 +36,7 @@ const updateComment = catchAsync(async (req, res) => {
 });
 
 const deleteComment = catchAsync(async (req, res) => {
-    const commentId = req.params.id;
+    const commentId = req.params.commentId;
     const userId = req.user._id;
 
     const deletedComment = await commentService.deleteComment({ commentId, userId });
@@ -49,7 +49,7 @@ const deleteComment = catchAsync(async (req, res) => {
 });
 
 const toggleCommentVote = catchAsync(async (req, res) => {
-    const commentId = req.params.id;
+    const commentId = req.params.commentId;
     const userId = req.user._id;
 
     const commentVote = await commentService.toggleCommentVote({ commentId, userId });

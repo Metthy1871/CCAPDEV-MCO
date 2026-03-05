@@ -42,13 +42,13 @@ app.use('/api/posts', postRouter); // commentRouter is encapsulated in the postR
 app.use('/api/users', userRouter);
 
 // add error middleware
-app.use((err, req, res, next) => {
+app.use((err, _req, res, next) => {
     const statusCode = err.statusCode || 500;
     res.status(statusCode).json({
         message: err.message || "Internal Server Error",
         error: process.env.NODE_ENV === "development" ? err.stack : null,
     });
-})
+});
 
 // status check
 app.get('/', (_req, res) => {

@@ -11,7 +11,7 @@ const getAllPosts = catchAsync(async (req, res) => {
 });
 
 const getPostById = catchAsync(async (req, res) => {
-    const postId  = req.params.id;
+    const postId  = req.params.postId;
     const post = await postService.getPostById(postId);
 
     res.status(200).json({ success: true, data: post });
@@ -40,7 +40,7 @@ const createPost = catchAsync(async (req, res) => {
 const updatePost = catchAsync(async (req, res) => {
     const userId = req.user._id;
     const { title, content } = req.body;
-    const postId = req.params.id;
+    const postId = req.params.postId;
 
     const updatedPost = await postService.updatePost({ postId, userId, title, content });
 
@@ -53,7 +53,7 @@ const updatePost = catchAsync(async (req, res) => {
 
 const deletePost = catchAsync(async (req, res) => {
     const userId = req.user._id;
-    const postId = req.params.id;
+    const postId = req.params.postId;
 
     const deletedPost = await postService.deletePost({ postId, userId });
 
@@ -65,7 +65,7 @@ const deletePost = catchAsync(async (req, res) => {
 });
 
 const togglePostVote = catchAsync(async (req, res) => {
-    const postId = req.params.id;
+    const postId = req.params.postId;
     const userId = req.user._id;
 
     const postVote = await postService.togglePostVote({ postId, userId });
