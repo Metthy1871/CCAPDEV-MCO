@@ -32,7 +32,11 @@ const commentSchema = new Schema(
         upvotes: [{ // use array of UserIDs to track which user has upvoted
             type: ObjectId,
             ref: 'User'
-        }]
+        }],
+        isDeleted: { // let React handle the rendering for deleted comments
+            type: Boolean,
+            default: false
+        }
     },
     {
         timestamps: true // sets the createdAt and updatedAt fields
