@@ -2,7 +2,7 @@
 export const SORT_POSTS_OPTIONS = {
     RECENT: 'recent',
     POPULAR_ALL_TIME: 'popular_all_time',
-    POPULAR_RECENT: 'popularRecent'
+    POPULAR_RECENT: 'popular_recent'
 };
 
 export const SORT_COMMENTS_OPTIONS = {
