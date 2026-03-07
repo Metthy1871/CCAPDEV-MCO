@@ -38,30 +38,43 @@ const seedDatabase = async () => {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
 
-        const posts = await Post.create([
+        // Pre-generate IDs so we can reference them in comments below
+        const postId1 = new mongoose.Types.ObjectId();
+        const postId2 = new mongoose.Types.ObjectId();
+        const postId3 = new mongoose.Types.ObjectId();
+
+        // Use the raw MongoDB driver to bypass Mongoose's automatic timestamp handling,
+        // allowing us to manually set createdAt for testing the sorting algorithms
+        await Post.collection.insertMany([
             {
+                _id: postId1,
                 title: 'The Shujin Teacher Conspiracy',
                 content: 'This post is very old but has the most votes. (Popular All-Time)',
                 author: users[0]._id, // Joker
                 tags: ['shujin', 'rumor'],
                 upvotes: [users[1]._id, users[2]._id, users[3]._id, users[4]._id], // 4 Votes
-                createdAt: sixMonthsAgo 
+                createdAt: sixMonthsAgo,
+                updatedAt: sixMonthsAgo
             },
             {
+                _id: postId2,
                 title: 'Warning: Shibuya Scams',
                 content: 'This post is new and has decent votes. (Popular Recent)',
                 author: users[4]._id, // Queen
                 tags: ['shibuya', 'warning'],
                 upvotes: [users[0]._id, users[1]._id, users[2]._id], // 3 Votes
-                createdAt: yesterday
+                createdAt: yesterday,
+                updatedAt: yesterday
             },
             {
+                _id: postId3,
                 title: 'Did anyone see that calling card?',
                 content: 'Brand new, zero votes. Should be at the bottom of popular sorts.',
                 author: users[1]._id, // Skull
                 tags: ['callingcard'],
                 upvotes: [], // 0 Votes
-                createdAt: new Date() // Right now
+                createdAt: new Date(),
+                updatedAt: new Date()
             }
         ]);
         console.log('Posts created with manipulated timestamps.');
@@ -79,7 +92,7 @@ const seedDatabase = async () => {
         const rootComment1 = await Comment.create({
             content: 'I heard about this too! We need to investigate.',
             author: users[4]._id, // Queen
-            post: posts[0]._id,
+            post: postId1,
             parentComment: null,
             upvotes: [users[0]._id], // 1 Upvote (Joker)
             createdAt: twoDaysAgo
@@ -89,7 +102,7 @@ const seedDatabase = async () => {
         const rootComment2 = await Comment.create({
             content: 'Wait, I have proof. Look at this picture I took at the courtyard.',
             author: users[3]._id, // Fox
-            post: posts[0]._id,
+            post: postId1,
             parentComment: null,
             upvotes: [users[0]._id, users[1]._id, users[2]._id, users[4]._id], // 4 Upvotes
             createdAt: oneHourAgo
@@ -99,7 +112,7 @@ const seedDatabase = async () => {
         const reply1 = await Comment.create({
             content: 'Let me know if you find anything. I can ask around.',
             author: users[1]._id, // Skull
-            post: posts[0]._id,
+            post: postId1,
             parentComment: rootComment1._id,
             upvotes: [], // 0 Upvotes
             createdAt: new Date()
