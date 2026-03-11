@@ -1,0 +1,37 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "user": "Joker",
+      "title": "The Phantom Thieves have returned!",
+      "content": "Get ready for a change of heart. We are coming for your distorted desires.",
+      "date": "2 hours ago",
+      "votes": 15,
+      "tags": ["announcement", "phantom_thieves"],
+      "comments": []
+    },
+    {
+      "id": "2",
+      "user": "Ryuji",
+      "title": "Ramen shop recommendations?",
+      "content": "I'm starving. Where is the best bowl in Shibuya?",
+      "date": "5 hours ago",
+      "votes": 4,
+      "tags": ["food", "tokyo"],
+      "comments": []
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "Joker",
+      "avatar": "https://i.pinimg.com/474x/ba/a1/41/baa141603b6595a462b8fea1743310f9.jpg"
+    },
+    {
+        "id": "2",
+        "username": "Skull",
+        "avatar": "https://preview.redd.it/osh0zg2xjtc41.png?auto=webp&s=fdc89aa46138a8de734f2fe52e0cc774cc34e092"
+    }
+    
+  ]
+}

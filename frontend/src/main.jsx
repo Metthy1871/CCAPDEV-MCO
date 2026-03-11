@@ -3,8 +3,12 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import App from './App.jsx'
 import './index.css'
+
+/* Create the Client to manage the data */
+const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   
@@ -14,8 +18,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         {/* Allows client-side routing */}
         <BrowserRouter>
 
-            <App/>
-
+            <QueryClientProvider client = {queryClient}>
+                <App/>
+            </QueryClientProvider>
+            
         </BrowserRouter>
 
     </React.StrictMode>,
