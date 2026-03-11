@@ -1,0 +1,29 @@
+{
+  "name": "ccapdev-mco",
+  "version": "1.0.0",
+  "description": "1. Download the LTS Version from nodejs.org (https://nodejs.org/).\r 2. Run the installer and click \"Next\" through everything.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "npm run dev --prefix backend",
+    "frontend": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Metthy1871/CCAPDEV-MCO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Metthy1871/CCAPDEV-MCO/issues"
+  },
+  "homepage": "https://github.com/Metthy1871/CCAPDEV-MCO#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.3"
+  }
+}

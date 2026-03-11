@@ -24,7 +24,7 @@ const app = express();
 
 // register middleware
 
-app.use(helmet); // sets HTTP headers to secure the app
+app.use(helmet()); // sets HTTP headers to secure the app
 app.use(morgan("dev")); // log HTTP requests to the console
 app.use(cors(corsOptions)); // allows requests from the React frontend and requests with no origin to send HTTP requests
 
@@ -33,7 +33,8 @@ app.use(cors(corsOptions)); // allows requests from the React frontend and reque
 app.use(express.json()); // parse incoming JSON payloads
 app.use(express.urlencoded( { extended: true } )); // parse data sent via standard HTML forms
 app.use(cookieParser()); // read secure HTTP-only coookie containing a user's JWT via req.cookies
-app.use(mongoSanitize()); // prevent MongoDB Operator Injection
+//app.use(mongoSanitize()); // prevent MongoDB Operator Injection
+// TODO: Fix TypeError conflict with Express version
 
 // define routes
 app.use('/api/auth', authRouter);
@@ -41,7 +42,13 @@ app.use('/api/posts', postRouter); // commentRouter is encapsulated in the postR
 app.use('/api/users', userRouter);
 
 // add error middleware
-
+app.use((err, _req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    res.status(statusCode).json({
+        message: err.message || "Internal Server Error",
+        error: process.env.NODE_ENV === "development" ? err.stack : null,
+    });
+});
 
 // status check
 app.get('/', (_req, res) => {

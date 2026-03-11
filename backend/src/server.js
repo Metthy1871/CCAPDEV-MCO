@@ -3,7 +3,7 @@ import config from './config/env.js';
 import connectDB from './config/db.js';
 
 
-// import appt
+// import app
 // connect database
 // environment variable checks
 // listener
