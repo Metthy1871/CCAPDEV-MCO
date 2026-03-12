@@ -19,8 +19,35 @@
       "votes": 4,
       "tags": ["food", "tokyo"],
       "comments": []
+    },
+    {
+        "id": "3",
+        "user": "Morgana",
+        "title": "The Phantom Thieves Strike Again!",
+        "content": "Did anyone else see the calling card on the news? Kamoshida is done for.",
+        "date": "3 hours ago",
+        "votes": 1205,
+        "tags": ["news", "phantomthieves", "justice", "kamoshida"],
+        "comments": [
+            {
+                "user": "Morgana", 
+                "date": "2 hour ago", 
+                "content": "Go to sleep",
+                "votes": 67,
+                "comments": [
+                    {
+                        "user": "Joker", 
+                        "date": "1 hour ago", 
+                        "content": "silence cat",
+                        "votes": 69,
+                        "comments": []
+                    }
+                ]
+            }
+        ]
     }
   ],
+  
   "users": [
     {
       "id": "1",
@@ -28,9 +55,14 @@
       "avatar": "https://i.pinimg.com/474x/ba/a1/41/baa141603b6595a462b8fea1743310f9.jpg"
     },
     {
-        "id": "2",
-        "username": "Skull",
-        "avatar": "https://preview.redd.it/osh0zg2xjtc41.png?auto=webp&s=fdc89aa46138a8de734f2fe52e0cc774cc34e092"
+      "id": "2",
+      "username": "Morgana",
+      "avatar": "https://i.pinimg.com/736x/b7/a9/39/b7a939727d776c17504d41d0c0a08a93.jpg"
+    },
+    {
+      "id": "3",
+      "username": "Ryuji",
+      "avatar": "https://preview.redd.it/osh0zg2xjtc41.png?auto=webp&s=fdc89aa46138a8de734f2fe52e0cc774cc34e092"
     }
     
   ]

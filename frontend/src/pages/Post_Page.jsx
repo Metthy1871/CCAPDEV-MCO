@@ -1,22 +1,35 @@
 /* Renders a page dedicated to a single post and its comments. */
 
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+
 import Nav_bar from '../components/Nav_Bar.jsx';
 import Right_Side_Bar from '../components/Right_Side_Bar.jsx';
 import Post from '../components/Post.jsx';
+
 import { sample_posts } from '../data/sample_posts.js';
-import { useParams } from 'react-router-dom';
+
 import './Post_Page.css';
 
 function Post_Page() {
 
     const { id } = useParams();
 
-    /* Find the specific post in your data */
-    const post = sample_posts.find(p => p.id === Number(id));
+    //Find the specific post
+    const { data: post, isLoading, isError } = useQuery({
+        queryKey: ['post', id], //Unique cache key for this specific post
+        queryFn: async () => {
+            const response = await axios.get(`http://localhost:8000/posts/${id}`);
+            return response.data;
+        }
+    });
 
-    if (!post) {
-        return <div>Post not found!</div>;
-    }
+    if (isLoading) 
+        return <h2 style={{ color: 'white', textAlign: 'center' }}>Loading Post... ⏳</h2>;
+
+    if (isError) 
+        return <h2 style={{ color: 'red', textAlign: 'center' }}>Post not found! 🚨</h2>;
 
     return (
 
