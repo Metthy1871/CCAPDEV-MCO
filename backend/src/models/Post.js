@@ -32,7 +32,7 @@ const postSchema = new Schema(
             type: ObjectId,
             ref: 'User'
         }],
-        tags: [{
+        tags: {
             type: [{
                 type: String,
                 trim: true,
@@ -41,7 +41,7 @@ const postSchema = new Schema(
                 maxLength: [50, 'Tag cannot exceed 50 characters'],
             }],
             validate: [numberOfTagsLimit, 'Number of tags cannot exceed 5']
-        }]
+        }
     },
     {
         timestamps: true // sets the createdAt and updatedAt fields
