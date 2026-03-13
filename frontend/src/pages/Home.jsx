@@ -1,9 +1,8 @@
 /* This is the home page of the application. */
 
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+
+import { useFetchPosts } from '../hooks/useFetchPosts.js';
 
 import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
 import Nav_Bar from '../components/Nav_Bar.jsx';
@@ -12,26 +11,14 @@ import Post from '../components/Post.jsx';
 import Feed_Filter from '../components/Feed_Filter.jsx';
 import Create_Post from '../components/Create_Post.jsx';
 
-import { user_controller } from '../controllers/user_controller.js';
-
 import './Home.css';
 
 function Home() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const current_user = user_controller.getCurrentUser();
 
-    const { data: posts, isLoading, isError } = useQuery({
-        
-        queryKey: ['posts'],
-
-        queryFn: async () => {
-            const response = await axios.get('http://localhost:8000/posts');
-            return response.data.reverse();
-        }
-    });
+    const { data: posts, isLoading, isError } = useFetchPosts();
     
-
     const handleCreatePost = (title, content) => { 
 
         if (!title.trim() || !content.trim()) 

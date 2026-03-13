@@ -30,11 +30,11 @@ const userSchema = new Schema(
         },
         bio: {
             type: String,
-            default: "Meow"
+            default: " "
         },
         avatar: {
             type: String,
-            default: "https://i.pinimg.com/736x/b7/a9/39/b7a939727d776c17504d41d0c0a08a93.jpg"
+            default: "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg"
         }
     },
     {

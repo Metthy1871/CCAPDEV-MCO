@@ -2,22 +2,45 @@
 
 import { useState } from 'react';
 import { useParams } from 'react-router-dom'
+
+import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
+import { useFetchViewedUser } from '../hooks/useFetchViewedUser';
+import { useFetchPostHistory } from '../hooks/useFetchPostHistory';
+
 import Nav_Bar from '../components/Nav_Bar';
 import Post from '../components/Post';
 import Feed_Filter from '../components/Feed_Filter';
 import Edit_Profile from '../components/Edit_Profile';
-import { user_controller } from '../controllers/user_controller';
-import { post_controller } from '../controllers/post_controller';
+
 import './Profile_Page.css';
 
 function Profile_Page() {
 
     const { user }= useParams();
-    const current_user = user_controller.getCurrentUser();
-    const viewed_user = user ? user_controller.getUserByName(user) : current_user;
-    const isOwner = current_user.username === viewed_user.username;
-    const user_posts = post_controller.getPostsByUser(viewed_user.username);
     const [isEditOpen, setIsEditOpen] = useState(false);
+
+    //Fetch current user data
+    const { data: current_user, isLoading: loadingAuth } = useFetchCurrentUser();
+
+    //Fetch viewed user data
+    const { data: viewed_user, isLoading: loadingUser, isError: userError } = useFetchViewedUser(user);
+
+    //Fetch user post history
+    const { data: user_posts, isLoading: loadingPosts } = useFetchPostHistory(user);
+
+    if (loadingAuth || loadingUser || loadingPosts) return 
+        <h2 style={{ color: 'white', textAlign: 'center' }}>Loading Profile... ⏳</h2>;
+
+    if (userError || !viewed_user) return 
+        <h2 style={{ color: 'red', textAlign: 'center' }}>User not found! 🚨</h2>;
+
+    const isOwner = current_user.username === viewed_user.username;
+
+    const formattedDate = new Date(viewed_user.joinDate).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
 
     return (
 
@@ -70,8 +93,8 @@ function Profile_Page() {
                         {isOwner && (
                             
                             <button 
-                                className="edit_profile_button" 
-                                onClick={() => setIsEditOpen(true)}
+                                className = "edit_profile_button" 
+                                onClick = {() => setIsEditOpen(true)}
                             >
                                 ⚙ EDIT
                             </button>
@@ -110,45 +133,45 @@ function Profile_Page() {
 
                         <div className="profile_stats_container">
 
-                            <div className="info_header">
+                            <div className = "info_header">
                                 Profile Info
                             </div>
                         
                             {/* Profile statistics */}
-                            <div className="stats_grid">
+                            <div className = "stats_grid">
 
-                                <div className="stat_item">
+                                <div className = "stat_item">
 
-                                    <span className="stat_label">
+                                    <span className = "stat_label">
                                         Posts:
                                     </span>
 
-                                    <span className="stat_value">
+                                    <span className = "stat_value">
                                         {viewed_user.stats.posts}
                                     </span>
 
                                 </div>
 
-                                <div className="stat_item">
+                                <div className = "stat_item">
 
-                                    <span className="stat_label">
+                                    <span className = "stat_label">
                                         Karma:
                                     </span>
 
-                                    <span className="stat_value highlight">
+                                    <span className = "stat_value highlight">
                                         {viewed_user.stats.karma}
                                     </span>
 
                                 </div>
 
-                                <div className="stat_item">
+                                <div className = "stat_item">
 
-                                    <span className="stat_label">
+                                    <span className = "stat_label">
                                         Joined on:
                                     </span>
 
-                                    <span className="stat_value">
-                                        {viewed_user.joinDate}
+                                    <span className = "stat_value">
+                                        {formattedDate}
                                     </span>
 
                                 </div>
