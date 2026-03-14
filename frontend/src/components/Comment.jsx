@@ -2,16 +2,23 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
+
 import Vote_Button from './Vote_Button';
 import Pill_Button from './Pill_Button';
+
 import { user_controller } from '../controllers/user_controller';
+import { getRelativeTime, getExactTime } from '../utils/timeUtils';
+
 import './Comment.css';
 
 function Comment({user, date, content, votes, comments}) {
 
     const author = user_controller.getUserByName(user);
     const current_user = user_controller.getCurrentUser();
+
     const isAuthor = current_user.username === user;
+    const relativeDate = getRelativeTime(date);
+    const exactDate = getExactTime(date);
 
     const [showComments, setShowComments] = useState(true);
 
@@ -62,8 +69,8 @@ function Comment({user, date, content, votes, comments}) {
                         </span>
 
                         {/* Comment date */}
-                        <span className = "comment_date"> 
-                            • {date} 
+                        <span className = "comment_date" title = {exactDate}> 
+                            • {relativeDate} 
                         </span>
 
                     </div>

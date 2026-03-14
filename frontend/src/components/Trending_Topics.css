@@ -24,7 +24,7 @@
     transform: skew(-10deg);
 }
 
-.trend_cloud {
+.trend_list {
 
     list-style: none;
     padding: 0;
@@ -32,6 +32,12 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.topic {
+
+    display: flex;
+    justify-content: space-between;
 }
 
 .keyword {
@@ -54,4 +60,9 @@
 .keyword:active {
 
     transform: translate(1px, 1px);
+}
+
+.topic_count {
+
+    color: white;
 }

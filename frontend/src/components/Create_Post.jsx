@@ -1,17 +1,48 @@
 /* This component contains the post creation menu. */
 
 import { useState } from 'react';
+
+import { useCreatePost } from '../hooks/useCreatePost';
+import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 import Pill_Button from './Pill_Button';
+
 import './Create_Post.css';
 
-function Create_Post({ isOpen, onClose, onCreate }) {
+function Create_Post({ isOpen, onClose }) {
     
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    
+
+    const { data: current_user } = useFetchCurrentUser();
+    const createPostMutation = useCreatePost();
+
     /* If not open, don't render */
     if (!isOpen) 
         return null;
+    
+    const handlePostSubmit = () => {
+
+        if (!title.trim() || !content.trim()) 
+            return;
+
+        const newPost = {
+            title: title,
+            user: current_user?.username,
+            date: new Date().toISOString().replace('Z', '+08:00'),
+            content: content,
+            votes: 0,
+            tags: ["Discussion"],
+            comments: []
+        };
+
+        createPostMutation.mutate(newPost, {
+            onSuccess: () => {
+                setTitle("");
+                setContent("");
+                onClose(); 
+            }
+        });
+    }
 
     return (
 
@@ -73,10 +104,11 @@ function Create_Post({ isOpen, onClose, onCreate }) {
                     />
 
                     <Pill_Button 
-                        text = "POST" 
-                        icon = "🪶"
-                        onClick ={() => onCreate(title, content)} 
+                        text = {createPostMutation.isPending ? "Posting..." : "Post"}
+                        icon = {createPostMutation.isPending ? "⏳" : "🪶"}
+                        onClick = {handlePostSubmit}
                         className = "send_button"
+                        disabled = {createPostMutation.isPending}
                     />
 
                 </div>

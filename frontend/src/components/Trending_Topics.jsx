@@ -1,9 +1,15 @@
 /* This component renders the trending topics. */
 
-import { trending_topics } from '../data/trending_topics';
+import { useFetchPopularTopics } from '../hooks/useFetchPopularTopics';
+
 import './Trending_Topics.css';
 
 function Trending_Topics() {
+
+    const { data: popularTopics, isLoading } = useFetchPopularTopics();
+
+    if (isLoading) 
+        return <div>Loading popular topics...</div>;
 
     return (
 
@@ -13,21 +19,19 @@ function Trending_Topics() {
                     Popular Topics
                 </h3>
 
-                <div className = "trend_cloud">
+                <ul className = "trend_list">
 
                     {/* Map the list of trending topics */}
-                    {trending_topics.map((word) => (
+                    {popularTopics.map(tag => (
 
-                        <span
-                            key = {word.id}
-                            className = "keyword"
-                        >
-                            {word.text}
-                        </span>
-
+                        <li key = {tag.name} className = "topic">
+                            <span className = "keyword">#{tag.name}</span>
+                            <span className = "topic_count">{tag.count} posts</span>
+                        </li>
+                        
                     ))}
 
-                </div>
+                </ul>
         </div>
 
     );

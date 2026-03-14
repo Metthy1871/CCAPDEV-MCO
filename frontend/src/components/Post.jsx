@@ -2,17 +2,24 @@
 
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+
 import Pill_Button from './Pill_Button';
 import Vote_Button from './Vote_Button';
 import Comment from './Comment';
+
 import { user_controller } from '../controllers/user_controller';
+import { getRelativeTime, getExactTime } from '../utils/timeUtils';
+
 import './Post.css';
 
 function Post({id, title, user, date, content, votes, isPreview, tags = [], comments = []}) {
     
     const author = user_controller.getUserByName(user);
     const current_user = user_controller.getCurrentUser();
+
     const isAuthor = current_user.username === user;
+    const relativeDate = getRelativeTime(date);
+    const exactDate = getExactTime(date);
 
     /* If we are in Preview (Home), hide comments. If Full Page, show them */
     const [showComments, setShowComments] = useState(!isPreview);
@@ -74,8 +81,8 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
                         </span>
 
                         {/* Post date */}
-                        <span className = "post_date">
-                            • {date}
+                        <span className = "post_date" title = {exactDate}>
+                            • {relativeDate}
                         </span>
 
                     </div>

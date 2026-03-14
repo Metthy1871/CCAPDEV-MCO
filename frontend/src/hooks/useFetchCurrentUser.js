@@ -3,8 +3,8 @@ import axios from 'axios';
 
 export function useFetchCurrentUser() {
 
-    //Hardcoded until real login is built
-    const username = "Guest"; 
+    // Hardcoded until real login is built
+    const username = "Morgana"; 
 
     return useQuery({
         queryKey: ['currentUser', username],

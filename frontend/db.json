@@ -5,9 +5,12 @@
       "user": "Joker",
       "title": "The Phantom Thieves have returned!",
       "content": "Get ready for a change of heart. We are coming for your distorted desires.",
-      "date": "2 hours ago",
+      "date": "2026-03-13T00:30:00.000+08:00",
       "votes": 15,
-      "tags": ["announcement", "phantom_thieves"],
+      "tags": [
+        "announcement",
+        "phantomthieves"
+      ],
       "comments": []
     },
     {
@@ -15,9 +18,12 @@
       "user": "Ryuji",
       "title": "Ramen shop recommendations?",
       "content": "I'm starving. Where is the best bowl in Shibuya?",
-      "date": "5 hours ago",
+      "date": "2026-02-14T00:30:00.000+08:00",
       "votes": 4,
-      "tags": ["food", "tokyo"],
+      "tags": [
+        "food",
+        "tokyo"
+      ],
       "comments": []
     },
     {
@@ -25,24 +31,29 @@
       "user": "Morgana",
       "title": "The Phantom Thieves Strike Again!",
       "content": "Did anyone else see the calling card on the news? Kamoshida is done for.",
-      "date": "3 hours ago",
+      "date": "2025-03-14T00:30:00.000+08:00",
       "votes": 1205,
-      "tags": ["news", "phantomthieves", "justice", "kamoshida"],
+      "tags": [
+        "news",
+        "phantomthieves",
+        "justice",
+        "kamoshida"
+      ],
       "comments": [
         {
-            "user": "Morgana", 
-            "date": "2 hour ago", 
-            "content": "Go to sleep",
-            "votes": 67,
-            "comments": [
-                {
-                    "user": "Joker", 
-                    "date": "1 hour ago", 
-                    "content": "silence cat",
-                    "votes": 69,
-                    "comments": []
-                }
-            ]
+          "user": "Morgana",
+          "date": "2026-03-14T00:30:00.000+08:00",
+          "content": "Go to sleep",
+          "votes": 67,
+          "comments": [
+            {
+              "user": "Joker",
+              "date": "2026-03-14T00:30:00.000+08:00",
+              "content": "silence cat",
+              "votes": 69,
+              "comments": []
+            }
+          ]
         }
       ]
     },
@@ -51,194 +62,213 @@
       "user": "Yusuke",
       "title": "BEACH IS FULL LOBSTERS",
       "content": "I went to the beach recently and caught over 100 lobsters",
-      "date": "3 hours ago",
+      "date": "2026-03-14T00:30:00.000+08:00",
       "votes": 47,
-      "tags": ["lobsters", "beach", "food"],
+      "tags": [
+        "lobsters",
+        "beach",
+        "food"
+      ],
       "comments": [
         {
-            "user": "Morgana",
-            "date": "1 day ago",
-            "content": "(,,> ᴗ <,,)",
-            "votes": 67,
-            "comments": []
+          "user": "Morgana",
+          "date": "1 day ago",
+          "content": "(,,> ᴗ <,,)",
+          "votes": 67,
+          "comments": []
         },
         {
-            "user": "Futaba",
-            "date": "1 day ago",
-            "content": "No one cares Inari",
-            "votes": 100,
-            "comments": []
+          "user": "Futaba",
+          "date": "1 day ago",
+          "content": "No one cares Inari",
+          "votes": 100,
+          "comments": []
         }
       ]
     },
     {
-        "id": 5,
-        "title": "Looking for book recommendations",
-        "user": "Makoto",
-        "date": "6 days ago",
-        "content": "As the title suggests.",
-        "votes": 1100,
-        "tags": ["books", "recommendations"],
-        "comments": [
+      "id": "5",
+      "title": "Looking for book recommendations",
+      "user": "Makoto",
+      "date": "2026-03-14T00:30:00.000+08:00",
+      "content": "As the title suggests.",
+      "votes": 1100,
+      "tags": [
+        "books",
+        "recommendations"
+      ],
+      "comments": [
+        {
+          "user": "Haru",
+          "date": "2026-03-09T14:30:00.000+08:00",
+          "content": "What genres are you interested in?",
+          "votes": 67,
+          "comments": [
             {
-                "user": "Haru",
-                "date": "4 days ago",
-                "content": "What genres are you interested in?",
-                "votes": 67,
-                "comments": [
-                    {
-                        "user": "Makoto",
-                        "date": "4 days ago",
-                        "content": "Hmm I want one that'll move me to tears",
-                        "votes": 35,
-                        "comments": [
-                            {
-                                "user": "Haru",
-                                "date": "4 days ago",
-                                "content": "All Quiet on the Western Front. War never changes.",
-                                "votes": 26,
-                                "comments": []
-                            },
-                            {
-                                "user": "Futaba",
-                                "date": "4 days ago",
-                                "content": "Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein https://www.goodreads.com/book/show/108986.Introduction_to_Algorithms",
-                                "votes": -4,
-                                "comments": []
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "user": "Joker",
-                "date": "2 day ago",
-                "content": "Why are you posting here? Just go to the library",
-                "votes": -1000,
-                "comments": [
-                    {
-                        "user": "Ryuji",
-                        "date": "1 days ago",
-                        "content": "Get ratio'd",
-                        "votes": 89,
-                        "comments": []
-                    }
-                ]
+              "user": "Makoto",
+              "date": "2016-04-09T14:30:00.000+08:00",
+              "content": "Hmm I want one that'll move me to tears",
+              "votes": 35,
+              "comments": [
+                {
+                  "user": "Haru",
+                  "date": "2016-04-09T14:30:00.000+08:00",
+                  "content": "All Quiet on the Western Front. War never changes.",
+                  "votes": 26,
+                  "comments": []
+                },
+                {
+                  "user": "Futaba",
+                  "date": "2016-04-09T14:30:00.000+08:00",
+                  "content": "Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein https://www.goodreads.com/book/show/108986.Introduction_to_Algorithms",
+                  "votes": -4,
+                  "comments": []
+                }
+              ]
             }
-        ]
+          ]
+        },
+        {
+          "user": "Joker",
+          "date": "2016-04-09T14:30:00.000+08:00",
+          "content": "Why are you posting here? Just go to the library",
+          "votes": -1000,
+          "comments": [
+            {
+              "user": "Ryuji",
+              "date": "2016-04-09T14:30:00.000+08:00",
+              "content": "Get ratio'd",
+              "votes": 89,
+              "comments": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d40e",
+      "title": "Hello",
+      "user": "Morgana",
+      "date": "2026-03-14T14:13:42.351+08:00",
+      "content": "Meow",
+      "votes": 0,
+      "tags": [
+        "Discussion"
+      ],
+      "comments": []
     }
   ],
-  
   "users": [
     {
       "id": "0",
       "username": "Guest",
       "bio": "",
-      "joinDate": "?",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-09T14:30:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg"
     },
     {
       "id": "1",
       "username": "Joker",
       "bio": "I like cats",
-      "joinDate": "2016-04-09T14:30:00.000Z",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-09T14:30:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://i.pinimg.com/474x/ba/a1/41/baa141603b6595a462b8fea1743310f9.jpg"
     },
     {
       "id": "2",
       "username": "Morgana",
       "bio": "Meow Meow",
-      "joinDate": "2016-04-12T14:30:00.000Z",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-12T14:30:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://i.pinimg.com/736x/b7/a9/39/b7a939727d776c17504d41d0c0a08a93.jpg"
     },
     {
       "id": "3",
       "username": "Ryuji",
       "bio": "Former athlete",
-      "joinDate": "2016-04-13T00:00:00.000Z",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-13T00:00:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://preview.redd.it/osh0zg2xjtc41.png?auto=webp&s=fdc89aa46138a8de734f2fe52e0cc774cc34e092"
     },
     {
       "id": "4",
       "username": "Ann",
       "bio": "1/4th American",
-      "joinDate": "2016-04-12T14:30:00.000Z",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-12T14:30:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://avatarfiles.alphacoders.com/865/thumb-1920-86522.png"
     },
     {
       "id": "5",
       "username": "Mishima",
       "bio": "Certified Nerd",
-      "joinDate": "2016-04-12T14:30:00.000Z",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-12T14:30:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://thumbs.dreamstime.com/b/nerd-face-emoji-clever-emoticon-glasses-geek-student-nerd-face-emoji-clever-emoticon-glasses-geek-student-vector-173148618.jpg"
     },
     {
       "id": "6",
       "username": "Yusuke",
       "bio": "Lobsters",
-      "joinDate": "2016-04-12T14:30:00.000Z",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-12T14:30:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://i.pinimg.com/474x/47/76/d5/4776d5ba413f83bd49a16eca36b6652b.jpg"
     },
     {
       "id": "7",
       "username": "Makoto",
       "bio": "Student council president",
-      "joinDate": "2016-04-12T14:30:00.000Z",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-12T14:30:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://i.redd.it/20ld74wraawa1.jpg"
     },
     {
       "id": "8",
       "username": "Futaba",
       "bio": "I love computers",
-      "joinDate": "2016-04-12T14:30:00.000Z",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-12T14:30:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://assetsio.gnwcdn.com/persona-5-royal-futaba-confidant.jpg?width=1200&height=1200&fit=crop&quality=100&format=png&enable=upscale&auto=webp"
     },
     {
       "id": "9",
       "username": "Haru",
       "bio": "Capitalism never changes",
-      "joinDate": "2016-04-12T14:30:00.000Z",
-      "stats": { 
-            "posts": 0, 
-            "karma": 0
-        },
+      "joinDate": "2016-04-12T14:30:00.000+08:00",
+      "stats": {
+        "posts": 0,
+        "karma": 0
+      },
       "avatar": "https://i.redd.it/k65b6u682s661.png"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
