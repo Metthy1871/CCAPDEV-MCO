@@ -1,8 +1,6 @@
 /* Renders a page dedicated to a single post and its comments. */
 
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
 import { useFetchPostById } from '../hooks/useFetchPostById.js';
 import Nav_bar from '../components/Nav_Bar.jsx';

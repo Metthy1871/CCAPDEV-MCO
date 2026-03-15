@@ -1,59 +1,30 @@
 /* This component renders the voting button for posts and comments. */
 
 import { useState } from 'react';
+
 import './Vote_Button.css';
 
-/* Temporary backend */
 function Vote_Button({initialScore}) {
-
-    /* State to track the score locally */
-    const [score, setScore] = useState(initialScore);
     
     /* State to track user's choice: 0 = none, 1 = up, -1 = down */
     const [userVote, setUserVote] = useState(0);
 
-    /* Handle Upvote */
-    const handleUp = () => {
+    const displayScore = initialScore + userVote;
 
-        /* Already voted */
-        if (userVote === 1) {
-            setScore(score - 1);
-            setUserVote(0);
-        } 
-        
-        /* Downvoted */
-        else if (userVote === -1) {
-            setScore(score + 2);
-            setUserVote(1);
-        } 
-        
-        /* Not yet voted */
-        else {
-            setScore(score + 1);
-            setUserVote(1);
-        }
+    /* Handle Upvote */
+    const handleUp = (e) => {
+
+        e.stopPropagation();
+
+        setUserVote(userVote === 1 ? 0 : 1);
     };
 
     /* Handle Downvote */
-    const handleDown = () => {
+    const handleDown = (e) => {
 
-        /* Already voted */
-        if (userVote === -1) {
-            setScore(score + 1);
-            setUserVote(0);
-        } 
+        e.stopPropagation();
         
-        /* Downvoted */
-        else if (userVote === 1) {
-            setScore(score - 2);
-            setUserVote(-1);
-        } 
-        
-        /* Not yet voted */
-        else {
-            setScore(score - 1);
-            setUserVote(-1);
-        }
+        setUserVote(userVote === -1 ? 0 : -1);
     };
     
     return (
@@ -70,7 +41,7 @@ function Vote_Button({initialScore}) {
 
             {/* Display votes */}
             <span className={`vote_score ${userVote !== 0 ? 'highlight' : ''}`}>
-                {score}
+                {displayScore}
             </span>
 
             {/* Downvote button */}
