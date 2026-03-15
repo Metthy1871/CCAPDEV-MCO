@@ -6,17 +6,20 @@ import { Link } from 'react-router-dom'
 import Vote_Button from './Vote_Button';
 import Pill_Button from './Pill_Button';
 
-import { user_controller } from '../controllers/user_controller';
+import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
+import { useFetchUserByName } from '../hooks/useFetchUserByName';
+import { useCreateComment } from '../hooks/useCreateComment';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Comment.css';
 
-function Comment({user, date, content, votes, comments}) {
+function Comment({ postId, topComments, user, date, content, votes, comments}) {
 
-    const author = user_controller.getUserByName(user);
-    const current_user = user_controller.getCurrentUser();
+    const { data: author } = useFetchUserByName(user);
+    const { data: current_user } = useFetchCurrentUser();
+    const createCommentMutation = useCreateComment();
 
-    const isAuthor = current_user.username === user;
+    const isAuthor = current_user?.username === user;
     const relativeDate = getRelativeTime(date);
     const exactDate = getExactTime(date);
 
@@ -24,22 +27,54 @@ function Comment({user, date, content, votes, comments}) {
 
     /* Reply */
     const [isReplying, setIsReplying] = useState(false);
-    const [allNestedComments, setAllNestedComments] = useState(comments) || [];
+    const [allNestedComments, setAllNestedComments] = useState(comments || []);
+    const [replyText, setReplyText] = useState("");
 
-    const handleReply = (text) =>{ 
-        if (!text.trim()) 
+    const handleReply = () => { 
+
+        if (!replyText.trim()) 
             return;
 
         const newReply = {
-            user: current_user.username,
-            date: "Just now",
-            content: text,
+            user: current_user?.username,
+            date: new Date().toISOString().replace('Z', '+08:00'),
+            content: replyText,
             votes: 0,
             comments: []
         }
         
-        setAllNestedComments([...allNestedComments, newReply]);
+        const updatedLocalComments = [...allNestedComments, newReply];
+        setAllNestedComments(updatedLocalComments);
+        
+        const fullTreeClone = JSON.parse(JSON.stringify(topComments));
+
+        const insertReplyIntoTree = (tree) => {
+
+            for (let i = 0; i < tree.length; i++) {
+
+                if (tree[i].user === user && tree[i].content === content) {
+                    tree[i].comments.push(newReply);
+                    return true;
+                }
+
+                if (tree[i].comments && tree[i].comments.length > 0) {
+                    if (insertReplyIntoTree(tree[i].comments)) return true;
+                }
+            }
+            return false;
+        };
+
+        insertReplyIntoTree(fullTreeClone);
+
+        createCommentMutation.mutate({
+            postId: postId,
+            updatedComments: fullTreeClone
+        })
+
+
+        setReplyText("");
         setIsReplying(false);
+        setShowComments(true);
     }
 
     return (
@@ -56,7 +91,7 @@ function Comment({user, date, content, votes, comments}) {
                         onClick = {(e) => e.stopPropagation()}>
 
                         <img 
-                            src = {author.avatar}
+                            src = {author?.avatar}
                             className = "post_avatar"
                         />
                     </Link>
@@ -137,7 +172,9 @@ function Comment({user, date, content, votes, comments}) {
                             <textarea
                                 placeholder = "What are your thoughts?" 
                                 id = "comment-reply"
+                                value = {replyText}
                                 onChange = {(e) =>{
+                                    setReplyText(e.target.value);
                                     e.target.style.height = 'auto';
                                     e.target.style.height = `${e.target.scrollHeight}px`;
                                 }}
@@ -148,17 +185,16 @@ function Comment({user, date, content, votes, comments}) {
                                 <Pill_Button
                                     icon = ""
                                     text = "Cancel"
-                                    onClick = {() =>
-                                        setIsReplying(false)
-                                    }
+                                    onClick = {() => {
+                                        setIsReplying(false);
+                                        setReplyText("");
+                                    }}
                                 />
 
                                 <Pill_Button 
                                     icon = ""
                                     text = "Comment"
-                                    onClick = {() => 
-                                        handleReply(document.getElementById("comment-reply").value)
-                                    }
+                                    onClick = {handleReply}
                                 />
 
                             </div>
@@ -173,6 +209,8 @@ function Comment({user, date, content, votes, comments}) {
                     {allNestedComments.map((commentData, index) => (
                         <Comment 
                             key = {index} 
+                            postId = {postId}
+                            topComments = {topComments}
                             {...commentData} 
                         />
                     ))}

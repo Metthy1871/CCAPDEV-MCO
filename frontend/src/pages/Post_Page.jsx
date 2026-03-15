@@ -4,11 +4,10 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+import { useFetchPostById } from '../hooks/useFetchPostById.js';
 import Nav_bar from '../components/Nav_Bar.jsx';
 import Right_Side_Bar from '../components/Right_Side_Bar.jsx';
 import Post from '../components/Post.jsx';
-
-import { sample_posts } from '../data/sample_posts.js';
 
 import './Post_Page.css';
 
@@ -16,14 +15,8 @@ function Post_Page() {
 
     const { id } = useParams();
 
-    //Find the specific post
-    const { data: post, isLoading, isError } = useQuery({
-        queryKey: ['post', id], //Unique cache key for this specific post
-        queryFn: async () => {
-            const response = await axios.get(`http://localhost:8000/posts/${id}`);
-            return response.data;
-        }
-    });
+    // Find the specific post
+    const { data: post, isLoading, isError } = useFetchPostById(id);
 
     if (isLoading) 
         return <h2 style={{ color: 'white', textAlign: 'center' }}>Loading Post... ⏳</h2>;

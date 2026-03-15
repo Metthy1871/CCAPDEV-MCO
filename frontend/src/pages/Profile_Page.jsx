@@ -19,13 +19,13 @@ function Profile_Page() {
     const { user }= useParams();
     const [isEditOpen, setIsEditOpen] = useState(false);
 
-    //Fetch current user data
+    // Fetch current user data
     const { data: current_user, isLoading: loadingAuth } = useFetchCurrentUser();
 
-    //Fetch viewed user data
+    // Fetch viewed user data
     const { data: viewed_user, isLoading: loadingUser, isError: userError } = useFetchViewedUser(user);
 
-    //Fetch user post history
+    // Fetch user post history
     const { data: user_posts, isLoading: loadingPosts } = useFetchPostHistory(user);
 
     if (loadingAuth || loadingUser || loadingPosts) return 

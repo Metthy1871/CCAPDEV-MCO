@@ -7,17 +7,20 @@ import Pill_Button from './Pill_Button';
 import Vote_Button from './Vote_Button';
 import Comment from './Comment';
 
-import { user_controller } from '../controllers/user_controller';
+import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
+import { useFetchUserByName } from '../hooks/useFetchUserByName';
+import { useCreateComment } from '../hooks/useCreateComment';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Post.css';
 
 function Post({id, title, user, date, content, votes, isPreview, tags = [], comments = []}) {
     
-    const author = user_controller.getUserByName(user);
-    const current_user = user_controller.getCurrentUser();
+    const { data: author } = useFetchUserByName(user);
+    const { data: current_user } = useFetchCurrentUser();
+    const createCommentMutation = useCreateComment();
 
-    const isAuthor = current_user.username === user;
+    const isAuthor = current_user?.username === user;
     const relativeDate = getRelativeTime(date);
     const exactDate = getExactTime(date);
 
@@ -38,20 +41,28 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
         }
     };
 
-    const handleReply = (text) =>{ 
+    const handleReply = (text) => { 
+
         if (!text.trim()) 
             return;
 
         const newReply = {
-            user: current_user.username,
-            date: "Just now",
+            user: current_user?.username,
+            date: new Date().toISOString().replace('Z', '+08:00'),
             content: text,
             votes: 0,
             comments: []
         }
+
+        const updatedComments = [...allComments, newReply];
         
-        setAllComments([...allComments, newReply]);
+        setAllComments([updatedComments]);
         setIsReplying(false);
+
+        createCommentMutation.mutate({
+            postId: id,
+            updatedComments: updatedComments
+        });
     }
 
     return (
@@ -68,7 +79,7 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
                         onClick = {(e) => e.stopPropagation()}>
 
                         <img 
-                            src = {author.avatar}
+                            src = {author?.avatar}
                             className = "post_avatar"
                         />
                     </Link>
@@ -214,12 +225,10 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
                     <div className="comment_section_container">
                         {allComments.map((commentData, index) => (
                             <Comment 
-                                key={index} 
-                                user={commentData.user} 
-                                date={commentData.date}
-                                content={commentData.content}
-                                votes={commentData.votes}
-                                comments={commentData.comments} 
+                                key = {index} 
+                                postId = {id}
+                                topComments = {comments}
+                                {...commentData}
                             />
                         ))}
                     </div>
