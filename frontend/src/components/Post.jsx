@@ -14,22 +14,22 @@ import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Post.css';
 
-function Post({id, title, user, date, content, votes, isPreview, tags = [], comments = []}) {
+function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPreview, tags = [], comments = []}) {
     
-    const { data: author } = useFetchUserByName(user);
+    const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
     const createCommentMutation = useCreateComment();
 
-    const isAuthor = current_user?.username === user;
-    const relativeDate = getRelativeTime(date);
-    const exactDate = getExactTime(date);
+    const isAuthor = current_user?.username === author.username;
+    const relativeDate = getRelativeTime(createdAt);
+    const exactDate = getExactTime(createdAt);
+    const isEdited = createdAt !== updatedAt;
 
     /* If we are in Preview (Home), hide comments. If Full Page, show them */
     const [showComments, setShowComments] = useState(!isPreview);
 
     /* Reply */
     const [isReplying, setIsReplying] = useState(false);
-    const [allComments, setAllComments] = useState(comments);
 
     const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
     const handlePostClick = () => {
 
         if (isPreview) {
-            navigate(`/post/${id}`);
+            navigate(`/post/${_id}`);
         }
     };
 
@@ -46,23 +46,15 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
         if (!text.trim()) 
             return;
 
-        const newReply = {
-            user: current_user?.username,
-            date: new Date().toISOString().replace('Z', '+08:00'),
-            content: text,
-            votes: 0,
-            comments: []
-        }
-
-        const updatedComments = [...allComments, newReply];
-        
-        setAllComments([updatedComments]);
-        setIsReplying(false);
-
         createCommentMutation.mutate({
-            postId: id,
-            updatedComments: updatedComments
+            postId: _id,
+            updatedComments: text,
+            parentCommentId: null
         });
+
+        setReplyText("");
+        setIsReplying(false);
+        setShowComments(true);
     }
 
     return (
@@ -75,11 +67,11 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
                 <div className = 'post_header'>
 
                     <Link 
-                        to = {`/profile/${user}`}
+                        to = {`/profile/${author.username}`}
                         onClick = {(e) => e.stopPropagation()}>
 
                         <img 
-                            src = {author?.avatar}
+                            src = {authorProfile?.avatar}
                             className = "post_avatar"
                         />
                     </Link>
@@ -88,12 +80,14 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
 
                         {/* Post author */}
                         <span className = "post_author"> 
-                            @{user}
+                            @{author.username}
                         </span>
 
                         {/* Post date */}
                         <span className = "post_date" title = {exactDate}>
                             • {relativeDate}
+
+                            {isEdited && <span style={{ fontStyle: 'italic', marginLeft: '4px', opacity: 0.7 }}>(edited: {updatedAt})</span>}
                         </span>
 
                     </div>
@@ -161,7 +155,7 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
 
                         {/* Vote_Button component */}
                         <Vote_Button 
-                            initialScore = {votes}>
+                            initialScore = {upvotes.length}>
                         </Vote_Button>
 
                     </div>
@@ -174,7 +168,7 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
                             e.stopPropagation(); // Prevent navigating to post page if clicking here
                             
                             if (isPreview)
-                                navigate(`/post/${id}`)
+                                navigate(`/post/${_id}`)
                             
                             else
                                 setIsReplying(!isReplying);
@@ -225,8 +219,8 @@ function Post({id, title, user, date, content, votes, isPreview, tags = [], comm
                     <div className="comment_section_container">
                         {allComments.map((commentData, index) => (
                             <Comment 
-                                key = {index} 
-                                postId = {id}
+                                key = {commentData.id} 
+                                postId = {_id}
                                 topComments = {comments}
                                 {...commentData}
                             />

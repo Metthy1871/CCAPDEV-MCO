@@ -8,7 +8,7 @@ export function useFetchPostById(id) {
         queryKey: ['post', id],
 
         queryFn: async () => {
-            const response = await axios.get(`http://localhost:8000/posts/${id}`);
+            const response = await axios.get(`http://localhost:3000/posts/${id}`);
             return response.data;
         },
 

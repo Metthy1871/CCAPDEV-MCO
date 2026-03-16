@@ -3,14 +3,26 @@ import axios from 'axios';
 
 export function useFetchCurrentUser() {
 
-    // Hardcoded until real login is built
-    const username = "Morgana"; 
-
     return useQuery({
-        queryKey: ['currentUser', username],
+
+        queryKey: ['currentUser'],
         queryFn: async () => {
-            const response = await axios.get(`http://localhost:8000/users?username=${username}`);
-            return response.data[0];
+
+            const token = localStorage.getItem('token');
+
+            if(!token)
+                return null;
+
+            const response = await axios.get(
+                'http://localhost:3000/api/auth/me',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            return response.data;
         }
     });
 }

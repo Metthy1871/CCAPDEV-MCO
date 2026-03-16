@@ -13,21 +13,21 @@ import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Comment.css';
 
-function Comment({ postId, topComments, user, date, content, votes, comments}) {
+function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, comments}) {
 
-    const { data: author } = useFetchUserByName(user);
+    const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
     const createCommentMutation = useCreateComment();
 
-    const isAuthor = current_user?.username === user;
-    const relativeDate = getRelativeTime(date);
-    const exactDate = getExactTime(date);
+    const isAuthor = current_user?.username === author.username;
+    const relativeDate = getRelativeTime(createdAt);
+    const exactDate = getExactTime(createdAt);
+    const isEdited = createdAt !== updatedAt;
 
     const [showComments, setShowComments] = useState(true);
 
     /* Reply */
     const [isReplying, setIsReplying] = useState(false);
-    const [allNestedComments, setAllNestedComments] = useState(comments || []);
     const [replyText, setReplyText] = useState("");
 
     const handleReply = () => { 
@@ -35,42 +35,11 @@ function Comment({ postId, topComments, user, date, content, votes, comments}) {
         if (!replyText.trim()) 
             return;
 
-        const newReply = {
-            user: current_user?.username,
-            date: new Date().toISOString().replace('Z', '+08:00'),
-            content: replyText,
-            votes: 0,
-            comments: []
-        }
-        
-        const updatedLocalComments = [...allNestedComments, newReply];
-        setAllNestedComments(updatedLocalComments);
-        
-        const fullTreeClone = JSON.parse(JSON.stringify(topComments));
-
-        const insertReplyIntoTree = (tree) => {
-
-            for (let i = 0; i < tree.length; i++) {
-
-                if (tree[i].user === user && tree[i].content === content) {
-                    tree[i].comments.push(newReply);
-                    return true;
-                }
-
-                if (tree[i].comments && tree[i].comments.length > 0) {
-                    if (insertReplyIntoTree(tree[i].comments)) return true;
-                }
-            }
-            return false;
-        };
-
-        insertReplyIntoTree(fullTreeClone);
-
         createCommentMutation.mutate({
             postId: postId,
-            updatedComments: fullTreeClone
+            content: replyText,
+            parentCommentId: _id
         })
-
 
         setReplyText("");
         setIsReplying(false);
@@ -87,11 +56,11 @@ function Comment({ postId, topComments, user, date, content, votes, comments}) {
                 <div className = "comment_header">
 
                     <Link 
-                        to = {`/profile/${user}`}
+                        to = {`/profile/${author.username}`}
                         onClick = {(e) => e.stopPropagation()}>
 
                         <img 
-                            src = {author?.avatar}
+                            src = {authorProfile?.avatar}
                             className = "post_avatar"
                         />
                     </Link>
@@ -100,7 +69,7 @@ function Comment({ postId, topComments, user, date, content, votes, comments}) {
 
                         {/* Comment author */}
                         <span className = "comment_user">
-                            @{user} 
+                            @{author.username} 
                         </span>
 
                         {/* Comment date */}
@@ -152,7 +121,7 @@ function Comment({ postId, topComments, user, date, content, votes, comments}) {
 
                     {/* Vote_Button component */}
                     <Vote_Button 
-                        initialScore = {votes}>
+                        initialScore = {upvotes.length}>
                     </Vote_Button>
 
                     {/* Reply Button */}
@@ -204,13 +173,12 @@ function Comment({ postId, topComments, user, date, content, votes, comments}) {
             </div>
 
             {/* Section 3: Comment Section */}
-            {showComments && allNestedComments.length > 0 && (
+            {showComments && comments.length > 0 && (
                 <div className = "nested_thread_container">
-                    {allNestedComments.map((commentData, index) => (
+                    {comments.map((commentData) => (
                         <Comment 
-                            key = {index} 
+                            key = {commentData._id} 
                             postId = {postId}
-                            topComments = {topComments}
                             {...commentData} 
                         />
                     ))}

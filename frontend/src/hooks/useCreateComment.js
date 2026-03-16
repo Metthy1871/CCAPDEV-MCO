@@ -7,11 +7,23 @@ export function useCreateComment() {
 
     return useMutation({
 
-        mutationFn: async ({ postId, updatedComments }) => {
+        mutationFn: async ({ postId, content, parentCommentId = null}) => {
 
-            const response = await axios.patch(`http://localhost:8000/posts/${postId}`, {
-                comments: updatedComments
-            });
+            const token = localStorage.getItem('token');
+
+            const response = await axios.post(
+                `http://localhost:3000/api/posts/${postId}/comments`, 
+                { 
+                    post: postId,
+                    content: content,
+                    parentComment: parentCommentId
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
 
             return response.data;
         },

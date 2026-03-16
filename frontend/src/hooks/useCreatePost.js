@@ -7,13 +7,25 @@ export function useCreatePost() {
 
     return useMutation({
 
-        mutationFn: async (newPostData) => {
-            const response = await axios.post('http://localhost:8000/posts', newPostData);
+        mutationFn: async (newPost) => {
+
+            const token = localStorage.getItem('token');
+
+            const response = await axios.post(
+                'http://localhost:3000/api/posts', 
+                newPost,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
             return response.data;
         },
 
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['posts'] });
+            queryClient.invalidateQueries(['posts']);
         }
     });
 }
