@@ -3,6 +3,8 @@
 import { useParams } from 'react-router-dom';
 
 import { useFetchPostById } from '../hooks/useFetchPostById.js';
+import { useFetchComments } from '../hooks/useFetchComments.js';
+
 import Nav_bar from '../components/Nav_Bar.jsx';
 import Right_Side_Bar from '../components/Right_Side_Bar.jsx';
 import Post from '../components/Post.jsx';
@@ -14,13 +16,14 @@ function Post_Page() {
     const { id } = useParams();
 
     // Find the specific post
-    const { data: post, isLoading, isError } = useFetchPostById(id);
+    const { data: post, isLoading: postLoading, isError: postError } = useFetchPostById(id);
+    const { data: comments = [], isLoading: commentsLoading, isError: commentError } = useFetchComments(id);
 
-    if (isLoading) 
-        return <h2 style={{ color: 'white', textAlign: 'center' }}>Loading Post... ⏳</h2>;
+    if (postLoading || commentsLoading) 
+        return <h2 style={{ color: 'white', textAlign: 'center' }}>Loading... ⏳</h2>;
 
-    if (isError) 
-        return <h2 style={{ color: 'red', textAlign: 'center' }}>Post not found! 🚨</h2>;
+    if (postError || commentError) 
+        return <h2 style={{ color: 'red', textAlign: 'center' }}>Error! 🚨</h2>;
 
     return (
 
@@ -32,17 +35,14 @@ function Post_Page() {
 
                 <div className = "post_page_view">
 
-                    <Post 
-                        id = {post.id}
-                        title = {post.title}
-                        user = {post.user}
-                        date = {post.date}
-                        content = {post.content}
-                        votes = {post.votes}
-                        tags = {post.tags}
-                        isPreview = {false}
-                        comments = {post.comments}
-                    />
+                    {post && (
+                        <Post 
+                            {...post}
+                            comments = {comments}
+                            isPreview = {false}
+                        />
+                    )}
+                    
 
                 </div>
 

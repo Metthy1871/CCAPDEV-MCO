@@ -23,12 +23,28 @@ const seedDatabase = async () => {
 
         // Create 5 users
         const users = await User.create([
-            { username: 'Joker', email: 'leader@phantom.com', password: 'password123' },
-            { username: 'Skull', email: 'trackstar@phantom.com', password: 'password123' },
-            { username: 'Panther', email: 'model@phantom.com', password: 'password123' },
-            { username: 'Fox', email: 'artist@phantom.com', password: 'password123' },
-            { username: 'Queen', email: 'studentcouncil@phantom.com', password: 'password123' }
+            { 
+                username: 'Joker', email: 'leader@phantom.com', password: 'password123',
+                bio: "hehe", avatar: "https://i.pinimg.com/474x/ba/a1/41/baa141603b6595a462b8fea1743310f9.jpg" 
+            },
+            { 
+                username: 'Skull', email: 'trackstar@phantom.com', password: 'password123', 
+                bio: "athlete", avatar: "https://preview.redd.it/osh0zg2xjtc41.png?auto=webp&s=fdc89aa46138a8de734f2fe52e0cc774cc34e092" 
+            },
+            { 
+                username: 'Panther', email: 'model@phantom.com', password: 'password123',
+                bio: "hehe", avatar: "https://avatarfiles.alphacoders.com/865/thumb-1920-86522.png" 
+            },
+            { 
+                username: 'Fox', email: 'artist@phantom.com', password: 'password123',
+                bio: "hehe", avatar: "https://i.pinimg.com/474x/47/76/d5/4776d5ba413f83bd49a16eca36b6652b.jpg" 
+            },
+            { 
+                username: 'Queen', email: 'studentcouncil@phantom.com', password: 'password123',
+                bio: "hehe", avatar: "https://i.redd.it/20ld74wraawa1.jpg" 
+            }
         ]);
+        
         console.log('5 Users created.');
 
         // Create posts with time travel (for testing sorting algorithm)

@@ -217,11 +217,10 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
             {/* Section 3: Comment Section */}
             {showComments && (
                     <div className="comment_section_container">
-                        {allComments.map((commentData, index) => (
+                        {comments.map((commentData) => (
                             <Comment 
-                                key = {commentData.id} 
+                                key = {commentData._id} 
                                 postId = {_id}
-                                topComments = {comments}
                                 {...commentData}
                             />
                         ))}

@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-import Vote_Button from './Vote_Button';
-import Pill_Button from './Pill_Button';
-
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 import { useFetchUserByName } from '../hooks/useFetchUserByName';
 import { useCreateComment } from '../hooks/useCreateComment';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
+
+import Vote_Button from './Vote_Button';
+import Pill_Button from './Pill_Button';
 
 import './Comment.css';
 
@@ -173,12 +173,12 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
             </div>
 
             {/* Section 3: Comment Section */}
-            {showComments && comments.length > 0 && (
+            {showComments && comments?.length > 0 && (
                 <div className = "nested_thread_container">
                     {comments.map((commentData) => (
                         <Comment 
                             key = {commentData._id} 
-                            postId = {postId}
+                            postId = {_id}
                             {...commentData} 
                         />
                     ))}
