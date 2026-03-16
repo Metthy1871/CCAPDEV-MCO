@@ -8,7 +8,6 @@ export function useFetchUserByName(username) {
         queryKey: ['user', username],
 
         queryFn: async () => {
-
             const response = await axios.get(`http://localhost:3000/api/users/${username}`);
             return response.data; 
         },

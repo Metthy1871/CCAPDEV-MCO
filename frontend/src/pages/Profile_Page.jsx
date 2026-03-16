@@ -13,30 +13,31 @@ import Feed_Filter from '../components/Feed_Filter';
 import Edit_Profile from '../components/Edit_Profile';
 
 import './Profile_Page.css';
+import { useFetchUserByName } from '../hooks/useFetchUserByName';
 
 function Profile_Page() {
 
-    const { user }= useParams();
+    const { username }= useParams();
     const [isEditOpen, setIsEditOpen] = useState(false);
 
     // Fetch current user data
     const { data: current_user, isLoading: loadingAuth } = useFetchCurrentUser();
 
     // Fetch viewed user data
-    const { data: viewed_user, isLoading: loadingUser, isError: userError } = useFetchViewedUser(user);
+    const { data: viewed_user, isLoading: loadingUser, isError: userError } = useFetchUserByName(username);
 
     // Fetch user post history
-    const { data: user_posts, isLoading: loadingPosts } = useFetchPostHistory(user);
+    const { data: user_posts = [], isLoading: loadingPosts } = useFetchPostHistory(viewed_user?._id);
 
-    if (loadingAuth || loadingUser || loadingPosts) return 
-        <h2 style={{ color: 'white', textAlign: 'center' }}>Loading Profile... ⏳</h2>;
+    if (loadingAuth || loadingUser || loadingPosts) 
+        return <h2 style={{ color: 'white', textAlign: 'center' }}>Loading Profile... ⏳</h2>;
 
-    if (userError || !viewed_user) return 
-        <h2 style={{ color: 'red', textAlign: 'center' }}>User not found! 🚨</h2>;
+    if (userError || !viewed_user) 
+        return <h2 style={{ color: 'red', textAlign: 'center' }}>User not found! 🚨</h2>;
 
-    const isOwner = current_user.username === viewed_user.username;
+    const isOwner = current_user?.username === viewed_user?.username;
 
-    const formattedDate = new Date(viewed_user.joinDate).toLocaleDateString('en-US', {
+    const formattedDate = new Date(viewed_user.createdAt).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
@@ -114,7 +115,7 @@ function Profile_Page() {
                         <div className = "profile_history_feed">
 
                             {user_posts.map(post => (
-                                <Post key={post.id} 
+                                <Post key={post._id} 
                                     {...post} 
                                     isPreview={true} 
                                 />
@@ -147,7 +148,7 @@ function Profile_Page() {
                                     </span>
 
                                     <span className = "stat_value">
-                                        {viewed_user.stats.posts}
+                                        {user_posts.length}
                                     </span>
 
                                 </div>
@@ -159,7 +160,7 @@ function Profile_Page() {
                                     </span>
 
                                     <span className = "stat_value highlight">
-                                        {viewed_user.stats.karma}
+                                        {user_posts.length} {/* TO BE EDITED */}
                                     </span>
 
                                 </div>
@@ -185,12 +186,16 @@ function Profile_Page() {
                 </div>
 
                 {/* Edit Profile Modal */}
-                <Edit_Profile 
-                    isOpen = {isEditOpen} 
-                    onClose = {() => setIsEditOpen(false)}
-                    current_user = {current_user}
-                />
+                
+                {isEditOpen && current_user && (
 
+                    <Edit_Profile 
+                        isOpen = {isEditOpen} 
+                        onClose = {() => setIsEditOpen(false)}
+                        current_user = {current_user}
+                    />
+                )}
+                
             </div>
 
         </>
