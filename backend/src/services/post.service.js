@@ -102,12 +102,13 @@ const getPostsByUser = async (userId, sortBy = SORT_POSTS_OPTIONS.RECENT) => {
 }
 
 // postData is an object containing the title, content, author, and tags
-const createPost = async ({ title, content, userId }) => {
+const createPost = async ({ title, content, userId, tags }) => {
     try {
         const newPost = await Post.create({
             title,
             content,
-            author: userId
+            author: userId,
+            tags
         });
 
         // populate author details so username automatically renders without refresh

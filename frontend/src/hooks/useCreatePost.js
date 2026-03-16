@@ -25,7 +25,8 @@ export function useCreatePost() {
         },
 
         onSuccess: () => {
-            queryClient.invalidateQueries(['posts']);
+            queryClient.invalidateQueries({ queryKey: ['posts'] });
+            queryClient.invalidateQueries({ queryKey: ['popularTags'] });
         }
     });
 }

@@ -29,9 +29,9 @@ const getPostsByUser = catchAsync(async (req, res) => {
 
 const createPost = catchAsync(async (req, res) => {
     const userId = req.user._id;
-    const { title, content } = req.body;
+    const { title, content, tags } = req.body;
 
-    const newPost = await postService.createPost({ title, content, userId });
+    const newPost = await postService.createPost({ title, content, userId, tags });
 
     res.status(201).json({ success: true, data: newPost});
 

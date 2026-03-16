@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { useCreatePost } from '../hooks/useCreatePost';
-import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
+
 import Pill_Button from './Pill_Button';
 
 import './Create_Post.css';
@@ -12,14 +12,39 @@ function Create_Post({ isOpen, onClose }) {
     
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [tags, setTags] = useState([]);
+    const [tagInput, setTagInput] = useState("");
 
-    const { data: current_user } = useFetchCurrentUser();
     const createPostMutation = useCreatePost();
 
     /* If not open, don't render */
     if (!isOpen) 
         return null;
     
+    const handleCreateTag = (e) => {
+
+        if (e.key === 'Enter') {
+
+            e.preventDefault();
+    
+            const newTag = tagInput.trim();
+            
+            if (newTag && !tags.includes(newTag) && tags.length < 5) {
+                setTags([...tags, newTag]);
+                setTagInput(""); 
+            }
+
+            if (e.key === 'Backspace' && tagInput === "" && tags.length > 0) {
+                setTags(tags.slice(0, -1));
+            }
+        }
+    }
+
+    const removeTag = (tagToRemove) => {
+
+        setTags(tags.filter(tag => tag !== tagToRemove));
+    }
+
     const handlePostSubmit = () => {
 
         if (!title.trim() || !content.trim()) 
@@ -27,12 +52,8 @@ function Create_Post({ isOpen, onClose }) {
 
         const newPost = {
             title: title,
-            user: current_user?.username,
-            date: new Date().toISOString().replace('Z', '+08:00'),
             content: content,
-            votes: 0,
-            tags: ["Discussion"],
-            comments: []
+            tags: tags.length > 0 ? tags : ["Discussion"]
         };
 
         createPostMutation.mutate(newPost, {
@@ -76,6 +97,38 @@ function Create_Post({ isOpen, onClose }) {
                             value = {title}
                             className = "modal_input" 
                             onChange={(e) => setTitle(e.target.value)}
+                        />
+
+                    </div>
+
+                    <div className = "input_group">
+                        
+                        <div className="post_tags">
+                            {tags?.map((tag, index) => (
+                                <span 
+                                    key={index} 
+                                    className="tag_pill"
+                                    title="Click to remove"
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        removeTag(tag);
+                                    }}
+                                >
+                                    #{tag} ✕
+                                </span>
+                            ))}
+
+                        </div>
+
+                        <input 
+                            type = "text" 
+                            placeholder = {tags.length < 5 ? "Add tags (press Enter)..." : "Tag limit reached"}
+                            value = {tagInput}
+                            className = "modal_input" 
+                            onChange = {(e) => setTagInput(e.target.value)}
+                            onKeyDown = {handleCreateTag}
+                            disabled = {tags.length >= 5}
                         />
 
                     </div>

@@ -4,12 +4,13 @@ import axios from 'axios';
 export function useFetchPopularTopics() {
 
     return useQuery({
+
         queryKey: ['popularTags'],
         queryFn: async () => {
 
             // Fetch every post from the database
-            const response = await axios.get('http://localhost:8000/posts');
-            const posts = response.data;
+            const response = await axios.get('http://localhost:3000/api/posts');
+            const posts = response.data.data;
 
             // Create a dictionary to tally the votes
             const tagTally = {};
