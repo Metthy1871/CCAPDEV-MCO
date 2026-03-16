@@ -23,9 +23,9 @@ const createUser = async (userData) => {
 const validateUserLogin = async (email, password) => {
     const user = await User.findOne({ email: email.toLowerCase() });
 
-    if(!user) return res.status(400).json({
-        message: "User not found"
-    });
+    if(!user) {
+        throw new Error("User not found")
+    };
 
     // compare passwords
     const isMatch = await user.comparePassword(password);

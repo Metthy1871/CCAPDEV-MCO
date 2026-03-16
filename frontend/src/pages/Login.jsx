@@ -2,26 +2,31 @@
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { user_controller } from '../controllers/user_controller';
+import { useLogin } from '../hooks/useLogin';
+
 import phantom_logo from '../media/phantom_logo.png';
+
 import './Login.css';
 
 function Login() {
 
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
+    const loginMutation = useLogin();
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
+
         e.preventDefault();
 
-        const success = user_controller.loginUser(username, password);
-
-        if (success) 
-            navigate("/"); // Redirect to Home
-        else 
-            setError("Authentication Failed: User not found.");
-        
+        loginMutation.mutate(
+            { email, password },
+            {
+                onSuccess: () => {
+                    navigate('/')
+                }
+            }
+        );
     }
 
     return (
@@ -56,12 +61,18 @@ function Login() {
                     Log in to continue
                 </p>
 
+                {loginMutation.isError && (
+                    <p style={{ color: 'red', fontSize: '14px' }}>
+                        Invalid credentials. Try again!
+                    </p>
+                )}
+
                 <label>
-                    Username
+                    Email
                     <input 
                         type = "text" 
-                        value = {username} 
-                        onChange={(e) => setUsername(e.target.value)} 
+                        value = {email} 
+                        onChange={(e) => setEmail(e.target.value)} 
                         required
                     />
                 </label>
