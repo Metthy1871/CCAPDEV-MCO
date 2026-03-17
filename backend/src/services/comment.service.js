@@ -79,7 +79,10 @@ const deleteComment = async ({ commentId, userId }) => {
         // update the content of a comment to indicate that is has been deleted
         const deletedComment = await Comment.findOneAndUpdate(
             { _id: commentId, author: userId },
-            { isDeleted: true },
+            { 
+                isDeleted: true, 
+                content: "[deleted]" 
+            },
             { new: true }
         );
         return deletedComment;

@@ -11,6 +11,7 @@ import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 import { useFetchUserByName } from '../hooks/useFetchUserByName';
 import { useCreateComment } from '../hooks/useCreateComment';
 import { useFetchComments } from '../hooks/useFetchComments';
+import { useDeletePost } from '../hooks/useDeletePost';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Post.css';
@@ -20,7 +21,9 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
     const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
     const { data: fetchedComments = [], isLoading} = useFetchComments(_id);
+
     const createCommentMutation = useCreateComment();
+    const deletePostMutation = useDeletePost();
 
     const isAuthor = current_user?.username === author.username;
     const relativeDate = getRelativeTime(createdAt);
@@ -142,9 +145,14 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
                         {isAuthor && (
                             <button 
                                 className = "delete_button"
+                                disabled = {deletePostMutation.isPending}
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    alert("Backend WIP");
+
+                                    if (window.confirm("Are you sure you want to delete this post?")) {
+                                        deletePostMutation.mutate(_id);
+                                    }
+                                    
                                 }}
                             >
                                 🗑

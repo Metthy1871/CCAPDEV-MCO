@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 import { useFetchUserByName } from '../hooks/useFetchUserByName';
 import { useCreateComment } from '../hooks/useCreateComment';
+import { useDeleteComment } from '../hooks/useDeleteComment';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import Vote_Button from './Vote_Button';
@@ -13,11 +14,13 @@ import Pill_Button from './Pill_Button';
 
 import './Comment.css';
 
-function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, comments}) {
+function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, isDeleted, comments}) {
 
     const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
+
     const createCommentMutation = useCreateComment();
+    const deleteCommentMutation = useDeleteComment();
 
     const isAuthor = current_user?.username === author.username;
     const relativeDate = getRelativeTime(createdAt);
@@ -50,94 +53,107 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
 
         <div className = "comment_container">
 
-            <div className = "comment_block">
+            {isDeleted ? (
+                <div className = "deleted_comment_block">
+                    <p style = {{ fontStyle: 'italic', color: 'gray' }}>
+                        [This comment was deleted]
+                    </p>
+                </div>
+            ) : (
+                <div className="comment_block">
+                   
+                    {/* Section 1: Comment Header */}
+                    <div className = "comment_header">
 
-                {/* Section 1: Comment Header */}
-                <div className = "comment_header">
+                        <Link 
+                            to = {`/profile/${author.username}`}
+                            onClick = {(e) => e.stopPropagation()}>
 
-                    <Link 
-                        to = {`/profile/${author.username}`}
-                        onClick = {(e) => e.stopPropagation()}>
+                            <img 
+                                src = {authorProfile?.avatar}
+                                className = "post_avatar"
+                            />
+                        </Link>
 
-                        <img 
-                            src = {authorProfile?.avatar}
-                            className = "post_avatar"
+                        <div className = "post_info">
+
+                            {/* Comment author */}
+                            <span className = "comment_user">
+                                @{author.username} 
+                            </span>
+
+                            {/* Comment date */}
+                            <span className = "comment_date" title = {exactDate}> 
+                                • {relativeDate} 
+
+                                {isEdited && <span style={{ fontStyle: 'italic', marginLeft: '4px', opacity: 0.7 }}>(edited: {updatedAt})</span>}
+                            </span>
+
+                        </div>
+
+                        <span className = "modify_post_container">
+
+                            {/* Edit Button */}
+                            {isAuthor && (
+                                <button 
+                                    className = "edit_button"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                            
+                                    }}
+                                >
+                                    ✎
+                                </button>
+                            )}
+
+                            {/* Delete Button */}
+                            {isAuthor && (
+                                <button 
+                                    className = "delete_button"
+                                    disabled = {deleteCommentMutation.isPending}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+
+                                        if (window.confirm("Are you sure you want to delete this comment?")) {
+                                            deleteCommentMutation.mutate({
+                                                postId: postId,
+                                                commentId: _id
+                                            });
+                                        }
+                                    }}
+                                >
+                                    🗑
+                                </button>
+                            )}
+
+                        </span>
+                    </div>
+                    
+                    {/* Comment content */}
+                    <p className = "comment_content"> 
+                        {content} 
+                    </p>
+
+                    {/* Section 2: Comment Footer */}
+                    <div className = "comment_footer">
+
+                        {/* Vote_Button component */}
+                        <Vote_Button 
+                            initialScore = {upvotes.length}>
+                        </Vote_Button>
+
+                        {/* Reply Button */}
+                        <Pill_Button 
+                            icon = "✍️" 
+                            text = "Reply" 
+                            onClick = {(e) => {
+                                e.stopPropagation(); // Prevent navigating to post page if clicking here
+                                setIsReplying(!isReplying);
+                            }} 
                         />
-                    </Link>
-
-                    <div className = "post_info">
-
-                        {/* Comment author */}
-                        <span className = "comment_user">
-                            @{author.username} 
-                        </span>
-
-                        {/* Comment date */}
-                        <span className = "comment_date" title = {exactDate}> 
-                            • {relativeDate} 
-
-                            {isEdited && <span style={{ fontStyle: 'italic', marginLeft: '4px', opacity: 0.7 }}>(edited: {updatedAt})</span>}
-                        </span>
-
                     </div>
 
-                    <span className = "modify_post_container">
-
-                        {/* Edit Button */}
-                        {isAuthor && (
-                            <button 
-                                className = "edit_button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    alert("Backend WIP");
-                                }}
-                            >
-                                ✎
-                            </button>
-                        )}
-
-                        {/* Delete Button */}
-                        {isAuthor && (
-                            <button 
-                                className = "delete_button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    alert("Backend WIP");
-                                }}
-                            >
-                                🗑
-                            </button>
-                        )}
-
-                    </span>
-                    
-                </div>
-
-                {/* Comment content */}
-                <p className = "comment_content"> 
-                    {content} 
-                </p>
-
-                {/* Section 2: Comment Footer */}
-                <div className = "comment_footer">
-
-                    {/* Vote_Button component */}
-                    <Vote_Button 
-                        initialScore = {upvotes.length}>
-                    </Vote_Button>
-
-                    {/* Reply Button */}
-                    <Pill_Button 
-                        icon = "✍️" 
-                        text = "Reply" 
-                        onClick = {(e) => {
-                            e.stopPropagation(); // Prevent navigating to post page if clicking here
-                            setIsReplying(!isReplying);
-                        }} 
-                    />
-                </div>
-
-                {isReplying && (
+                    {isReplying && (
 
                         <div className = "reply_box">
                             <textarea
@@ -154,9 +170,9 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                             <span style={{ fontSize: '12px', color: replyText.trim().length > 10000 ? '#ff4d4d' : '#888' }}>
                                     {replyText.trim().length}/10000
                             </span>
-                            
-                            <div class = "reply_box_footer">
                                 
+                            <div class = "reply_box_footer">
+                                    
                                 <Pill_Button
                                     icon = ""
                                     text = "Cancel"
@@ -176,7 +192,9 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
 
                         </div>
                     )}
-            </div>
+            
+                </div>
+            )}
 
             {/* Section 3: Comment Section */}
             {showComments && comments?.length > 0 && (
@@ -190,6 +208,9 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                     ))}
                 </div>
             )}
+            
+            {/* The child comments STILL RENDER safely down here! */}
+            {showComments && comments?.length > 0}
 
         </div>
     );
