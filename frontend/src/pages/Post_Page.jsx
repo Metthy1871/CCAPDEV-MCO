@@ -3,7 +3,6 @@
 import { useParams } from 'react-router-dom';
 
 import { useFetchPostById } from '../hooks/useFetchPostById.js';
-import { useFetchComments } from '../hooks/useFetchComments.js';
 
 import Nav_bar from '../components/Nav_Bar.jsx';
 import Right_Side_Bar from '../components/Right_Side_Bar.jsx';
@@ -17,12 +16,11 @@ function Post_Page() {
 
     // Find the specific post
     const { data: post, isLoading: postLoading, isError: postError } = useFetchPostById(id);
-    const { data: comments = [], isLoading: commentsLoading, isError: commentError } = useFetchComments(id);
 
-    if (postLoading || commentsLoading) 
+    if (postLoading) 
         return <h2 style={{ color: 'white', textAlign: 'center' }}>Loading... ⏳</h2>;
 
-    if (postError || commentError) 
+    if (postError) 
         return <h2 style={{ color: 'red', textAlign: 'center' }}>Error! 🚨</h2>;
 
     return (
@@ -38,7 +36,6 @@ function Post_Page() {
                     {post && (
                         <Post 
                             {...post}
-                            comments = {comments}
                             isPreview = {false}
                         />
                     )}

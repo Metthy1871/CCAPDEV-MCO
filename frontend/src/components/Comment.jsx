@@ -75,6 +75,8 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                         {/* Comment date */}
                         <span className = "comment_date" title = {exactDate}> 
                             • {relativeDate} 
+
+                            {isEdited && <span style={{ fontStyle: 'italic', marginLeft: '4px', opacity: 0.7 }}>(edited: {updatedAt})</span>}
                         </span>
 
                     </div>
@@ -148,6 +150,10 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                                     e.target.style.height = `${e.target.scrollHeight}px`;
                                 }}
                             />
+
+                            <span style={{ fontSize: '12px', color: replyText.trim().length > 10000 ? '#ff4d4d' : '#888' }}>
+                                    {replyText.trim().length}/10000
+                            </span>
                             
                             <div class = "reply_box_footer">
                                 
@@ -178,7 +184,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                     {comments.map((commentData) => (
                         <Comment 
                             key = {commentData._id} 
-                            postId = {_id}
+                            postId = {postId}
                             {...commentData} 
                         />
                     ))}

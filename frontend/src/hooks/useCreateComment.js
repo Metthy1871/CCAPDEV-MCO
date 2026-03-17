@@ -29,7 +29,7 @@ export function useCreateComment() {
         },
 
         onSuccess: (data, variables) => {
-            queryClient.invalidateQueries({ queryKey: ['post', variables.postId] });
+            queryClient.invalidateQueries({ queryKey: ['comments', variables.postId] });
         }
     });
 }

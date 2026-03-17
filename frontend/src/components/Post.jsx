@@ -1,6 +1,6 @@
 /* This component renders a single post. */
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 import Pill_Button from './Pill_Button';
@@ -10,14 +10,16 @@ import Comment from './Comment';
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 import { useFetchUserByName } from '../hooks/useFetchUserByName';
 import { useCreateComment } from '../hooks/useCreateComment';
+import { useFetchComments } from '../hooks/useFetchComments';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Post.css';
 
-function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPreview, tags = [], comments = []}) {
+function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPreview, tags = []}) {
     
     const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
+    const { data: fetchedComments = [], isLoading} = useFetchComments(_id);
     const createCommentMutation = useCreateComment();
 
     const isAuthor = current_user?.username === author.username;
@@ -30,6 +32,7 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
 
     /* Reply */
     const [isReplying, setIsReplying] = useState(false);
+    const [replyText, setReplyText] = useState("");
 
     const navigate = useNavigate();
 
@@ -41,14 +44,14 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
         }
     };
 
-    const handleReply = (text) => { 
+    const handleReply = () => { 
 
-        if (!text.trim()) 
+        if (!replyText.trim()) 
             return;
 
         createCommentMutation.mutate({
             postId: _id,
-            updatedComments: text,
+            content: replyText,
             parentCommentId: null
         });
 
@@ -56,6 +59,34 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
         setIsReplying(false);
         setShowComments(true);
     }
+
+    /* Turn the MongoDB list into a nested tree */
+    const commentTree = useMemo(() => {
+
+        const commentsById = {};
+        const rootComments = [];
+
+        // Give every single comment an empty 'comments' array
+        fetchedComments.forEach(comment => {
+            commentsById[comment._id] = { ...comment, comments: [] };
+        });
+
+        fetchedComments.forEach(comment => {
+            if (comment.parentComment) {
+
+                // If it's a reply, push it inside its parent's array
+                if (commentsById[comment.parentComment]) {
+                    commentsById[comment.parentComment].comments.push(commentsById[comment._id]);
+                }
+                
+            } else {
+                // If it has no parent, it goes on the main post
+                rootComments.push(commentsById[comment._id]);
+            }
+        });
+
+        return rootComments;
+    }, [fetchedComments]);
 
     return (
         
@@ -179,32 +210,38 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
                 
                 {isReplying && (
 
-                        <div className = "reply_box">
+                        <div className = "reply_box" onClick = {(e) => e.stopPropagation()}>
                             <textarea
                                 placeholder = "What are your thoughts?" 
+                                value = {replyText}
                                 id = "comment-reply"
                                 onChange = {(e) =>{
+                                    setReplyText(e.target.value)
                                     e.target.style.height = 'auto';
                                     e.target.style.height = `${e.target.scrollHeight}px`;
                                 }}
                             />
+
+                            <span style={{ fontSize: '12px', color: replyText.trim().length > 50000 ? '#ff4d4d' : '#888' }}>
+                                    {replyText.trim().length}/50000
+                            </span>
                             
                             <div class = "reply_box_footer">
                                 
                                 <Pill_Button
                                     icon = ""
                                     text = "Cancel"
-                                    onClick = {() =>
-                                        setIsReplying(false)
-                                    }
+                                    onClick = {() => {
+                                        setIsReplying(false);
+                                        setReplyText("");
+                                    } }
                                 />
 
                                 <Pill_Button 
                                     icon = ""
                                     text = "Comment"
-                                    onClick = {() => 
-                                        handleReply(document.getElementById("comment-reply").value)
-                                    }
+                                    disabled = {createCommentMutation.isPending}
+                                    onClick = {handleReply}
                                 />
 
                             </div>
@@ -216,8 +253,12 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
             
             {/* Section 3: Comment Section */}
             {showComments && (
+
                     <div className="comment_section_container">
-                        {comments.map((commentData) => (
+
+                        {isLoading && <p>Loading comments...</p>}
+
+                        {commentTree.map((commentData) => (
                             <Comment 
                                 key = {commentData._id} 
                                 postId = {_id}

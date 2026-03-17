@@ -10,7 +10,7 @@ const commentSchema = new Schema(
         content: {
             type: String,
             required: [true, 'Please provide comment'],
-            minLength: [5, 'Comment must be at least 5 characters long'],
+            minLength: [1, 'Comment must be at least 1 character long'],
             maxLength: [10000, 'Comment exceeds the maximum allowed length'],
             trim: true
         },
