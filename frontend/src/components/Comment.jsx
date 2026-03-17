@@ -7,6 +7,7 @@ import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 import { useFetchUserByName } from '../hooks/useFetchUserByName';
 import { useCreateComment } from '../hooks/useCreateComment';
 import { useDeleteComment } from '../hooks/useDeleteComment';
+import { useEditComment } from '../hooks/useEditComment';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import Vote_Button from './Vote_Button';
@@ -21,13 +22,19 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
 
     const createCommentMutation = useCreateComment();
     const deleteCommentMutation = useDeleteComment();
+    const editCommentMutation = useEditComment();
 
     const isAuthor = current_user?.username === author.username;
     const relativeDate = getRelativeTime(createdAt);
     const exactDate = getExactTime(createdAt);
+    const formattedEditDte = getExactTime(updatedAt);
     const isEdited = createdAt !== updatedAt;
 
     const [showComments, setShowComments] = useState(true);
+
+    /* Edit */
+    const [isEditing, setIsEditing] = useState(false);
+    const [editText, setEditText] = useState(content);
 
     /* Reply */
     const [isReplying, setIsReplying] = useState(false);
@@ -86,7 +93,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                             <span className = "comment_date" title = {exactDate}> 
                                 • {relativeDate} 
 
-                                {isEdited && <span style={{ fontStyle: 'italic', marginLeft: '4px', opacity: 0.7 }}>(edited: {updatedAt})</span>}
+                                {isEdited && <span style={{ fontStyle: 'italic', marginLeft: '4px', opacity: 0.7 }}>(edited: {formattedEditDte})</span>}
                             </span>
 
                         </div>
@@ -99,7 +106,8 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                                     className = "edit_button"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                            
+                                        setIsEditing(!isEditing);
+                                        setEditText(content);
                                     }}
                                 >
                                     ✎
@@ -130,9 +138,49 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                     </div>
                     
                     {/* Comment content */}
-                    <p className = "comment_content"> 
-                        {content} 
-                    </p>
+                    {isEditing ? (
+
+                        <div className = "reply_box" onClick={(e) => e.stopPropagation()}>
+                            <textarea
+                                value = {editText}
+                                onChange = {(e) => {
+                                    setEditText(e.target.value);
+                                    e.target.style.height = 'auto';
+                                    e.target.style.height = `${e.target.scrollHeight}px`;
+                                }}
+                            />
+
+                            <span style = {{ fontSize: '12px', color: replyText.trim().length > 10000 ? '#ff4d4d' : '#888' }}>
+                                    {editText.trim().length}/10000
+                            </span>
+                            
+                            <div className = "reply_box_footer" style = {{ marginTop: '5px' }}>
+
+                                <Pill_Button
+                                    icon = "" text = "Cancel"
+                                    onClick={() => {
+                                        setIsEditing(false);
+                                        setEditText(content); // revert to original
+                                    }}
+                                />
+
+                                <Pill_Button 
+                                    icon = "" text = "Save"
+                                    disabled = {editCommentMutation.isPending || editText.trim().length < 5 || editText === content}
+                                    onClick = {() => {
+                                        editCommentMutation.mutate(
+                                            { postId, commentId: _id, content: editText },
+                                            { onSuccess: () => setIsEditing(false) } // Close box on success
+                                        );
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <p className="comment_content"> 
+                            {content} 
+                        </p>
+                    )}
 
                     {/* Section 2: Comment Footer */}
                     <div className = "comment_footer">
@@ -167,7 +215,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                                 }}
                             />
 
-                            <span style={{ fontSize: '12px', color: replyText.trim().length > 10000 ? '#ff4d4d' : '#888' }}>
+                            <span style = {{ fontSize: '12px', color: replyText.trim().length > 10000 ? '#ff4d4d' : '#888' }}>
                                     {replyText.trim().length}/10000
                             </span>
                                 

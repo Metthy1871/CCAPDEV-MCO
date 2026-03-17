@@ -12,6 +12,7 @@ import { useFetchUserByName } from '../hooks/useFetchUserByName';
 import { useCreateComment } from '../hooks/useCreateComment';
 import { useFetchComments } from '../hooks/useFetchComments';
 import { useDeletePost } from '../hooks/useDeletePost';
+import { useEditPost } from '../hooks/useEditPost';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Post.css';
@@ -24,14 +25,20 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
 
     const createCommentMutation = useCreateComment();
     const deletePostMutation = useDeletePost();
+    const editPostMutation = useEditPost();
 
     const isAuthor = current_user?.username === author.username;
     const relativeDate = getRelativeTime(createdAt);
     const exactDate = getExactTime(createdAt);
+    const formattedEditDate = getExactTime(updatedAt);
     const isEdited = createdAt !== updatedAt;
 
     /* If we are in Preview (Home), hide comments. If Full Page, show them */
     const [showComments, setShowComments] = useState(!isPreview);
+
+     /* Edit */
+    const [isEditing, setIsEditing] = useState(false);
+    const [editText, setEditText] = useState(content);
 
     /* Reply */
     const [isReplying, setIsReplying] = useState(false);
@@ -121,7 +128,7 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
                         <span className = "post_date" title = {exactDate}>
                             • {relativeDate}
 
-                            {isEdited && <span style={{ fontStyle: 'italic', marginLeft: '4px', opacity: 0.7 }}>(edited: {updatedAt})</span>}
+                            {isEdited && <span style={{ fontStyle: 'italic', marginLeft: '4px', opacity: 0.7 }}>(edited: {formattedEditDate})</span>}
                         </span>
 
                     </div>
@@ -134,7 +141,8 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
                                 className = "edit_button"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    alert("Backend WIP");
+                                    setIsEditing(!isEditing);
+                                    setEditText(content);
                                 }}
                             >
                                 ✎
@@ -183,10 +191,50 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
                 </div>
 
                 {/* Post content */}
-                <p className = "post_content">
-                    {content}
-                </p>
+                {isEditing ? (
 
+                        <div className = "reply_box" onClick={(e) => e.stopPropagation()}>
+                            <textarea
+                                value = {editText}
+                                onChange = {(e) => {
+                                    setEditText(e.target.value);
+                                    e.target.style.height = 'auto';
+                                    e.target.style.height = `${e.target.scrollHeight}px`;
+                                }}
+                            />
+
+                            <span style = {{ fontSize: '12px', color: replyText.trim().length > 50000 ? '#ff4d4d' : '#888' }}>
+                                    {editText.trim().length}/50000
+                            </span>
+                            
+                            <div className = "reply_box_footer" style = {{ marginTop: '5px' }}>
+
+                                <Pill_Button
+                                    icon = "" text = "Cancel"
+                                    onClick={() => {
+                                        setIsEditing(false);
+                                        setEditText(content); // revert to original
+                                    }}
+                                />
+
+                                <Pill_Button 
+                                    icon = "" text = "Save"
+                                    disabled = {editPostMutation.isPending || editText.trim().length < 5 || editText === content}
+                                    onClick = {() => {
+                                        editPostMutation.mutate(
+                                            { postId: _id, content: editText },
+                                            { onSuccess: () => setIsEditing(false) } // Close box on success
+                                        );
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <p className="post_content"> 
+                            {content} 
+                        </p>
+                )}
+               
                 {/* Section 2: Post Footer */}
                 <div className = "post_footer">
 

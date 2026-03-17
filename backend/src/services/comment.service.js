@@ -63,10 +63,6 @@ const updateComment = async ({ commentId, userId, newContent }) => {
             }
         )
 
-        if (!updatedComment) {
-            throw new Error("Comment not found, deleted, or unauthorized");
-        }
-
         return updatedComment;
     } catch (error) {
         throw error;
