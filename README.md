@@ -36,6 +36,7 @@
 2. Go to the frontend folder: cd frontend
 3. Install dependencies: npm install
    (Note: if routing issues occur, run npm install react-routed-dom)
-4. Start the app: npm run dev
-5. Follow the local link
+4. Go to the src folder: cd frontend/src
+5. Start the app: npm run dev
+6. Follow the local link
 
