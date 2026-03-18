@@ -1,6 +1,6 @@
 /* This component provides global navigation for the application. */
 
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 
@@ -18,6 +18,7 @@ function Nav_Bar(){
     const navigate = useNavigate();
 
     const { data: current_user, isLoading } = useFetchCurrentUser();
+    const isGuest = !current_user && !isLoading;
 
     {isLoading && (
         <h2 style={{ color: 'white', textAlign: 'center', marginTop: '20px' }}>
@@ -112,12 +113,15 @@ function Nav_Bar(){
                                 className = "log_in_button" 
                             />
                         </Link>
-                    
                 )}
                     
                 {/* Link to profile page */}
-                <Link to = {`/profile/${current_user?.username}`} className = 'nav_link'>
-                
+                <Link 
+                    to = {`/profile/${current_user?.username}`} 
+                    className = {`nav_link ${isGuest ? 'locked' : ''}`}
+                    onClick = {(e) => isGuest && e.preventDefault()}
+                >
+                   
                     {/* Profile icon */}
                     <Profile_Icon user = {current_user}/>
 

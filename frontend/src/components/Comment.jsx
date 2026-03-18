@@ -15,7 +15,7 @@ import Pill_Button from './Pill_Button';
 
 import './Comment.css';
 
-function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, isDeleted, comments}) {
+function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, isDeleted, comments, isGuest}) {
 
     const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
@@ -187,15 +187,21 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
 
                         {/* Vote_Button component */}
                         <Vote_Button 
-                            initialScore = {upvotes.length}>
+                            initialScore = {upvotes.length}
+                            isGuest = {isGuest}>
                         </Vote_Button>
 
                         {/* Reply Button */}
                         <Pill_Button 
                             icon = "✍️" 
                             text = "Reply" 
+                            className = {`${isGuest ? 'locked' : ''}`}
                             onClick = {(e) => {
                                 e.stopPropagation(); // Prevent navigating to post page if clicking here
+
+                                if (isGuest) 
+                                    return
+                                
                                 setIsReplying(!isReplying);
                             }} 
                         />
@@ -251,6 +257,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                         <Comment 
                             key = {commentData._id} 
                             postId = {postId}
+                            isGuest = {isGuest}
                             {...commentData} 
                         />
                     ))}

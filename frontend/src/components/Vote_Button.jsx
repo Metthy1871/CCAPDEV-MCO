@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import './Vote_Button.css';
 
-function Vote_Button({initialScore}) {
+function Vote_Button({initialScore, isGuest}) {
     
     /* State to track user's choice: 0 = none, 1 = up, -1 = down */
     const [userVote, setUserVote] = useState(0);
@@ -16,6 +16,9 @@ function Vote_Button({initialScore}) {
 
         e.stopPropagation();
 
+        if (isGuest)
+            return;
+
         setUserVote(userVote === 1 ? 0 : 1);
     };
 
@@ -23,13 +26,16 @@ function Vote_Button({initialScore}) {
     const handleDown = (e) => {
 
         e.stopPropagation();
+
+        if (isGuest)
+            return;
         
         setUserVote(userVote === -1 ? 0 : -1);
     };
     
     return (
 
-        <div className = "vote_pill">
+        <div className = {`vote_pill ${isGuest ? 'locked' : ''}`}>
 
             {/* Upvote button */}
             <button 

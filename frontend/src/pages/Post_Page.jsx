@@ -2,6 +2,7 @@
 
 import { useParams } from 'react-router-dom';
 
+import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser.js';
 import { useFetchPostById } from '../hooks/useFetchPostById.js';
 
 import Nav_bar from '../components/Nav_Bar.jsx';
@@ -13,6 +14,8 @@ import './Post_Page.css';
 function Post_Page() {
 
     const { id } = useParams();
+    const {data: current_user} = useFetchCurrentUser();
+    const isGuest = !current_user;
 
     // Find the specific post
     const { data: post, isLoading: postLoading, isError: postError } = useFetchPostById(id);
@@ -37,6 +40,7 @@ function Post_Page() {
                         <Post 
                             {...post}
                             isPreview = {false}
+                            isGuest = {isGuest}
                         />
                     )}
                     

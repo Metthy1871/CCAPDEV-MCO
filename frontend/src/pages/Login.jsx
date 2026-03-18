@@ -105,6 +105,18 @@ function Login() {
                     Log In
                 </button>
 
+                <button 
+                    type = "button" 
+                    className = "guest_button" 
+                    onClick = {() => {
+                        localStorage.removeItem('token');
+                        navigate('/');
+                        }
+                    }
+                >
+                    Continue as Guest
+                </button>
+
                 <p className = "login_footer">
                     Don't have an account? <Link to = "/signup" className = "signup_link">Sign Up</Link>
                 </p>

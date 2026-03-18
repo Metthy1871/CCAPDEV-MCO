@@ -4,7 +4,7 @@ import './Profile_Icon.css';
 
 function Profile_Icon({user}) {
 
-    const avatar = user?.avatar;
+    const avatar = user?.avatar || "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg";
     const alt = user?.username;
 
     return (

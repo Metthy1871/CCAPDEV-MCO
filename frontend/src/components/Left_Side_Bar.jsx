@@ -5,7 +5,7 @@ import Trending_Topics from './Trending_Topics.jsx';
 
 import './Left_Side_Bar.css';
 
-function Left_Side_Bar({ onOpenModal }) {
+function Left_Side_Bar({ onOpenModal, isGuest }) {
 
 
     return (
@@ -16,7 +16,7 @@ function Left_Side_Bar({ onOpenModal }) {
             <Pill_Button 
                 icon = "" 
                 text = "Post" 
-                className = "post_button"
+                className = {`post_button ${isGuest ? 'locked' : ''}`}
                 onClick = {onOpenModal}>
             </Pill_Button>
 

@@ -72,11 +72,12 @@ input:focus {
     box-shadow: 3px 3px black;
 }
 
-.login_button {
+.login_button, .guest_button {
 
     width: 100%;
     padding: 13px 15px;
     border-radius: 9999px;
+    margin-bottom: 10px;
     font-weight: bold;
     cursor: pointer;
     border: none;
@@ -93,18 +94,20 @@ input:focus {
     transition: all 0.2s;
 }
 
-.login_button:hover {
+.login_button:hover, .guest_button:hover {
 
     transform: skew(-5deg) translate(1px, 1px);
     border: 2px solid black;
     box-shadow: 3px 3px black;
 }
 
-.login_button:active {
+.login_button:active, .guest_button:active {
 
     border-color: white; 
     box-shadow: 2px 2px 0 black;
 }
+
+
 
 .login_footer {
 

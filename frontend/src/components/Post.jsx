@@ -17,7 +17,7 @@ import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Post.css';
 
-function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPreview, tags = []}) {
+function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags = [], isPreview, isGuest}) {
     
     const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
@@ -242,7 +242,8 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
 
                         {/* Vote_Button component */}
                         <Vote_Button 
-                            initialScore = {upvotes.length}>
+                            initialScore = {upvotes.length}
+                            isGuest = {isGuest}>
                         </Vote_Button>
 
                     </div>
@@ -251,9 +252,13 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
                     <Pill_Button 
                         icon = "✍️" 
                         text = "Reply" 
+                        className = {`${isGuest ? 'locked' : ''}`}
                         onClick = {(e) => {
                             e.stopPropagation(); // Prevent navigating to post page if clicking here
                             
+                            if (isGuest)
+                                return 
+
                             if (isPreview)
                                 navigate(`/post/${_id}`)
                             
@@ -318,6 +323,7 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, isPre
                             <Comment 
                                 key = {commentData._id} 
                                 postId = {_id}
+                                isGuest = {isGuest}
                                 {...commentData}
                             />
                         ))}

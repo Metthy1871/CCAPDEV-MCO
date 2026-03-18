@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser.js';
 import { useFetchPosts } from '../hooks/useFetchPosts.js';
 
 import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
@@ -17,16 +18,10 @@ function Home() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const { data: current_user } = useFetchCurrentUser();
     const { data: posts, isLoading, isError } = useFetchPosts();
-    
-    const handleCreatePost = (title, content) => { 
 
-        if (!title.trim() || !content.trim()) 
-            return;
-
-        alert("WIP!");
-        setIsModalOpen(false);
-    }
+    const isGuest = !current_user;
 
     return (
     
@@ -44,7 +39,10 @@ function Home() {
                 <div className = "left_side_container">
 
                     {/* Place Left_Side_Bar component on the left */}
-                    <Left_Side_Bar onOpenModal={() => setIsModalOpen(true)}/>
+                    <Left_Side_Bar 
+                        onOpenModal={() => setIsModalOpen(true)}
+                        isGuest = {isGuest}
+                    />
                     
                 </div>
 
@@ -72,6 +70,7 @@ function Home() {
                             key = {post._id}
                             {...post}
                             isPreview = {true}
+                            isGuest = {isGuest}
                         />
                     ))}
                 
@@ -90,7 +89,6 @@ function Home() {
             <Create_Post 
                 isOpen = {isModalOpen} 
                 onClose = {() => setIsModalOpen(false)}
-                onCreate = {handleCreatePost}
             />
         
         </>
