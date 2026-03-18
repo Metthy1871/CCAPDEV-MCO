@@ -26,7 +26,7 @@ const validateUserLogin = async (identifier, password) => {
                 { email: identifier.toLowerCase() },
                 { username: identifier.toLowerCase() }
             ]
-        });
+        }).select('+password');
 
         if(!user) {
             return null;

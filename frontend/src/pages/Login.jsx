@@ -13,7 +13,7 @@ function Login() {
 
     const navigate = useNavigate();
     const loginMutation = useLogin();
-    const [email, setEmail] = useState('');
+    const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
 
@@ -22,7 +22,7 @@ function Login() {
         e.preventDefault();
 
         loginMutation.mutate(
-            { email, password, remember: rememberMe },
+            { identifier, password, remember: rememberMe },
             {
                 onSuccess: () => {
                     navigate('/')
@@ -70,11 +70,11 @@ function Login() {
                 )}
 
                 <label>
-                    Email
+                    Email or Username
                     <input 
                         type = "text" 
-                        value = {email} 
-                        onChange={(e) => setEmail(e.target.value)} 
+                        value = {identifier} 
+                        onChange={(e) => setIdentifier(e.target.value)} 
                         required
                     />
                 </label>

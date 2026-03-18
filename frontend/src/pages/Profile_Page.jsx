@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom'
 
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
-import { useFetchViewedUser } from '../hooks/useFetchViewedUser';
 import { useFetchPostHistory } from '../hooks/useFetchPostHistory';
+import { useFetchUserByName } from '../hooks/useFetchUserByName';
 
 import Nav_Bar from '../components/Nav_Bar';
 import Post from '../components/Post';
@@ -13,7 +13,6 @@ import Feed_Filter from '../components/Feed_Filter';
 import Edit_Profile from '../components/Edit_Profile';
 
 import './Profile_Page.css';
-import { useFetchUserByName } from '../hooks/useFetchUserByName';
 
 function Profile_Page() {
 
@@ -80,7 +79,7 @@ function Profile_Page() {
                                 </h1>
 
                                 <span className = "profile_handle">
-                                    {viewed_user.handle}
+                                    {viewed_user.displayName}
                                 </span>
 
                                 <p className = "profile_bio">

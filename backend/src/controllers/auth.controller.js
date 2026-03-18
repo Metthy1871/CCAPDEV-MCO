@@ -71,7 +71,7 @@ const loginUser = async (req, res) => {
                 bio: user.bio
             }
         });
-    }catch (error){
+    } catch (error) {
         return res.status(500).json({
             message: "Internal Server Error", error: error.message
         });

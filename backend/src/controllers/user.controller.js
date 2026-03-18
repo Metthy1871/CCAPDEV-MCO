@@ -20,7 +20,7 @@ const getUserProfile = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
     try {
-        const { id } = req.params;
+        const id = req.user._id;
         const { displayName, bio, avatar } = req.body;
 
         const updatedUser = await userService.updateUserData(id, { displayName, bio, avatar });
@@ -40,22 +40,7 @@ const updateUserProfile = async (req, res) => {
     }
 }
 
-/*const getUserPosts = async (req, res) => {
-    try {
-        const { username } = req.params;
-
-        const posts = await userService.findUserPosts(username);
-
-        return res.status(200).json(posts);
-    } catch (error) {
-        return res.status(500).json({ 
-            message: "Error fetching user posts", error: error.message 
-        });
-    }
-}*/
-
 export {
     getUserProfile,
     updateUserProfile
 };
-//export getUserPosts

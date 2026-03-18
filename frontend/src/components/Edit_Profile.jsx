@@ -1,20 +1,44 @@
 /* This component contains the edit profile menu. */
 
 import { useState, useEffect } from 'react';
+
+import { useEditProfile } from '../hooks/useEditProfile';
+
 import Pill_Button from './Pill_Button';
+
 import './Create_Post.css';
 import './Edit_Profile.css';
 
 function Edit_Profile({ isOpen, onClose, current_user }) {
 
-    const [previewAvatar, setPreviewAvatar] = useState(current_user.avatar);
-
+    const [avatar, setAvatar] = useState(current_user?.avatar);
+    const [displayName, setDisplayName] = useState(current_user?.displayName);
+    const [bio, setBio] = useState(current_user?.bio);
+    
+    const editProfileMutation = useEditProfile();
+    
     // Reset when modal opens
     useEffect(() => {
-        if(isOpen) setPreviewAvatar(current_user.avatar);
+        if(isOpen && current_user) {
+            setAvatar(current_user.avatar);
+            setDisplayName(current_user.displayName || current_user.username);
+            setBio(current_user.bio);
+        }
     }, [isOpen, current_user]);
 
-    if (!isOpen) 
+    const handleSave = () => {
+
+        editProfileMutation.mutate(
+            {displayName, bio, avatar},
+            {
+                onSuccess: () => {
+                    onClose();
+                }
+            }
+        );
+    };
+
+    if (!isOpen || !current_user) 
         return null;
 
     return (
@@ -44,10 +68,10 @@ function Edit_Profile({ isOpen, onClose, current_user }) {
                         <div className="avatar_preview_wrapper">
 
                             <img 
-                                src = {previewAvatar} 
+                                src = {avatar} 
                                 alt = "Current Avatar" 
                                 className = "avatar_preview_img" 
-                                onError = {(e) => e.target.src = "https://via.https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg.com/150"} // Fallback if link breaks
+                                onError = {(e) => e.target.src = "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg"} // Fallback if link breaks
                             />
                             
                         </div>
@@ -63,38 +87,25 @@ function Edit_Profile({ isOpen, onClose, current_user }) {
                                 type = "text" 
                                 className = "modal_input" 
                                 placeholder = "Paste new image link..."
-                                value = {previewAvatar}
-                                onChange = {(e) => setPreviewAvatar(e.target.value)}
+                                value = {avatar}
+                                onChange = {(e) => setAvatar(e.target.value)}
                             />
 
                         </div>
 
                     </div>
 
-                    {/* Name Edit */}
-                    <div className = "input_group">
-
-                        <label className = "p5_label">
-                            Username
-                        </label>
-
-                        <input 
-                            type = "text" 
-                            defaultValue = {current_user.username} 
-                            className = "modal_input" 
-                        />
-                    </div>
-
-                    {/* Handle Edit */}
+                    {/* Display Name Edit */}
                     <div className="input_group">
 
                         <label className = "p5_label">
-                            Handle
+                            Display Name
                         </label>
 
                         <input 
                             type = "text" 
-                            defaultValue = {current_user.handle} 
+                            value = {displayName}
+                            onChange = {(e) => setDisplayName(e.target.value)}
                             className = "modal_input" 
                         />
                         
@@ -108,7 +119,8 @@ function Edit_Profile({ isOpen, onClose, current_user }) {
                         </label>
 
                         <textarea 
-                            defaultValue = {current_user.bio} 
+                            value = {bio} 
+                            onChange = {(e) => setBio(e.target.value)}
                             className = "modal_textarea"
                             rows = "3"
                         ></textarea>
@@ -122,7 +134,13 @@ function Edit_Profile({ isOpen, onClose, current_user }) {
                 <div className="modal_footer">
 
                     <Pill_Button text = "CANCEL" onClick = {onClose} className = "cancel_button" />
-                    <Pill_Button text = "SAVE CHANGES" onClick = {onClose} className = "send_button" />
+
+                    <Pill_Button 
+                        text = "SAVE CHANGES" 
+                        onClick = {handleSave} 
+                        className = "send_button" 
+                        disabled = {editProfileMutation.isPending}
+                    />
 
                 </div>
 
