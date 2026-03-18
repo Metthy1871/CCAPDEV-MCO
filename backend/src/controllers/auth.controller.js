@@ -1,9 +1,11 @@
 import * as authService from "../services/auth.service.js";
 import jwt from "jsonwebtoken";
 
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN || "30d",
+const generateToken = (id, remember = false) => {
+    // If rememberMe is true, set expiration to 3 weeks, otherwise default to 24 hours
+    const expiration = remember ? "21d" : "24h"; 
+    return jwt.sign({ id, remember }, process.env.JWT_SECRET, {
+        expiresIn: expiration,
     });
 }
 
@@ -41,18 +43,21 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try{
 
-        // check if the user already exists
-        const { email, password } = req.body;
+        // check if the user already exists and capture the rememberMe flag
+        const { email, password, remember } = req.body;
 
         const user = await authService.validateUserLogin(email, password);
 
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
+        
+        // pass the token to the generator
+        const token = generateToken(user._id, !!remember); 
 
         return res.status(200).json({
             message: "User Logged in",
-            token: generateToken(user._id),
+            token,
             user: {
                 id: user._id,
                 username: user.username,

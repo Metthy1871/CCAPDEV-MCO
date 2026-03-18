@@ -19,6 +19,18 @@ const protect = async (req, res, next) => {
                 return res.status(401).json({ message: "User no longer exists" });
             }
 
+            // check if the current token has the remember flag
+            if (decoded.remember) {
+                const newToken = jwt.sign(
+                    { id: decoded.id, remember: true },
+                    process.env.JWT_SECRET,
+                    { expiresIn: "21d" }                 
+                );
+                // Attach the new token to the response header for the client to update
+                res.setHeader("x-refreshed-token", newToken);
+                res.setHeader("Access-Control-Expose-Headers", "x-refreshed-token"); 
+            }
+
             return next();
         } catch (error) {
             res.status(401).json({ 
