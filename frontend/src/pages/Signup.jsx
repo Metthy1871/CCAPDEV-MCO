@@ -1,30 +1,42 @@
 /* This is the signup page of the application. */
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { useRegister } from '../hooks/useRegister';
+
 import phantom_logo from '../media/phantom_logo.png';
+
 import './Signup.css';
 
 function Signup() {
 
+    const navigate = useNavigate();
+    const registerMutation = useRegister();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleRegister = (e) => {
+
         e.preventDefault();
-        if (password !== confirmPassword) {
-            alert("Passwords do not match!");
-            return;
-        }
+
+        registerMutation.mutate(
+            { username, email, password },
+            {
+                onSuccess: () => {
+                    navigate('/')
+                }
+            }
+        )
     }
 
     return (
 
         <div className = "signup_page">
 
-            <form className = "signup_card" onSubmit={handleSubmit}>
+            <form className = "signup_card" onSubmit = {handleRegister}>
 
                 {/* Links to home page */}
                 <Link to = "/" className = "nav_link">
@@ -38,8 +50,8 @@ function Signup() {
 
                 </Link>
 
-                <h1 className="signup_title">Create Account</h1>
-                <p className="signup_subtitle">Sign up to join The Phantom Forum</p>
+                <h1 className = "signup_title">Create Account</h1>
+                <p className = "signup_subtitle">Sign up to join The Phantom Forum</p>
 
                 <label>
                     Username

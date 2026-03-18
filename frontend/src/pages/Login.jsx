@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { useLogin } from '../hooks/useLogin';
 
 import phantom_logo from '../media/phantom_logo.png';
@@ -14,13 +15,14 @@ function Login() {
     const loginMutation = useLogin();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleLogin = (e) => {
 
         e.preventDefault();
 
         loginMutation.mutate(
-            { email, password },
+            { email, password, remember: rememberMe },
             {
                 onSuccess: () => {
                     navigate('/')
@@ -33,7 +35,7 @@ function Login() {
 
         <div className = "login_page">
 
-            <form className = "login_card" onSubmit={handleSubmit}>
+            <form className = "login_card" onSubmit={handleLogin}>
 
                 {/* Links to home page */}
                 <Link to = "/">
@@ -87,7 +89,19 @@ function Login() {
                     />
                 </label>
 
-                <button type = "submit" className = "login_button">
+                <div className = "checkbox_container">
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                        <input 
+                            type="checkbox" 
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                            style={{ margin: 0, width: '18px', height: '18px', cursor: 'pointer' }}
+                        />
+                        <span style={{ lineHeight: 1, paddingTop: '2px' }}>Remember me</span>
+                    </label>
+                </div>
+
+                <button type = "submit" className = "login_button" disabled = {loginMutation.isPending}>
                     Log In
                 </button>
 

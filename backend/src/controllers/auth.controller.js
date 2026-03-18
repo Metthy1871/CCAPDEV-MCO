@@ -18,7 +18,7 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: "All fields must be filled"});
         }
 
-        const user = await authService.createUser(req.body);
+        const user = await authService.createUser({username, email, password});
 
         if (!user) {
             return res.status(400).json({ message: "Invalid user data" });
@@ -34,6 +34,12 @@ const registerUser = async (req, res) => {
             }
         });
     } catch (error) {
+
+        if (error.code === 11000){
+            const field = Object.keys(error.keyValue)[0]; 
+            return res.status(409).json({ message: `That ${field} is already taken.` });
+        }
+
         return res.status(500).json({ 
             message: "Internal server error", error: error.message
         });
@@ -44,12 +50,12 @@ const loginUser = async (req, res) => {
     try{
 
         // check if the user already exists and capture the rememberMe flag
-        const { email, password, remember } = req.body;
+        const { identifier, password, remember } = req.body;
 
-        const user = await authService.validateUserLogin(email, password);
+        const user = await authService.validateUserLogin(identifier, password);
 
         if (!user) {
-            return res.status(400).json({ message: "Invalid credentials" });
+            return res.status(401).json({ message: "Invalid credentials" });
         }
         
         // pass the token to the generator

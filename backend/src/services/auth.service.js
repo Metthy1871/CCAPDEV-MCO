@@ -1,39 +1,47 @@
 import { User } from "../models/User.js";
 
-const createUser = async (userData) => {
-    const { username, email, password } = userData;
+const createUser = async ({username, email, password}) => {
 
-    // check if the user already exists
-    const existing = await User.findOne({ email: email.toLowerCase() });
-    if(existing) {
-        throw new Error("user already exists");
+    try {
+
+        const user = await User.create({
+            username,
+            email: email.toLowerCase(),
+            password,
+        });
+
+        return user;
+
+    } catch (error) {
+        throw error;
     }
-
-    // create the user
-    
-    const user = await User.create({
-        username,
-        email: email.toLowerCase(),
-        password,
-    });
-
-    return user;
 }
 
-const validateUserLogin = async (email, password) => {
-    const user = await User.findOne({ email: email.toLowerCase() });
+const validateUserLogin = async (identifier, password) => {
+    
+    try {
 
-    if(!user) {
-        throw new Error("User not found")
-    };
+        const user = await User.findOne({ 
+            $or: [
+                { email: identifier.toLowerCase() },
+                { username: identifier.toLowerCase() }
+            ]
+        });
 
-    // compare passwords
-    const isMatch = await user.comparePassword(password);
-    if(!isMatch) {
-        throw new Error("Invalid credentials");
-    }
+        if(!user) {
+            return null;
+        };
 
-    return user;
+        // compare passwords
+        const isMatch = await user.comparePassword(password);
+        if(!isMatch) {
+            return null;
+        }
+
+        return user;
+    } catch (error) {
+        throw error;
+    }   
 }
 
 export {
