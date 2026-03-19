@@ -1,6 +1,9 @@
 /* This component renders a single comment to a post. */
+import 'quill/dist/quill.snow.css';
+import DOMPurify from 'dompurify';
 
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom'
 
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
@@ -12,8 +15,15 @@ import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import Vote_Button from './Vote_Button';
 import Pill_Button from './Pill_Button';
+import Rich_Text from './Rich_Text';
 
 import './Comment.css';
+
+function getTextLength(html) {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent.length;
+}
 
 function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, isDeleted, comments, isGuest}) {
 
@@ -40,21 +50,23 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
     const [isReplying, setIsReplying] = useState(false);
     const [replyText, setReplyText] = useState("");
 
-    const handleReply = () => { 
+    useEffect(() => {
+        setEditText(content);
+    }, [content]);
 
-        if (!replyText.trim()) 
-            return;
+    const handleReply = () => { 
+        const html = replyText;
+        if (!html || html === "<p><br></p>") return;
 
         createCommentMutation.mutate({
-            postId: postId,
-            content: replyText,
+            postId,
+            content: DOMPurify.sanitize(html),
             parentCommentId: _id
-        })
+        });
 
-        setReplyText("");
         setIsReplying(false);
-        setShowComments(true);
-    }
+        setReplyText("");
+    };
 
     return (
 
@@ -106,7 +118,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                                     className = "edit_button"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        setIsEditing(!isEditing);
+                                        setIsEditing(true);
                                         setEditText(content);
                                     }}
                                 >
@@ -140,18 +152,19 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                     {/* Comment content */}
                     {isEditing ? (
 
-                        <div className = "reply_box" onClick={(e) => e.stopPropagation()}>
-                            <textarea
-                                value = {editText}
-                                onChange = {(e) => {
-                                    setEditText(e.target.value);
-                                    e.target.style.height = 'auto';
-                                    e.target.style.height = `${e.target.scrollHeight}px`;
-                                }}
+                        <div 
+                            className="reply_box" 
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <Rich_Text
+                                className="rich_text_editor"
+                                key={_id + "_edit"} 
+                                value={editText}
+                                setValue={setEditText}
                             />
 
-                            <span style = {{ fontSize: '12px', color: replyText.trim().length > 10000 ? '#ff4d4d' : '#888' }}>
-                                    {editText.trim().length}/10000
+                            <span style = {{ fontSize: '12px', color: editText.trim().length > 10000 ? '#ff4d4d' : '#888' }}>
+                                    {getTextLength(editText)}/10000
                             </span>
                             
                             <div className = "reply_box_footer" style = {{ marginTop: '5px' }}>
@@ -169,7 +182,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                                     disabled = {editCommentMutation.isPending || editText.trim().length < 5 || editText === content}
                                     onClick = {() => {
                                         editCommentMutation.mutate(
-                                            { postId, commentId: _id, content: editText },
+                                            { postId, commentId: _id, content: DOMPurify.sanitize(editText) },
                                             { onSuccess: () => setIsEditing(false) } // Close box on success
                                         );
                                     }}
@@ -177,9 +190,12 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                             </div>
                         </div>
                     ) : (
-                        <p className="comment_content"> 
-                            {content} 
-                        </p>
+                        <p
+                            className="comment_content"
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(content)
+                            }}
+                        />
                     )}
 
                     {/* Section 2: Comment Footer */}
@@ -210,22 +226,18 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                     {isReplying && (
 
                         <div className = "reply_box">
-                            <textarea
-                                placeholder = "What are your thoughts?" 
-                                id = "comment-reply"
-                                value = {replyText}
-                                onChange = {(e) =>{
-                                    setReplyText(e.target.value);
-                                    e.target.style.height = 'auto';
-                                    e.target.style.height = `${e.target.scrollHeight}px`;
-                                }}
+                            <Rich_Text
+                                className="rich_text_editor"
+                                key={_id + "_reply"}
+                                value={replyText}
+                                setValue={setReplyText}
                             />
 
                             <span style = {{ fontSize: '12px', color: replyText.trim().length > 10000 ? '#ff4d4d' : '#888' }}>
-                                    {replyText.trim().length}/10000
+                                    {getTextLength(replyText)}/10000
                             </span>
                                 
-                            <div class = "reply_box_footer">
+                            <div className = "reply_box_footer">
                                     
                                 <Pill_Button
                                     icon = ""

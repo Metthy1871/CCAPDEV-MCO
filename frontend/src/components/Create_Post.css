@@ -16,6 +16,12 @@
     animation: fadeIn 0.2s ease-out;
 }
 
+.modal_overlay.closed {
+    display: none;  /* hide completely */
+    opacity: 0;
+    pointer-events: none;
+}
+
 .modal_card {
 
     background-size: 10px 10px, 10px 10px, cover;
@@ -135,4 +141,27 @@
 
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+.ql-editor {
+    min-height: 150px;           /* adjust height */
+    background-color: #1a1a1a;   /* dark gray background */
+    color: #f0f0f0;              /* text color */
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 8px;
+    border-radius: 0 0 12px 12px;          /* rounded corners */
+}
+
+.ql-container {
+    border-radius: 0 0 12px 12px;           /* match the editor's radius */
+    border: 1px solid #1a1a1a;     /* same as background to remove white line */
+    background-color: #1a1a1a;     /* dark gray */
+}
+
+.ql-toolbar {
+    border-radius: 12px 12px 0 0;  /* only top corners rounded */
+    border: 1px solid #1a1a1a;     /* match container border */
+    border-bottom: none;            /* remove double line between toolbar and editor */
+    background-color: #1a1a1a;     /* same dark gray */
 }

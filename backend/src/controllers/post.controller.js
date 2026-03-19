@@ -1,5 +1,6 @@
 import postService from '../services/post.service.js';
 import catchAsync from '../utils/catchAsync.js';
+import { sanitizeHTML } from '../utils/sanitize.js';
 
 
 const getAllPosts = catchAsync(async (req, res) => {
@@ -30,8 +31,9 @@ const getPostsByUser = catchAsync(async (req, res) => {
 const createPost = catchAsync(async (req, res) => {
     const userId = req.user._id;
     const { title, content, tags } = req.body;
+    const safeContent = sanitizeHTML(content);
 
-    const newPost = await postService.createPost({ title, content, userId, tags });
+    const newPost = await postService.createPost({ title, content: safeContent, userId, tags });
 
     res.status(201).json({ success: true, data: newPost});
 
@@ -42,7 +44,9 @@ const updatePost = catchAsync(async (req, res) => {
     const { title, content } = req.body;
     const postId = req.params.postId;
 
-    const updatedPost = await postService.updatePost({ postId, userId, title, content });
+    const safeContent = sanitizeHTML(content);
+
+    const updatedPost = await postService.updatePost({ postId, userId, title, content: safeContent });
 
     if (!updatedPost) {
         return res.status(404).json({ success: false, message: "Post not found"});

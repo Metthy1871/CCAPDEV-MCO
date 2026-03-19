@@ -1,5 +1,6 @@
 import commentService from '../services/comment.service.js';
 import catchAsync from '../utils/catchAsync.js';
+import { sanitizeHTML } from '../utils/sanitize.js';
 
 
 const getCommentsByPost = catchAsync(async (req, res) => {
@@ -12,7 +13,7 @@ const getCommentsByPost = catchAsync(async (req, res) => {
 });
 
 const createComment = catchAsync(async (req, res) => {
-    const content = req.body.content;
+    const content = sanitizeHTML(req.body.content);
     const userId = req.user._id;
     const postId = req.params.postId;
     const parentComment = req.body.parentComment;
@@ -25,7 +26,7 @@ const createComment = catchAsync(async (req, res) => {
 const updateComment = catchAsync(async (req, res) => {
     const commentId = req.params.commentId;
     const userId = req.user._id;
-    const newContent = req.body.content;
+    const newContent = sanitizeHTML(req.body.content);
 
     const updatedComment = await commentService.updateComment({ commentId, userId, newContent });
 

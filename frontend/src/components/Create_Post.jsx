@@ -1,4 +1,7 @@
 /* This component contains the post creation menu. */
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css';
+import DOMPurify from 'dompurify';
 
 import { useState } from 'react';
 
@@ -14,12 +17,19 @@ function Create_Post({ isOpen, onClose }) {
     const [content, setContent] = useState("");
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState("");
-
     const createPostMutation = useCreatePost();
 
-    /* If not open, don't render */
-    if (!isOpen) 
-        return null;
+    
+    const { quill: postQuill, quillRef: postRef } = useQuill({
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ list: 'ordered' }, { list: 'bullet' }],
+                ['link']
+            ]
+        }
+    }, isOpen);
     
     const handleCreateTag = (e) => {
 
@@ -47,19 +57,22 @@ function Create_Post({ isOpen, onClose }) {
 
     const handlePostSubmit = () => {
 
-        if (!title.trim() || !content.trim()) 
-            return;
+        if (!title.trim() || !postQuill) return;
+
+        const html = postQuill.root.innerHTML;
+
+        if (!html || html === "<p><br></p>") return;
 
         const newPost = {
             title: title,
-            content: content,
+            content: DOMPurify.sanitize(html),
             tags: tags.length > 0 ? tags : ["Discussion"]
         };
 
         createPostMutation.mutate(newPost, {
             onSuccess: () => {
                 setTitle("");
-                setContent("");
+                postQuill.root.innerHTML = ""; 
                 onClose(); 
             }
         });
@@ -67,7 +80,10 @@ function Create_Post({ isOpen, onClose }) {
 
     return (
 
-        <div className = "modal_overlay" onClick = {onClose}>
+        <div
+            className={`modal_overlay ${isOpen ? 'open' : 'closed'}`}
+            onClick={onClose}
+        >
             
             <div className = "modal_card" onClick={(e) => e.stopPropagation()}>
                 
@@ -135,13 +151,7 @@ function Create_Post({ isOpen, onClose }) {
 
                     <div className = "input_group">
                    
-                        <textarea 
-                            placeholder = "Content..." 
-                            className = "modal_textarea"
-                            value = {content}
-                            rows = "5"
-                            onChange={(e) => setContent(e.target.value)}
-                        />
+                        <div ref={postRef} />
 
                     </div>
 

@@ -1,11 +1,14 @@
 /* This component renders a single post. */
+import 'quill/dist/quill.snow.css';
+import DOMPurify from 'dompurify';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 import Pill_Button from './Pill_Button';
 import Vote_Button from './Vote_Button';
 import Comment from './Comment';
+import Rich_Text from './Rich_Text';
 
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 import { useFetchUserByName } from '../hooks/useFetchUserByName';
@@ -16,6 +19,12 @@ import { useEditPost } from '../hooks/useEditPost';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Post.css';
+
+function getTextLength(html) {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent.length;
+}
 
 function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags = [], isPreview, isGuest}) {
     
@@ -45,6 +54,17 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
     const [replyText, setReplyText] = useState("");
 
     const navigate = useNavigate();
+    const [currentContent, setCurrentContent] = useState(content);
+
+    useEffect(() => {
+        setCurrentContent(content);
+    }, [content]);
+
+    useEffect(() => {
+        if (isEditing) {
+            setEditText(currentContent);
+        }
+    }, [isEditing, currentContent]);
 
     /* Navigates to the specific post page */
     const handlePostClick = () => {
@@ -56,13 +76,13 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
 
     const handleReply = () => { 
 
-        if (!replyText.trim()) 
-            return;
+        const html = replyText;
+        if (!html || html === "<p><br></p>") return;
 
         createCommentMutation.mutate({
             postId: _id,
-            content: replyText,
-            parentCommentId: null
+            content: DOMPurify.sanitize(html),
+            parentCommentId: null,
         });
 
         setReplyText("");
@@ -142,7 +162,6 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setIsEditing(!isEditing);
-                                    setEditText(content);
                                 }}
                             >
                                 ✎
@@ -194,17 +213,22 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
                 {isEditing ? (
 
                         <div className = "reply_box" onClick={(e) => e.stopPropagation()}>
-                            <textarea
-                                value = {editText}
-                                onChange = {(e) => {
-                                    setEditText(e.target.value);
-                                    e.target.style.height = 'auto';
-                                    e.target.style.height = `${e.target.scrollHeight}px`;
+                            <div
+                                style={{
+                                    minHeight: '100px',
+                                    display: 'block'
                                 }}
-                            />
+                            >
+                                <Rich_Text
+                                    className="rich_text_editor"
+                                    key={_id + "_post_edit"}
+                                    value={editText}
+                                    setValue={setEditText}
+                                />
+                            </div>
 
-                            <span style = {{ fontSize: '12px', color: replyText.trim().length > 50000 ? '#ff4d4d' : '#888' }}>
-                                    {editText.trim().length}/50000
+                            <span style={{ fontSize: '12px', color: editText.length > 50000 ? '#ff4d4d' : '#888' }}>
+                                {getTextLength(editText)}/50000
                             </span>
                             
                             <div className = "reply_box_footer" style = {{ marginTop: '5px' }}>
@@ -219,20 +243,24 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
 
                                 <Pill_Button 
                                     icon = "" text = "Save"
-                                    disabled = {editPostMutation.isPending || editText.trim().length < 5 || editText === content}
+                                    disabled = {editPostMutation.isPending || editText.trim().length < 5 || editText === currentContent}
                                     onClick = {() => {
                                         editPostMutation.mutate(
-                                            { postId: _id, content: editText },
-                                            { onSuccess: () => setIsEditing(false) } // Close box on success
+                                            { postId: _id, content: DOMPurify.sanitize(editText) },
+                                            { onSuccess: () => {
+                                                setCurrentContent(DOMPurify.sanitize(editText));
+                                                setIsEditing(false);                             // close editor
+                                            } } // Close box on success
                                         );
                                     }}
                                 />
                             </div>
                         </div>
                     ) : (
-                        <p className="post_content"> 
-                            {content} 
-                        </p>
+                        <div
+                            className="post_content"
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(currentContent) }}
+                        />
                 )}
                
                 {/* Section 2: Post Footer */}
@@ -272,22 +300,18 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
                 {isReplying && (
 
                         <div className = "reply_box" onClick = {(e) => e.stopPropagation()}>
-                            <textarea
-                                placeholder = "What are your thoughts?" 
-                                value = {replyText}
-                                id = "comment-reply"
-                                onChange = {(e) =>{
-                                    setReplyText(e.target.value)
-                                    e.target.style.height = 'auto';
-                                    e.target.style.height = `${e.target.scrollHeight}px`;
-                                }}
+                            <Rich_Text
+                                className="rich_text_editor"
+                                key={_id + "_reply"}
+                                value={replyText}
+                                setValue={setReplyText}
                             />
 
                             <span style={{ fontSize: '12px', color: replyText.trim().length > 50000 ? '#ff4d4d' : '#888' }}>
-                                    {replyText.trim().length}/50000
+                                    {getTextLength(replyText)}/50000
                             </span>
                             
-                            <div class = "reply_box_footer">
+                            <div className = "reply_box_footer">
                                 
                                 <Pill_Button
                                     icon = ""
