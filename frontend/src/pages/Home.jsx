@@ -19,8 +19,8 @@ function Home() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { data: current_user } = useFetchCurrentUser();
-    const { data: posts, isLoading, isError } = useFetchPosts();
-
+    const [sortBy, setSortBy] = useState('recent');
+    const { data: posts, isLoading, isError } = useFetchPosts(sortBy);
     const isGuest = !current_user;
 
     return (
@@ -40,7 +40,7 @@ function Home() {
 
                     {/* Place Left_Side_Bar component on the left */}
                     <Left_Side_Bar 
-                        onOpenModal={() => setIsModalOpen(true)}
+                        onOpenModal = {() => setIsModalOpen(true)}
                         isGuest = {isGuest}
                     />
                     
@@ -49,7 +49,7 @@ function Home() {
                 <div className = "feed_container">
 
                     {/* Place Feed_Filter component on the center */}
-                    <Feed_Filter/>
+                    <Feed_Filter activeTab = {sortBy} setActiveTab = {setSortBy}/>
 
                     {/* Handle the waiting period */}
                     {isLoading && (

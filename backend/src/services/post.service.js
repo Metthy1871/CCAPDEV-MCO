@@ -11,7 +11,7 @@ const getAllPosts = async (sortBy = SORT_POSTS_OPTIONS.RECENT) => {
         switch (sortBy) {
             case SORT_POSTS_OPTIONS.POPULAR_ALL_TIME:
                 const allTime = await Post.aggregate([
-                    { $addFields: { voteCount: { $size: "$upvotes" } } }, // get the length of the upvotes array
+                    { $addFields: { voteCount: { $size: { $ifNull: ["$upvotes", []] } } } }, // get the length of the upvotes array
                     { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
                 ])
 
@@ -24,7 +24,7 @@ const getAllPosts = async (sortBy = SORT_POSTS_OPTIONS.RECENT) => {
 
                 const recentPopular = await Post.aggregate([
                     { $match: { createdAt: { $gte: sevenDaysAgo} } }, // filter posts created more than seven days ago
-                    { $addFields: { voteCount: { $size: "$upvotes" } } },
+                    { $addFields: { voteCount: { $size: { $ifNull: ["$upvotes", []] } } } },
                     { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
                 ]);
 

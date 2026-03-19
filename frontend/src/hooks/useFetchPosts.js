@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-export function useFetchPosts() {
+export function useFetchPosts(sortBy = 'recent') {
 
     return useQuery({
 
-        queryKey: ['posts'],
+        queryKey: ['posts', sortBy],
         
         queryFn: async () => {
-            const response = await axios.get('http://localhost:3000/api/posts');
-            return response.data.data.reverse();
+            const { data } = await axios.get(`http://localhost:3000/api/posts?sortBy=${sortBy}`);
+            return data.data;
         }
     });
 }
