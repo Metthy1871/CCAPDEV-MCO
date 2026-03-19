@@ -17,12 +17,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
         {/* Allows client-side routing */}
         <BrowserRouter>
-
             <QueryClientProvider client = {queryClient}>
                 <App/>
             </QueryClientProvider>
-            
         </BrowserRouter>
-
+        
     </React.StrictMode>,
 )

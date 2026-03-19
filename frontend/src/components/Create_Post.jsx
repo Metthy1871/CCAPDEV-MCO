@@ -1,4 +1,5 @@
-/* This component contains the post creation menu. */
+/* This component renders the post creation menu. */
+
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
 import DOMPurify from 'dompurify';

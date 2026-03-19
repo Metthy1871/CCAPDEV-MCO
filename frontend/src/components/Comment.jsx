@@ -1,4 +1,5 @@
 /* This component renders a single comment to a post. */
+
 import 'quill/dist/quill.snow.css';
 import DOMPurify from 'dompurify';
 

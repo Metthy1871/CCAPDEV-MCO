@@ -56,9 +56,9 @@ function Signup() {
                 <label>
                     Username
                     <input 
-                        type ="text" 
-                        value={username} 
-                        onChange={(e) => setUsername(e.target.value)} 
+                        type = "text" 
+                        value = {username} 
+                        onChange = {(e) => setUsername(e.target.value)} 
                         required
                     />
                 </label>
@@ -66,9 +66,9 @@ function Signup() {
                 <label>
                     Email
                     <input 
-                        type ="email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
+                        type = "email" 
+                        value = {email} 
+                        onChange = {(e) => setEmail(e.target.value)} 
                         required
                     />
                 </label>
@@ -76,9 +76,9 @@ function Signup() {
                 <label>
                     Password
                     <input 
-                        type ="password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
+                        type = "password" 
+                        value = {password} 
+                        onChange = {(e) => setPassword(e.target.value)} 
                         required
                     />
                 </label>
@@ -86,19 +86,19 @@ function Signup() {
                 <label>
                     Confirm Password
                     <input 
-                        type ="password" 
-                        value={confirmPassword} 
-                        onChange={(e) => setConfirmPassword(e.target.value)} 
+                        type = "password" 
+                        value = {confirmPassword} 
+                        onChange = {(e) => setConfirmPassword(e.target.value)} 
                         required
                     />
                 </label>
 
-                <button type="submit" className="signup_button">
+                <button type = "submit" className = "signup_button">
                     Sign Up
                 </button>
 
-                <p className="signup_footer">
-                    Already have an account? <Link to="/login" className="login_link">Log In</Link>
+                <p className = "signup_footer">
+                    Already have an account? <Link to = "/login" className="login_link">Log In</Link>
                 </p>
 
             </form>

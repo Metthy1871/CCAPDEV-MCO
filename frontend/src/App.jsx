@@ -12,6 +12,7 @@ import Profile_Page from './pages/Profile_Page';
 
 // Interceptor for Remember Me
 axios.interceptors.response.use(
+
     (response) => {
         // Look for the rolling session header
         const refreshedToken = response.headers['x-refreshed-token'];
@@ -24,6 +25,7 @@ axios.interceptors.response.use(
 
         return response;
     },
+    
     (error) => {
         // If the token is completely expired or invalid, kick them to login
         if (error.response && error.response.status === 401) {

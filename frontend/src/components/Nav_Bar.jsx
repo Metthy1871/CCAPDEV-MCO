@@ -1,10 +1,10 @@
-/* This component provides global navigation for the application. */
+/* This component renders the global navigation bar for the application. */
 
 import { Link, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 
-import { user_controller } from '../controllers/user_controller';
 import Pill_Button from './Pill_Button';
 import Profile_Icon from './Profile_Icon';
 
@@ -12,10 +12,10 @@ import phantom_logo from '../media/phantom_logo.png';
 
 import './Nav_Bar.css';
 
-
 function Nav_Bar(){
 
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
     const { data: current_user, isLoading } = useFetchCurrentUser();
     const isGuest = !current_user && !isLoading;
@@ -25,6 +25,13 @@ function Nav_Bar(){
             Loading Content... ⏳
         </h2>
     )}
+
+    const handleLogOut = () => {
+
+        localStorage.removeItem('token'); 
+        queryClient.clear(); 
+        window.location.href = '/';
+    }
 
     return (
 
@@ -93,23 +100,20 @@ function Nav_Bar(){
                     <>
                         {/* If logged in: Show Logout */}
                         <Pill_Button 
-                            text="Logout" 
-                            icon=""
+                            text = "Logout" 
+                            icon = ""
                             className = "log_in_button"
-                            onClick={() => {
-                                user_controller.logoutUser();
-                                navigate('/login');
-                            }}
+                            onClick = {handleLogOut}
                         />
                     </>
 
                     ) : (
 
                         /* If logged out: Show Login */
-                        <Link to = "/login" style={{textDecoration: 'none'}}>
+                        <Link to = "/login" style = {{textDecoration: 'none'}}>
                             <Pill_Button 
-                                text="Login" 
-                                icon=""
+                                text = "Login" 
+                                icon = ""
                                 className = "log_in_button" 
                             />
                         </Link>

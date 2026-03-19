@@ -1,4 +1,4 @@
-/* This component contains the edit profile menu. */
+/* This component renders the edit profile menu. */
 
 import { useState, useEffect } from 'react';
 

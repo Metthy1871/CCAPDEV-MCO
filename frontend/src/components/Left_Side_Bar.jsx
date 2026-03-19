@@ -1,4 +1,4 @@
-/* This component contains the post button and the Trending_Topics component. */
+/* This component renders the left side of the home screen, containing the post button and the Trending_Topics component. */
 
 import Pill_Button from '../components/Pill_Button.jsx'
 import Trending_Topics from './Trending_Topics.jsx';
