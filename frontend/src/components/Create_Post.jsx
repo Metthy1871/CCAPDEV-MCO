@@ -25,7 +25,7 @@ function Create_Post({ isOpen, onClose }) {
         modules: {
             toolbar: [
                 ['bold', 'italic', 'underline'],
-                [{ list: 'ordered' }, { list: 'bullet' }],
+                [{ list: 'ordered' }],
                 ['link']
             ]
         }

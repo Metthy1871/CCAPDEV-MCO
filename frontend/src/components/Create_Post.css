@@ -144,24 +144,24 @@
 }
 
 .ql-editor {
-    min-height: 150px;           /* adjust height */
-    background-color: #1a1a1a;   /* dark gray background */
-    color: #f0f0f0;              /* text color */
+    min-height: 150px;           
+    background-color: #1a1a1a;   
+    color: #f0f0f0;             
     font-size: 14px;
     line-height: 1.5;
     padding: 8px;
-    border-radius: 0 0 12px 12px;          /* rounded corners */
+    border-radius: 0 0 12px 12px;          
 }
 
 .ql-container {
-    border-radius: 0 0 12px 12px;           /* match the editor's radius */
-    border: 1px solid #1a1a1a;     /* same as background to remove white line */
-    background-color: #1a1a1a;     /* dark gray */
+    border-radius: 0 0 12px 12px;          
+    border: 1px solid #1a1a1a;    
+    background-color: #1a1a1a;     
 }
 
 .ql-toolbar {
-    border-radius: 12px 12px 0 0;  /* only top corners rounded */
-    border: 1px solid #1a1a1a;     /* match container border */
-    border-bottom: none;            /* remove double line between toolbar and editor */
-    background-color: #1a1a1a;     /* same dark gray */
+    border-radius: 12px 12px 0 0;  
+    border: 1px solid #1a1a1a;    
+    border-bottom: none;          
+    background-color: #1a1a1a;    
 }

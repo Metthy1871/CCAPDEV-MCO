@@ -179,3 +179,13 @@
     border-left: 2px solid var(--p5-red); 
 }
 
+.post_content ol,
+.post_content ul {
+    margin: 0 0 1em 1.5em; 
+    padding-left: 1.5em; 
+}
+
+.post_content li {
+    margin: 0.25em 0;     
+    padding: 0;            
+}
