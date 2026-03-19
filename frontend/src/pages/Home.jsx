@@ -9,7 +9,7 @@ import Left_Side_Bar from '../components/Left_Side_Bar.jsx';
 import Nav_Bar from '../components/Nav_Bar.jsx';
 import Right_Side_Bar from '../components/Right_Side_Bar.jsx'
 import Post from '../components/Post.jsx';
-import Feed_Filter from '../components/Feed_Filter.jsx';
+import Post_Sort from '../components/Post_Sort.jsx';
 import Create_Post from '../components/Create_Post.jsx';
 
 import './Home.css';
@@ -48,8 +48,8 @@ function Home() {
 
                 <div className = "feed_container">
 
-                    {/* Place Feed_Filter component on the center */}
-                    <Feed_Filter activeTab = {sortBy} setActiveTab = {setSortBy}/>
+                    {/* Place Post_Sort component on the center */}
+                    <Post_Sort activeTab = {sortBy} setActiveTab = {setSortBy}/>
 
                     {/* Handle the waiting period */}
                     {isLoading && (

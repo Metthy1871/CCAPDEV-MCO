@@ -9,7 +9,7 @@ import { useFetchUserByName } from '../hooks/useFetchUserByName';
 
 import Nav_Bar from '../components/Nav_Bar';
 import Post from '../components/Post';
-import Feed_Filter from '../components/Feed_Filter';
+import Post_Sort from '../components/Post_Sort';
 import Edit_Profile from '../components/Edit_Profile';
 
 import './Profile_Page.css';
@@ -26,7 +26,8 @@ function Profile_Page() {
     const { data: viewed_user, isLoading: loadingUser, isError: userError } = useFetchUserByName(username);
 
     // Fetch user post history
-    const { data: user_posts = [], isLoading: loadingPosts } = useFetchPostHistory(viewed_user?._id);
+    const [sortBy, setSortBy] = useState('recent');
+    const { data: user_posts = [], isLoading: loadingPosts } = useFetchPostHistory(viewed_user?._id, sortBy);
 
     if (loadingAuth || loadingUser || loadingPosts) 
         return <h2 style={{ color: 'white', textAlign: 'center' }}>Loading Profile... ⏳</h2>;
@@ -109,7 +110,7 @@ function Profile_Page() {
                             POST HISTORY
                         </h2>
 
-                        <Feed_Filter/>
+                        <Post_Sort activeTab = {sortBy} setActiveTab = {setSortBy}/>
 
                         <div className = "profile_history_feed">
 
