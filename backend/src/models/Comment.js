@@ -33,6 +33,10 @@ const commentSchema = new Schema(
             type: ObjectId,
             ref: 'User'
         }],
+        downvotes: [{ // use array of UserIDs to track which user has downvoted
+            type: ObjectId,
+            ref: 'User'
+        }],
         isDeleted: { // let React handle the rendering for deleted comments
             type: Boolean,
             default: false
@@ -42,6 +46,15 @@ const commentSchema = new Schema(
         timestamps: true // sets the createdAt and updatedAt fields
     }
 );
+
+// create a virtual property for the vote score
+commentSchema.virtual('voteScore').get(function() {
+    return this.upvotes.length - this.downvotes.length;
+});
+
+commentSchema.set('toJSON', { virtuals: true });
+commentSchema.set('toObject', { virtuals: true });
+
 
 const Comment = model('Comment', commentSchema);
 export default Comment;

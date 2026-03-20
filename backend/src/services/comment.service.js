@@ -86,10 +86,11 @@ const deleteComment = async ({ commentId, userId }) => {
     }
 }
 
-const toggleCommentVote = async ({ commentId, userId}) => {
+const toggleCommentVote = async ({ commentId, userId, action}) => {
     try {
-        // check if user has already voted for the comment
+        // check if user has already voted for the post
         const comment = await Comment.findById(commentId);
+
         // safety check
         if (!comment) {
             throw new Error("Comment not found");
@@ -100,23 +101,38 @@ const toggleCommentVote = async ({ commentId, userId}) => {
             throw new Error("Cannot vote on a deleted comment");
         }
 
-        // compare stringified IDs
-        const hasVoted = comment.upvotes.some(id => id.toString() === userId.toString());
+        // compare stringified Object IDs
+        const hasUpvoted = comment.upvotes.some(id => id.toString() === userId.toString());
+        const hasDownvoted = comment.downvotes.some(id => id.toString() === userId.toString());
+        
+        let update = {};
 
-        if (hasVoted) {
-            // keep all user IDs in the array except the matching user ID
-            return await Comment.findByIdAndUpdate(
-                commentId, 
-                { $pull: { upvotes: userId } },
-                { new: true } // return the updated document
-            );
-        } else {
-            return await Comment.findByIdAndUpdate(
-                commentId, 
-                { $addToSet: { upvotes: userId } },
-                { new: true } // return the updated document
-            );
+        if (action === VOTE_ACTIONS.UP) {
+            if (hasUpvoted) {
+                update = { $pull: { upvotes: userId } };
+            }
+            else { // add user ID to upvotes and ensure they are removed from downvotes
+                update = {
+                    $addToSet: { upvotes: userId },
+                    $pull: { downvotes: userId }      
+                };
+            }
+        } else if (action === VOTE_ACTIONS.DOWN) {
+            if (hasDownvoted) {
+                update = { $pull: { downvotes: userId } };
+            } else { // add user ID to downvotes and ensure they are removed from upvotes
+                update = {
+                    $addToSet: { downvotes: userId },
+                    $pull: { upvotes: userId }  
+                }
+            }  
         }
+      
+        return await Comment.findByIdAndUpdate(
+            commentId,
+            update,
+            { new: true }
+        );
 
     } catch (error) {
         throw error;

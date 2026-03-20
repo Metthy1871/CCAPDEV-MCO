@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Post from '../models/Post.js';
-import { SORT_POSTS_OPTIONS } from '../utils/constants.js';
+import { SORT_POSTS_OPTIONS, VOTE_ACTIONS } from '../utils/constants.js';
 
 const { ObjectId } = mongoose.Types;
 
@@ -145,7 +145,7 @@ const deletePost = async ({ postId, userId }) => {
 
 }
 
-const togglePostVote = async ({ postId, userId }) => {
+const togglePostVote = async ({ postId, userId, action }) => {
     try {
         // check if user has already voted for the post
         const post = await Post.findById(postId);
@@ -156,21 +156,37 @@ const togglePostVote = async ({ postId, userId }) => {
         }
 
         // compare stringified Object IDs
-        const hasVoted = post.upvotes.some(id => id.toString() === userId.toString());
+        const hasUpvoted = post.upvotes.some(id => id.toString() === userId.toString());
+        const hasDownvoted = post.downvotes.some(id => id.toString() === userId.toString());
+        
+        let update = {};
 
-        if (hasVoted) {
-            return await Post.findByIdAndUpdate(
-                postId, 
-                { $pull: { upvotes: userId } },
-                { new: true }
-            );
-        } else {
-            return await Post.findByIdAndUpdate(
-                postId, 
-                { $addToSet: { upvotes: userId } },
-                { new: true }
-            );
+        if (action === VOTE_ACTIONS.UP) {
+            if (hasUpvoted) {
+                update = { $pull: { upvotes: userId } };
+            }
+            else { // add user ID to upvotes and ensure they are removed from downvotes
+                update = {
+                    $addToSet: { upvotes: userId },
+                    $pull: { downvotes: userId }      
+                };
+            }
+        } else if (action === VOTE_ACTIONS.DOWN) {
+            if (hasDownvoted) {
+                update = { $pull: { downvotes: userId } };
+            } else { // add user ID to downvotes and ensure they are removed from upvotes
+                update = {
+                    $addToSet: { downvotes: userId },
+                    $pull: { upvotes: userId }  
+                }
+            }  
         }
+      
+        return await Post.findByIdAndUpdate(
+            postId,
+            update,
+            { new: true }
+        );
 
     } catch (error) {
         throw error;

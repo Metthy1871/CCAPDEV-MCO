@@ -71,8 +71,9 @@ const deletePost = catchAsync(async (req, res) => {
 const togglePostVote = catchAsync(async (req, res) => {
     const postId = req.params.postId;
     const userId = req.user._id;
+    const action = req.body.action;
 
-    const postVote = await postService.togglePostVote({ postId, userId });
+    const postVote = await postService.togglePostVote({ postId, userId, action });
 
     if (!postVote) {
         return res.status(404).json({ success: false, message: 'Post not found' });

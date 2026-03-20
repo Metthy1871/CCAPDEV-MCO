@@ -10,4 +10,7 @@ export const SORT_POSTS_OPTIONS = {
 //     POPULAR: 'popular'
 // };
 
-
+export const VOTE_ACTIONS = {
+    UP: 'up',
+    DOWN: 'down'
+};

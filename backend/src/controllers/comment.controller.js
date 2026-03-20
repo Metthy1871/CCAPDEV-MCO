@@ -52,8 +52,9 @@ const deleteComment = catchAsync(async (req, res) => {
 const toggleCommentVote = catchAsync(async (req, res) => {
     const commentId = req.params.commentId;
     const userId = req.user._id;
+    const action = req.body.action;
 
-    const commentVote = await commentService.toggleCommentVote({ commentId, userId });
+    const commentVote = await commentService.toggleCommentVote({ commentId, userId, action });
 
     if (!commentVote) {
         return res.status(404).json({ success: false, message: 'Comment not found' });
