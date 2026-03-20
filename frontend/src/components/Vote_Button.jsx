@@ -1,37 +1,8 @@
 /* This component renders the voting button for posts and comments. */
 
-import { useState } from 'react';
-
 import './Vote_Button.css';
 
-function Vote_Button({initialScore, isGuest}) {
-    
-    /* State to track user's choice: 0 = none, 1 = up, -1 = down */
-    const [userVote, setUserVote] = useState(0);
-
-    const displayScore = initialScore + userVote;
-
-    /* Handle Upvote */
-    const handleUp = (e) => {
-
-        e.stopPropagation();
-
-        if (isGuest)
-            return;
-
-        setUserVote(userVote === 1 ? 0 : 1);
-    };
-
-    /* Handle Downvote */
-    const handleDown = (e) => {
-
-        e.stopPropagation();
-
-        if (isGuest)
-            return;
-        
-        setUserVote(userVote === -1 ? 0 : -1);
-    };
+function Vote_Button({ score, hasUpvoted, hasDownvoted, onVote, isGuest }) {
     
     return (
 
@@ -39,21 +10,21 @@ function Vote_Button({initialScore, isGuest}) {
 
             {/* Upvote button */}
             <button 
-                className={`vote_button upvote ${userVote === 1 ? 'active' : ''}`} 
-                onClick={handleUp}
+                className = {`vote_button upvote ${hasUpvoted ? 'active' : ''}`} 
+                onClick = {(e) => onVote('up', e)}
             >
                 ▲
             </button>
 
             {/* Display votes */}
-            <span className={`vote_score ${userVote !== 0 ? 'highlight' : ''}`}>
-                {displayScore}
+            <span className = {`vote_score ${(hasUpvoted || hasDownvoted) ? 'highlight' : ''}`}>
+                {score}
             </span>
 
             {/* Downvote button */}
             <button 
-                className={`vote_button downvote ${userVote === -1 ? 'active' : ''}`} 
-                onClick={handleDown}
+                className = {`vote_button downvote ${hasDownvoted ? 'active' : ''}`} 
+                onClick = {(e) => onVote('down', e)}
             >
                 ▼
             </button>

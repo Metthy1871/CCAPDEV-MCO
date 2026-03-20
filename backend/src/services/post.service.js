@@ -185,8 +185,8 @@ const togglePostVote = async ({ postId, userId, action }) => {
         return await Post.findByIdAndUpdate(
             postId,
             update,
-            { new: true }
-        );
+            { new: true, timestamps: false }
+        ).populate('author', 'username');
 
     } catch (error) {
         throw error;

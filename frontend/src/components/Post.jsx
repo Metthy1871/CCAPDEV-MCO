@@ -16,6 +16,7 @@ import { useCreateComment } from '../hooks/useCreateComment';
 import { useFetchComments } from '../hooks/useFetchComments';
 import { useDeletePost } from '../hooks/useDeletePost';
 import { useEditPost } from '../hooks/useEditPost';
+import { usePostVote } from '../hooks/usePostVote';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import './Post.css';
@@ -26,7 +27,7 @@ function getTextLength(html) {
     return div.textContent.length;
 }
 
-function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags = [], isPreview, isGuest}) {
+function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downvotes, tags = [], isPreview, isGuest}) {
     
     const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
@@ -35,6 +36,7 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
     const createCommentMutation = useCreateComment();
     const deletePostMutation = useDeletePost();
     const editPostMutation = useEditPost();
+    const voteMutation = usePostVote();
 
     const isAuthor = current_user?.username === author.username;
     const relativeDate = getRelativeTime(createdAt);
@@ -55,6 +57,10 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
 
     const navigate = useNavigate();
     const [currentContent, setCurrentContent] = useState(content);
+
+    const currentScore = upvotes.length - downvotes.length;
+    const hasUpvoted = current_user ? upvotes.includes(current_user._id) : false;
+    const hasDownvoted = current_user ? downvotes.includes(current_user._id) : false;
 
     useEffect(() => {
         setCurrentContent(content);
@@ -89,6 +95,16 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
         setIsReplying(false);
         setShowComments(true);
     }
+
+    const handleVote = (action, e) => {
+
+        e.stopPropagation();
+
+        if (isGuest || voteMutation.isPending)
+            return;
+
+        voteMutation.mutate({ postId: _id, action});
+    };
 
     /* Turn the MongoDB list into a nested tree */
     const commentTree = useMemo(() => {
@@ -270,7 +286,10 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, tags 
 
                         {/* Vote_Button component */}
                         <Vote_Button 
-                            initialScore = {upvotes.length}
+                            score = {currentScore}
+                            hasUpvoted = {hasUpvoted}
+                            hasDownvoted = {hasDownvoted}
+                            onVote = {handleVote}
                             isGuest = {isGuest}>
                         </Vote_Button>
 

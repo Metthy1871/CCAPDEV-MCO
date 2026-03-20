@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Comment from '../models/Comment.js';
-import { SORT_COMMENTS_OPTIONS } from '../utils/constants.js';
 
 const { ObjectId } = mongoose.Types;
 
