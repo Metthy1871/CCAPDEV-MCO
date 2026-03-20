@@ -10,9 +10,13 @@ import Profile_Icon from './Profile_Icon';
 
 import phantom_logo from '../media/phantom_logo.png';
 
+import { useState } from 'react';
+
 import './Nav_Bar.css';
 
 function Nav_Bar(){
+
+    const [searchQuery, setSearchQuery] = useState('');
 
     const navigate = useNavigate();
     const queryClient = useQueryClient();
@@ -74,6 +78,13 @@ function Nav_Bar(){
                         type = "text" 
                         placeholder = "Search..." 
                         className = "search_input"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && searchQuery.trim()) {
+                                navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+                            }
+                        }}
                     />
 
                 </div>    

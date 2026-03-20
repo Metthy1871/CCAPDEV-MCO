@@ -1,0 +1,43 @@
+/* Define global color variables */
+:root {
+
+    --p5-red: #c70e0e;
+    --red: #c70e0e;
+    --bg: #2d2d2d;
+    --hover-color: rgba(255, 255, 255, 0.04);
+}
+
+.home_container {
+
+    background-color: var(--bg);
+    display: flex;
+    justify-content: center;
+}
+
+.left_side_container {
+
+    flex: 0 0 300px;
+}
+
+.feed_container {
+
+    flex-grow: 1;
+    flex-shrink: 1;
+    max-width: 700px; 
+    min-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right_side_container {
+
+    flex: 0 0 300px;
+}
+
+.results_for{
+    font-size: 1rem;
+    color: white;
+}

@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Post_Page from './pages/Post_Page';
 import Profile_Page from './pages/Profile_Page';
+import Search from './pages/Search'
 
 // Interceptor for Remember Me
 axios.interceptors.response.use(
@@ -55,7 +56,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path = "/post/:id" element = {<Post_Page/>}/>
                 <Route path = "/profile/:username" element = {<Profile_Page/>}/>
-            
+                <Route path="/search" element={<Search />} />
             </Routes>
 
         </>
