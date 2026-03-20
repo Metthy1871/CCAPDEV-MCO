@@ -6,30 +6,29 @@ const { ObjectId } = mongoose.Types;
 
 
 // default sorting is by oldest, only top-level comments will be sorted
-const getCommentsByPost = async (postId, sortBy = SORT_COMMENTS_OPTIONS.OLDEST) => {
+const getCommentsByPost = async (postId) => {
     try {
 
         // cast the string Id to a MongoDB ObjectId for aggregate pipelines
         const postObjectId = new ObjectId(postId)
         
-        switch (sortBy) {
-            case SORT_COMMENTS_OPTIONS.POPULAR:
-                const popularComments = await Comment.aggregate([
-                    { $match: {post: postObjectId} },
-                    { $addFields: { voteCount: { $size: "$upvotes" } } }, // get the length of the upvotes array
-                    { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
-                ])
+        
+            // case SORT_COMMENTS_OPTIONS.POPULAR:
+            //     const popularComments = await Comment.aggregate([
+            //         { $match: {post: postObjectId} },
+            //         { $addFields: { voteCount: { $size: "$upvotes" } } }, // get the length of the upvotes array
+            //         { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
+            //     ])
 
-                return await Comment.populate(popularComments, { path: 'author', select: 'username'} );
+            //     return await Comment.populate(popularComments, { path: 'author', select: 'username'} );
 
-            case SORT_COMMENTS_OPTIONS.OLDEST:
-            default:
-                const oldestComments = await Comment.find({ post: postId })
-                    .sort({ createdAt: 1 }) // sort by oldest
-                    .populate('author', 'username');
-                return oldestComments;
-        }
-
+            // case SORT_COMMENTS_OPTIONS.OLDEST:
+            // default:
+        const oldestComments = await Comment.find({ post: postId })
+            .sort({ createdAt: 1 }) // sort by oldest
+            .populate('author', 'username');
+        return oldestComments;
+        
     } catch (error) {
         throw error;
     }

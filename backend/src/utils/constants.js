@@ -5,9 +5,9 @@ export const SORT_POSTS_OPTIONS = {
     POPULAR_RECENT: 'popular_recent'
 };
 
-export const SORT_COMMENTS_OPTIONS = {
-    OLDEST: 'oldest',
-    POPULAR: 'popular'
-};
+// export const SORT_COMMENTS_OPTIONS = {
+//     OLDEST: 'oldest',
+//     POPULAR: 'popular'
+// };
 
 

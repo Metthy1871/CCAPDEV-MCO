@@ -5,9 +5,9 @@ import { sanitizeHTML } from '../utils/sanitize.js';
 
 const getCommentsByPost = catchAsync(async (req, res) => {
     const postId = req.params.postId;
-    const { sortBy } = req.query;
+    // const { sortBy } = req.query;
 
-    const comments = await commentService.getCommentsByPost(postId, sortBy);
+    const comments = await commentService.getCommentsByPost(postId);
 
     res.status(200).json({ success: true, data: comments });
 });
