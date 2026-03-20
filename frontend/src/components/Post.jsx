@@ -47,6 +47,8 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
     /* If we are in Preview (Home), hide comments. If Full Page, show them */
     const [showComments, setShowComments] = useState(!isPreview);
 
+    const [isCopied, setIsCopied] = useState("false");
+
      /* Edit */
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(content);
@@ -105,6 +107,24 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
 
         voteMutation.mutate({ postId: _id, action});
     };
+
+    const handleShare = (e) => {
+
+        e.stopPropagation();
+
+        const postUrl = `${window.location.origin}/post/${_id}`;
+
+        navigator.clipboard.writeText(postUrl).then(() => {
+
+            setIsCopied(true);
+            
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 2000);
+        }).catch(err => {
+            console.error("Failed to copy text: ", err);
+        });
+    }
 
     /* Turn the MongoDB list into a nested tree */
     const commentTree = useMemo(() => {
@@ -294,6 +314,13 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
                         </Vote_Button>
 
                     </div>
+
+                    {/* Copy Link Button */}
+                    <Pill_Button 
+                        icon = "🔗"
+                        text = "Copy Link"
+                        onClick = {handleShare}
+                    />
 
                     {/* Reply Button */}
                     <Pill_Button 
