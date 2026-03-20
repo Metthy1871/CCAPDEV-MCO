@@ -58,6 +58,8 @@ const seedDatabase = async () => {
         const postId1 = new mongoose.Types.ObjectId();
         const postId2 = new mongoose.Types.ObjectId();
         const postId3 = new mongoose.Types.ObjectId();
+        const postId4 = new mongoose.Types.ObjectId();
+        const postId5 = new mongoose.Types.ObjectId();
 
         // Use the raw MongoDB driver to bypass Mongoose's automatic timestamp handling,
         // allowing us to manually set createdAt for testing the sorting algorithms
@@ -65,30 +67,55 @@ const seedDatabase = async () => {
             {
                 _id: postId1,
                 title: 'The Shujin Teacher Conspiracy',
-                content: 'This post is very old but has the most votes. (Popular All-Time)',
+                content: "The pe teacher at Shujin Academy gives me bad vibes, am I the only one?",
                 author: users[0]._id, // Joker
                 tags: ['shujin', 'rumor'],
                 upvotes: [users[1]._id, users[2]._id, users[3]._id, users[4]._id], // 4 Votes
+                downvotes: [],
                 createdAt: sixMonthsAgo,
                 updatedAt: sixMonthsAgo
             },
             {
                 _id: postId2,
                 title: 'Warning: Shibuya Scams',
-                content: 'This post is new and has decent votes. (Popular Recent)',
+                content: "I've seen a growing number of scammers in Shibuya, stay vigilant",
                 author: users[4]._id, // Queen
                 tags: ['shibuya', 'warning'],
                 upvotes: [users[0]._id, users[1]._id, users[2]._id], // 3 Votes
+                downvotes: [],
                 createdAt: yesterday,
                 updatedAt: yesterday
             },
             {
                 _id: postId3,
                 title: 'Did anyone see that calling card?',
-                content: 'Brand new, zero votes. Should be at the bottom of popular sorts.',
+                content: "The Phantom Thieves just posted a new calling card on the bulletin board!",
                 author: users[1]._id, // Skull
                 tags: ['callingcard'],
                 upvotes: [], // 0 Votes
+                downvotes: [],
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            {
+                _id: postId4,
+                title: 'Shido is sus?',
+                content: "Shido seems suspicious, don't believe a word he says",
+                author: users[2]._id, // Panther
+                tags: ['politics', 'government', 'news'],
+                upvotes: [users[0]._id], // 0 Votes
+                downvotes: [],
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            {
+                _id: postId5,
+                title: 'Lobsters at the beach',
+                content: 'I just caught two massive lobsters at the beach.',
+                author: users[3]._id, // Fox
+                tags: ['food', 'beach', 'news'],
+                upvotes: [], // 0 Votes
+                downvotes: [users[0]._id], // 1 Downvote
                 createdAt: new Date(),
                 updatedAt: new Date()
             }
@@ -111,6 +138,7 @@ const seedDatabase = async () => {
             post: postId1,
             parentComment: null,
             upvotes: [users[0]._id], // 1 Upvote (Joker)
+            downvotes: [],
             createdAt: twoDaysAgo
         });
 
@@ -121,6 +149,7 @@ const seedDatabase = async () => {
             post: postId1,
             parentComment: null,
             upvotes: [users[0]._id, users[1]._id, users[2]._id, users[4]._id], // 4 Upvotes
+            downvotes: [],
             createdAt: oneHourAgo
         });
 
@@ -131,6 +160,27 @@ const seedDatabase = async () => {
             post: postId1,
             parentComment: rootComment1._id,
             upvotes: [], // 0 Upvotes
+            downvotes: [],
+            createdAt: new Date()
+        });
+
+        const reply2 = await Comment.create({
+            content: 'Taking pictures without consent? Kinda sus',
+            author: users[0]._id, // Joker
+            post: postId1,
+            parentComment: rootComment2._id,
+            upvotes: [], // 0 Upvotes
+            downvotes: [users[0]._id, users[1]._id, users[2]._id, users[4]._id],
+            createdAt: new Date()
+        });
+
+        const reply3 = await Comment.create({
+            content: "Get ratio'd",
+            author: users[1]._id, // Skull
+            post: postId1,
+            parentComment: rootComment2._id,
+            upvotes: [users[0]._id, users[1]._id, users[2]._id, users[4]._id], // 0 Upvotes
+            downvotes: [],
             createdAt: new Date()
         });
 
