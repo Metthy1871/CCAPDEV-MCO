@@ -1,4 +1,5 @@
 import * as userService from "../services/user.service.js";
+import { User } from "../models/User.js";
 
 const getUserProfile = async (req, res) => {
     try {
@@ -40,7 +41,27 @@ const updateUserProfile = async (req, res) => {
     }
 }
 
+const getTotalMembers = async (req, res) => {
+
+    try {
+        const totalMembers = await User.countDocuments(); 
+        
+        res.status(200).json({ 
+            success: true, 
+            data: { totalMembers } 
+        });
+    } catch (error) {
+
+        res.status(500).json({ 
+            success: false, 
+            message: "Failed to fetch total members",
+            error: error.message
+        });
+    }
+}
+
 export {
     getUserProfile,
-    updateUserProfile
+    updateUserProfile,
+    getTotalMembers
 };

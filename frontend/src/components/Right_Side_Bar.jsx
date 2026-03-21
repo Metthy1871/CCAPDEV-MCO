@@ -1,9 +1,13 @@
 /* This component displays the forum information and rules. */
 
+import { useFetchTotalMembers } from '../hooks/useFetchTotalMembers.js';
 import { forum_rules } from '../data/forum_rules.js';
+
 import './Right_Side_Bar.css';
 
 function Right_Side_Bar() {
+
+    const {data: totalMembers, isLoading } = useFetchTotalMembers();
 
     return (
 
@@ -26,19 +30,7 @@ function Right_Side_Bar() {
                         </span>
 
                         <span className="stat_value">
-                            12,405
-                        </span>
-
-                    </div>
-
-                    <div className="stat_item">
-
-                        <span className="stat_label">
-                            Active:
-                        </span>
-
-                        <span className="stat_value highlight">
-                            892
+                            {isLoading ? "..." : totalMembers?.totalMembers || totalMembers || 0}
                         </span>
 
                     </div>
