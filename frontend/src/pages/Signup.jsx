@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { useRegister } from '../hooks/useRegister';
 
-import phantom_logo from '../media/phantom_logo.png';
+import phantom_logo from '../media/Phantom_Logo.png';
 
 import './Signup.css';
 

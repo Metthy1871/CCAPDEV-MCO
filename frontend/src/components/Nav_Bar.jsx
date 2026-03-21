@@ -8,7 +8,7 @@ import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 import Pill_Button from './Pill_Button';
 import Profile_Icon from './Profile_Icon';
 
-import phantom_logo from '../media/phantom_logo.png';
+import phantom_logo from '../media/Phantom_Logo.png';
 
 import { useState } from 'react';
 
