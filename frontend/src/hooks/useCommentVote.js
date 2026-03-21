@@ -7,12 +7,12 @@ export function useCommentVote() {
 
     return useMutation({
 
-        mutationFn: async ({ commentId, action }) => {
+        mutationFn: async ({ postId, commentId, action }) => {
 
             const token = localStorage.getItem('token'); 
             
             const response = await axios.put(
-                `http://localhost:3000/api/comments/${commentId}/vote`, 
+                `http://localhost:3000/api/posts/${postId}/comments/${commentId}/vote`, 
                 { action },
                 {
                     headers: {

@@ -22,7 +22,7 @@ function Trending_Topics() {
                 <ul className = "trend_list">
 
                     {/* Map the list of trending topics */}
-                    {popularTopics.map(tag => (
+                    {popularTopics?.map(tag => (
 
                         <li key = {tag.name} className = "topic">
                             <span className = "keyword">#{tag.name}</span>

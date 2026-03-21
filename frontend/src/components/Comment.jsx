@@ -12,6 +12,7 @@ import { useFetchUserByName } from '../hooks/useFetchUserByName';
 import { useCreateComment } from '../hooks/useCreateComment';
 import { useDeleteComment } from '../hooks/useDeleteComment';
 import { useEditComment } from '../hooks/useEditComment';
+import { useCommentVote } from '../hooks/useCommentVote';
 import { getRelativeTime, getExactTime } from '../utils/timeUtils';
 
 import Vote_Button from './Vote_Button';
@@ -26,7 +27,7 @@ function getTextLength(html) {
     return div.textContent.length;
 }
 
-function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, isDeleted, comments, isGuest}) {
+function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, downvotes, isDeleted, comments, isGuest}) {
 
     const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
@@ -34,6 +35,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
     const createCommentMutation = useCreateComment();
     const deleteCommentMutation = useDeleteComment();
     const editCommentMutation = useEditComment();
+    const voteMutation = useCommentVote();
 
     const isAuthor = current_user?.username === author.username;
     const relativeDate = getRelativeTime(createdAt);
@@ -51,6 +53,10 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
     const [isReplying, setIsReplying] = useState(false);
     const [replyText, setReplyText] = useState("");
 
+    const currentScore = upvotes.length - downvotes.length;
+    const hasUpvoted = current_user ? upvotes.includes(current_user._id) : false;
+    const hasDownvoted = current_user ? downvotes.includes(current_user._id) : false;
+
     useEffect(() => {
         setEditText(content);
     }, [content]);
@@ -67,6 +73,16 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
 
         setIsReplying(false);
         setReplyText("");
+    };
+
+    const handleVote = (action, e) => {
+
+        e.stopPropagation();
+
+        if (isGuest || voteMutation.isPending)
+            return;
+
+        voteMutation.mutate({ postId, commentId: _id, action})
     };
 
     return (
@@ -204,7 +220,10 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
 
                         {/* Vote_Button component */}
                         <Vote_Button 
-                            initialScore = {upvotes.length}
+                            score = {currentScore}
+                            hasUpvoted = {hasUpvoted}
+                            hasDownvoted = {hasDownvoted}
+                            onVote = {handleVote}
                             isGuest = {isGuest}>
                         </Vote_Button>
 

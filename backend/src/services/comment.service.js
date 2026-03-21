@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Comment from '../models/Comment.js';
+import { VOTE_ACTIONS } from '../utils/constants.js';
 
 const { ObjectId } = mongoose.Types;
 
@@ -130,8 +131,8 @@ const toggleCommentVote = async ({ commentId, userId, action}) => {
         return await Comment.findByIdAndUpdate(
             commentId,
             update,
-            { new: true }
-        );
+            { new: true, timestamps: false }
+        ).populate('author', 'username avatar');;
 
     } catch (error) {
         throw error;
