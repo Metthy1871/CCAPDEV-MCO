@@ -51,28 +51,32 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
 
      /* Edit */
     const [isEditing, setIsEditing] = useState(false);
-    const [editText, setEditText] = useState(content);
+    const [currentTitle, setCurrentTitle] = useState(title);
+    const [currentContent, setCurrentContent] = useState(content);
+    const [editContent, setEditContent] = useState(content);
+    const [editTitle, setEditTitle] = useState(title);
 
     /* Reply */
     const [isReplying, setIsReplying] = useState(false);
     const [replyText, setReplyText] = useState("");
 
     const navigate = useNavigate();
-    const [currentContent, setCurrentContent] = useState(content);
-
+    
     const currentScore = upvotes.length - downvotes.length;
     const hasUpvoted = current_user ? upvotes.includes(current_user._id) : false;
     const hasDownvoted = current_user ? downvotes.includes(current_user._id) : false;
 
     useEffect(() => {
+        setCurrentTitle(title)
         setCurrentContent(content);
-    }, [content]);
+    }, [title, content]);
 
     useEffect(() => {
         if (isEditing) {
-            setEditText(currentContent);
+            setEditTitle(currentTitle);
+            setEditContent(currentContent);
         }
-    }, [isEditing, currentContent]);
+    }, [isEditing, currentTitle, currentContent]);
 
     /* Navigates to the specific post page */
     const handlePostClick = () => {
@@ -227,9 +231,11 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
                 </div>
 
                 {/* Post title */}
-                <h2 className = "post_title">
-                    {title}
-                </h2>
+                {!isEditing && (
+                    <h2 className="post_title">
+                        {currentTitle}
+                    </h2>
+                )}
                 
                 <div className="post_tags">
                     {tags.map((tag, index) => (
@@ -249,6 +255,25 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
                 {isEditing ? (
 
                         <div className = "reply_box" onClick={(e) => e.stopPropagation()}>
+                            
+                            <input 
+                                type = "text"
+                                className = "rich_text_editor"
+                                value = {editTitle}
+                                onChange = {(e) => setEditTitle(e.target.value)}
+                                style = {{
+                                    width: '100%',
+                                    padding: '10px',
+                                    marginBottom: '10px',
+                                    fontSize: '1.2rem',
+                                    fontWeight: 'bold',
+                                    borderRadius: '5px',
+                                    border: '1px solid #ccc',
+                                    background: 'transparent',
+                                    color: 'inherit'
+                                }}
+                            />
+                            
                             <div
                                 style={{
                                     minHeight: '100px',
@@ -256,15 +281,15 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
                                 }}
                             >
                                 <Rich_Text
-                                    className="rich_text_editor"
-                                    key={_id + "_post_edit"}
-                                    value={editText}
-                                    setValue={setEditText}
+                                    className = "rich_text_editor"
+                                    key = {_id + "_post_edit"}
+                                    value = {editContent}
+                                    setValue = {setEditText}
                                 />
                             </div>
 
-                            <span style={{ fontSize: '12px', color: editText.length > 50000 ? '#ff4d4d' : '#888' }}>
-                                {getTextLength(editText)}/50000
+                            <span style={{ fontSize: '12px', color: editContent.length > 50000 ? '#ff4d4d' : '#888' }}>
+                                {getTextLength(editContent)}/50000
                             </span>
                             
                             <div className = "reply_box_footer" style = {{ marginTop: '5px' }}>
@@ -279,12 +304,12 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
 
                                 <Pill_Button 
                                     icon = "" text = "Save"
-                                    disabled = {editPostMutation.isPending || editText.trim().length < 5 || editText === currentContent}
+                                    disabled = {editPostMutation.isPending || editContent.trim().length < 5 || editContent === currentContent}
                                     onClick = {() => {
                                         editPostMutation.mutate(
-                                            { postId: _id, content: DOMPurify.sanitize(editText) },
+                                            { postId: _id, title: editTitle, content: DOMPurify.sanitize(editContent) },
                                             { onSuccess: () => {
-                                                setCurrentContent(DOMPurify.sanitize(editText));
+                                                setCurrentContent(DOMPurify.sanitize(editContent));
                                                 setIsEditing(false);                             // close editor
                                             } } // Close box on success
                                         );

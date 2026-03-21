@@ -7,12 +7,12 @@ export function useEditPost() {
 
     return useMutation({
 
-        mutationFn: async ({ postId, content }) => {
+        mutationFn: async ({ postId, title, content }) => {
 
             const token = localStorage.getItem('token');
             const response = await axios.put(
                 `http://localhost:3000/api/posts/${postId}`,
-                { content },
+                { title, content },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -21,6 +21,7 @@ export function useEditPost() {
 
         onSuccess: (data, variables) => {
             queryClient.invalidateQueries({ queryKey: ['post', variables.postId] });
+            queryClient.invalidateQueries({ queryKey: ['posts'] });
         },
         
         onError: (error) => {
