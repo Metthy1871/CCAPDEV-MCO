@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useCommentVote() {
 
@@ -12,7 +13,7 @@ export function useCommentVote() {
             const token = localStorage.getItem('token'); 
             
             const response = await axios.put(
-                `http://localhost:3000/api/posts/${postId}/comments/${commentId}/vote`, 
+                `${config.apiUrl}/api/posts/${postId}/comments/${commentId}/vote`, 
                 { action },
                 {
                     headers: {

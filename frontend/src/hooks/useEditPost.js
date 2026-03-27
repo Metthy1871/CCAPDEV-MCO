@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useEditPost() {
 
@@ -11,7 +12,7 @@ export function useEditPost() {
 
             const token = localStorage.getItem('token');
             const response = await axios.put(
-                `http://localhost:3000/api/posts/${postId}`,
+                `${config.apiUrl}/api/posts/${postId}`,
                 { title, content },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

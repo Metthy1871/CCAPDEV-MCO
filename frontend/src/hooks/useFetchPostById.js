@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import config from '../../config/env.js';
 
 export function useFetchPostById(id) {
 
@@ -8,7 +9,7 @@ export function useFetchPostById(id) {
         queryKey: ['post', id],
 
         queryFn: async () => {
-            const response = await axios.get(`http://localhost:3000/api/posts/${id}`);
+            const response = await axios.get(`${config.apiUrl}/api/posts/${id}`);
             return response.data.data;
         },
 

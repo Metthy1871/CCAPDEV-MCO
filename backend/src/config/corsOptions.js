@@ -1,8 +1,10 @@
 // Source: https://www.stackhawk.com/blog/nodejs-cors-guide-what-it-is-and-how-to-enable-it/
 // Adapted to configure CORS and enable the frontend to make requests to the backend API
 
+import config from './env.js';
+
 const allowedOrigins = [
-    'http://localhost:5173', // React Frontend
+    config.clientUrl, // React Frontend
 ];
 
 

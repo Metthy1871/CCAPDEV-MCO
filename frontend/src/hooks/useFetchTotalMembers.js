@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useFetchTotalMembers() {
 
@@ -8,7 +9,7 @@ export function useFetchTotalMembers() {
         queryKey: ['forumStats'],
 
         queryFn: async () => {
-            const { data } = await axios.get('http://localhost:3000/api/users/stats');
+            const { data } = await axios.get(`${config.apiUrl}/api/users/stats`);
             return data.data; 
         },
 

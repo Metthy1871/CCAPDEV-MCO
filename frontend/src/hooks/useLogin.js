@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
+import config from '../../config/env.js';
 export function useLogin() {
     
     const queryClient = useQueryClient();
@@ -10,7 +11,7 @@ export function useLogin() {
         mutationFn: async (credentials) => {
             
             const response = await axios.post(
-                'http://localhost:3000/api/auth/login', 
+                `${config.apiUrl}/api/auth/login`, 
                 credentials
             );
 

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useFetchViewedUser(username) {
 
@@ -8,7 +9,7 @@ export function useFetchViewedUser(username) {
         queryKey: ['user', username],
 
         queryFn: async () => {
-            const response = await axios.get(`http://localhost:3000/api/users/${username}`);
+            const response = await axios.get(`${config.apiUrl}/api/users/${username}`);
             return response.data; 
         },
 

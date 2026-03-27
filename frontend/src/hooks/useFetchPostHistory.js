@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useFetchPostHistory(userId, sortBy = 'recent') {
 
@@ -8,7 +9,7 @@ export function useFetchPostHistory(userId, sortBy = 'recent') {
         queryKey: ['posts', 'user', userId, sortBy],
 
         queryFn: async () => {
-            const { data } = await axios.get(`http://localhost:3000/api/posts/user/${userId}?sortBy=${sortBy}`);
+            const { data } = await axios.get(`${config.apiUrl}/api/posts/user/${userId}?sortBy=${sortBy}`);
             return data.data; 
         },
 

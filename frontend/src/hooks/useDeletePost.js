@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useDeletePost() {
 
@@ -10,7 +11,7 @@ export function useDeletePost() {
         mutationFn: async (postId) => {
             const token = localStorage.getItem('token');
             const response = await axios.delete(
-                `http://localhost:3000/api/posts/${postId}`,
+                `${config.apiUrl}/api/posts/${postId}`,
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 }

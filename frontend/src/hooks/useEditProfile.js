@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useEditProfile() {
     
@@ -12,7 +13,7 @@ export function useEditProfile() {
             const token = localStorage.getItem('token');
 
             const response = await axios.put(
-                'http://localhost:3000/api/users/profile',
+                `${config.apiUrl}/api/users/profile`,
                 profileData,
                 { 
                     headers: { Authorization: `Bearer ${token}` } 

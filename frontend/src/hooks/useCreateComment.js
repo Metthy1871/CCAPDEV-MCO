@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useCreateComment() {
 
@@ -12,7 +13,7 @@ export function useCreateComment() {
             const token = localStorage.getItem('token');
 
             const response = await axios.post(
-                `http://localhost:3000/api/posts/${postId}/comments`, 
+                `${config.apiUrl}/api/posts/${postId}/comments`, 
                 { 
                     post: postId,
                     content: content,

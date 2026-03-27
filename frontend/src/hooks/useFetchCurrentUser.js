@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useFetchCurrentUser() {
 
@@ -14,7 +15,7 @@ export function useFetchCurrentUser() {
                 return null;
 
             const response = await axios.get(
-                'http://localhost:3000/api/auth/me',
+                `${config.apiUrl}/api/auth/me`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
+import config from '../../config/env.js';
 export function useRegister() {
 
     const queryClient = useQueryClient();
@@ -9,7 +10,7 @@ export function useRegister() {
 
         mutationFn: async (userData) => {
             const response = await axios.post(
-                'http://localhost:3000/api/auth/register', 
+                `${config.apiUrl}/api/auth/register`, 
                 userData
             );
 

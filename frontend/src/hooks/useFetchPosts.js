@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useFetchPosts(sortBy = 'recent', search) {
 
@@ -8,7 +9,7 @@ export function useFetchPosts(sortBy = 'recent', search) {
         queryKey: ['posts', sortBy, search],
         
         queryFn: async () => {
-            let url = `http://localhost:3000/api/posts?sortBy=${sortBy}`;
+            let url = `${config.apiUrl}/api/posts?sortBy=${sortBy}`;
             if (search && search.trim() !== '') {
                 url += `&search=${search}`;
             }

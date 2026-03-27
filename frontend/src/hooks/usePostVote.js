@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function usePostVote() {
 
@@ -12,7 +13,7 @@ export function usePostVote() {
             const token = localStorage.getItem('token'); 
             
             const response = await axios.put(
-                `http://localhost:3000/api/posts/${postId}/vote`, 
+                `${config.apiUrl}/api/posts/${postId}/vote`, 
                 { action },
                 {
                     headers: {

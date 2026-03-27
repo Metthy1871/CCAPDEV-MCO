@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useFetchPopularTopics() {
 
@@ -9,7 +10,7 @@ export function useFetchPopularTopics() {
         queryFn: async () => {
 
             // Fetch every post from the database
-            const response = await axios.get('http://localhost:3000/api/posts');
+            const response = await axios.get(`${config.apiUrl}/api/posts`);
             const posts = response.data.data;
 
             // Create a dictionary to tally the votes

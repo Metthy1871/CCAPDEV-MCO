@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import config from '../../config/env.js';
 
 export function useDeleteComment() {
 
@@ -12,7 +13,7 @@ export function useDeleteComment() {
             const token = localStorage.getItem('token');
 
             const response = await axios.delete(
-                `http://localhost:3000/api/posts/${postId}/comments/${commentId}`,
+                `${config.apiUrl}/api/posts/${postId}/comments/${commentId}`,
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 }
