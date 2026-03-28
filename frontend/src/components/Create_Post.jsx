@@ -1,7 +1,7 @@
 /* This component renders the post creation menu. */
 
 import { useQuill } from 'react-quilljs';
-import Quill from 'quill';
+
 import 'quill/dist/quill.snow.css';
 import DOMPurify from 'dompurify';
 
@@ -12,6 +12,8 @@ import { useCreatePost } from '../hooks/useCreatePost';
 import Pill_Button from './Pill_Button';
 
 import './Create_Post.css';
+
+import Quill from 'quill';
 
 function Create_Post({ isOpen, onClose }) {
     
@@ -31,7 +33,7 @@ function Create_Post({ isOpen, onClose }) {
                 ['link']
             ]
         }
-    }, Quill?.default || Quill);
+    }, Quill);
     
     const handleCreateTag = (e) => {
 

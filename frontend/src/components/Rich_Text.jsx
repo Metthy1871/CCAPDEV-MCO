@@ -2,7 +2,6 @@ import { useQuill } from 'react-quilljs';
 import { useEffect } from 'react';
 import 'quill/dist/quill.snow.css';
 import './Rich_Text.css';
-
 import Quill from 'quill';
 
 function Rich_Text({ value, setValue }) {
@@ -15,7 +14,7 @@ function Rich_Text({ value, setValue }) {
                 ['link']
             ]
         }
-    }, Quill?.default || Quill);
+    }, Quill);
 
     // Initialize editor and text-change handler
     useEffect(() => {
