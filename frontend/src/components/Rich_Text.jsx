@@ -15,7 +15,7 @@ function Rich_Text({ value, setValue }) {
                 ['link']
             ]
         }
-    }, Quill);
+    }, Quill?.default || Quill);
 
     // Initialize editor and text-change handler
     useEffect(() => {

@@ -31,7 +31,7 @@ function Create_Post({ isOpen, onClose }) {
                 ['link']
             ]
         }
-    }, Quill.default ? Quill.default : Quill);
+    }, Quill?.default || Quill);
     
     const handleCreateTag = (e) => {
 
