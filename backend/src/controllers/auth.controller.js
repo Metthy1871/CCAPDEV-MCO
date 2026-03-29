@@ -61,6 +61,13 @@ const loginUser = async (req, res) => {
         // pass the token to the generator
         const token = generateToken(user._id, !!remember); 
 
+        res.cookie("session", "active", {
+            httpOnly: false,
+            maxAge: remember 
+                ? 21 * 24 * 60 * 60 * 1000 
+                : 24 * 60 * 60 * 1000, // match token expiration
+        });
+
         return res.status(200).json({
             message: "User Logged in",
             token,
@@ -80,6 +87,10 @@ const loginUser = async (req, res) => {
 
 const logoutUser = async (req, res) => {
     try {
+        res.cookie("session", "", {
+            expires: new Date(0)
+        });
+        
         return res.status(200).json({
             message: "Logout successful"
         });
