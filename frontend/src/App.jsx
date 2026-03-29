@@ -11,6 +11,9 @@ import Post_Page from './pages/Post_Page';
 import Profile_Page from './pages/Profile_Page';
 import Search from './pages/Search'
 
+// Ensure cookies are sent with every request
+axios.defaults.withCredentials = true; 
+
 // Interceptor for Remember Me
 axios.interceptors.response.use(
 
