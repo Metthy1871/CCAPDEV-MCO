@@ -11,7 +11,7 @@
     left: 0;
     bottom: 0;
     padding: 20px;
-    position: fixed;
+    position: sticky;
 
     overflow-y: auto;
 }

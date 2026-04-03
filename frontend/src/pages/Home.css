@@ -14,15 +14,9 @@
     justify-content: center;
 }
 
-.left_side_container {
-
-    flex: 0 0 300px;
-}
-
 .feed_container {
 
-    flex-grow: 1;
-    flex-shrink: 1;
+    flex: 1;
     max-width: 700px; 
     min-width: 600px;
     margin: 0 auto;
@@ -32,8 +26,10 @@
     justify-content: center;
 }
 
-.right_side_container {
+.left_side_container, .right_side_container {
 
+    position: sticky;
     flex: 0 0 300px;
 }
+
 
