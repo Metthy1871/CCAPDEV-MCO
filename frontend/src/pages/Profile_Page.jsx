@@ -160,7 +160,7 @@ function Profile_Page() {
                                     </span>
 
                                     <span className = "stat_value highlight">
-                                        {user_posts.length} {/* TO BE EDITED */}
+                                        {viewed_user.karma}
                                     </span>
 
                                 </div>
