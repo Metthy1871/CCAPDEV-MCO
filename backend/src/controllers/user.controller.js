@@ -60,8 +60,32 @@ const getTotalMembers = async (req, res) => {
     }
 }
 
+const deleteUser = async (req, res) => {
+    try {
+        const id = req.user._id;
+
+        const deletedUser = await userService.deleteUserById(id);
+
+        if (!deletedUser){
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.cookie("session", "", {
+            expires: new Date(0)
+        });
+
+        return res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error deleting user",
+            error: error.message
+        });
+    }
+}
+
 export {
     getUserProfile,
     updateUserProfile,
+    deleteUser,
     getTotalMembers
 };

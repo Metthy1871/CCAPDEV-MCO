@@ -68,7 +68,22 @@ const updateUserData = async (id, updateFields) => {
      
 };
 
+const deleteUserById = async (id) => {
+    try {
+        const deletedUser = await User.findByIdAndDelete(id);
+
+        if (!deletedUser) {
+            return null;
+        }
+
+        return deletedUser;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export {
     findUserByUsername,
     updateUserData,
+    deleteUserById
 };
