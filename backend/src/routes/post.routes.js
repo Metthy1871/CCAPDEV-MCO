@@ -8,8 +8,8 @@ const postRouter = Router();
 postRouter.use('/:postId/comments', commentRouter);
 
 postRouter.get('/', postController.getAllPosts);
-postRouter.get('/:postId', postController.getPostById);
 postRouter.get('/user/:userId', postController.getPostsByUser);
+postRouter.get('/:postId', postController.getPostById);
 postRouter.post('/', protect, postController.createPost);
 postRouter.put('/:postId', protect, postController.updatePost);
 postRouter.delete('/:postId', protect, postController.deletePost);

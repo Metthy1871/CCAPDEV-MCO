@@ -4,10 +4,22 @@ import { sanitizeHTML } from '../utils/sanitize.js';
 
 
 const getAllPosts = catchAsync(async (req, res) => {
-    const { sortBy } = req.query;
-    const allPosts = await postService.getAllPosts(sortBy);
+    const { sortBy, search, tags } = req.query;
+    const keyword = search?.trim();
 
-    res.status(200).json({ success: true, data: allPosts });
+    // parse tags
+    // if no tags param, default to empty array
+    // normalize tags to lowercase
+    const tagList = tags
+        ? tags.split(",").map(t => t.trim().toLowerCase()).filter(Boolean)
+        : [];
+
+    // get all post if no query is done
+    const posts = keyword 
+        ? await postService.searchPosts({ keyword, tags: tagList, sortBy })
+        : await postService.getAllPosts(sortBy);
+
+    res.status(200).json({ success: true, data: posts });
 
 });
 
@@ -82,6 +94,8 @@ const togglePostVote = catchAsync(async (req, res) => {
     res.status(200).json({ success: true, data: postVote });
 });
 
+
+
 export default {
   getAllPosts,
   getPostById,
@@ -89,5 +103,5 @@ export default {
   createPost,
   updatePost,
   deletePost,
-  togglePostVote
+  togglePostVote,
 };

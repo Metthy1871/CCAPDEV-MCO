@@ -193,6 +193,63 @@ const togglePostVote = async ({ postId, userId, action }) => {
     }
 }
 
+const searchPosts = async ({ keyword, tags = [], sortBy=SORT_POSTS_OPTIONS.RECENT}) => {
+    
+    try {
+        const query = {};
+
+    // keyword matching (title OR body)
+    // "i" to make the regex case-insensitive
+    
+    // sanitize user input
+    const escaped = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    query.$or = [
+        { title: { $regex: escaped, $options: "i" } },
+        { content: { $regex: escaped, $options: "i" } }
+    ];
+    
+
+    // optional tag filtering (applied on top of keyword stage)
+    if (tags.length > 0) {
+        query.tags = { $in: tags };
+    }
+
+    switch (sortBy) {
+        case SORT_POSTS_OPTIONS.POPULAR_ALL_TIME:
+            const allTime = await Post.aggregate([
+                { $match: query },
+                { $addFields: { voteCount: { $size: { $ifNull: ["$upvotes", []] } } } }, // get the length of the upvotes array
+                { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
+            ])
+
+            return await Post.populate(allTime, { path: 'author', select: 'username'} );
+        
+        case SORT_POSTS_OPTIONS.POPULAR_RECENT: // sort by the most popular for posts created within the last seven days
+            const sevenDaysAgo = new Date();
+            // calculate the date exactly 7 days ago
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+            const recentPopular = await Post.aggregate([
+                { $match: { ...query, createdAt: { $gte: sevenDaysAgo} } }, // filter posts created more than seven days ago
+                { $addFields: { voteCount: { $size: { $ifNull: ["$upvotes", []] } } } },
+                { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
+            ]);
+
+            return await Post.populate(recentPopular, { path: 'author', select: 'username'} );
+
+        case SORT_POSTS_OPTIONS.RECENT:
+        default:
+            return await Post.find(query)
+                .sort({ createdAt: -1 }) // sort by most recent
+                .populate('author', 'username');
+        }
+
+    } catch (error) {
+        throw error;
+    }
+
+};
+
 export default {
   getAllPosts,
   getPostById,
@@ -200,5 +257,6 @@ export default {
   createPost,
   updatePost,
   deletePost,
-  togglePostVote
+  togglePostVote,
+  searchPosts
 };
