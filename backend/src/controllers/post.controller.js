@@ -2,11 +2,20 @@ import postService from '../services/post.service.js';
 import catchAsync from '../utils/catchAsync.js';
 import { sanitizeHTML } from '../utils/sanitize.js';
 
+const hasNonEmptyString = (value) =>
+    typeof value === 'string' && value.trim().length > 0;
+
+const getKeywordFromQuery = (query) => {
+    if (hasNonEmptyString(query.keyword)) return query.keyword.trim();
+    if (hasNonEmptyString(query.search)) return query.search.trim();
+    return '';
+};
+
 
 const getAllPosts = catchAsync(async (req, res) => {
 
-    const { sortBy, keyword, tags } = req.query;
-    const cleanKeyword = keyword?.trim() || "";
+    const { sortBy, tags } = req.query;
+    const cleanKeyword = getKeywordFromQuery(req.query);
 
     // parse tags
     // if no tags param, default to empty array

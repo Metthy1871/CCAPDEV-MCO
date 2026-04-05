@@ -33,12 +33,26 @@ const isAuthRateLimitedRoute = (req) =>
     req.method === 'POST' &&
     (req.path === '/auth/login' || req.path === '/auth/register');
 
+const hasNonEmptyString = (value) =>
+    typeof value === 'string' && value.trim().length > 0;
+
+const getKeyword = (req) => {
+    if (hasNonEmptyString(req.query.keyword)) return req.query.keyword.trim();
+    if (hasNonEmptyString(req.query.search)) return req.query.search.trim();
+    return '';
+};
+
+const hasTagFilter = (tags) =>
+    Array.isArray(tags)
+        ? tags.some((tag) => hasNonEmptyString(tag))
+        : hasNonEmptyString(tags);
+
 const isSearchRateLimitedRoute = (req) =>
     req.method === 'GET' &&
     req.path === '/posts' &&
-    typeof req.query.search === 'string' &&
-    req.query.search.trim().length > 0;
+    (getKeyword(req).length > 0 || hasTagFilter(req.query.tags));
 
+    
 // use Redis for multi-server deployments
 const globalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,

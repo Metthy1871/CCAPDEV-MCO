@@ -7,12 +7,22 @@ import { protect } from '../middlewares/auth.middleware.js'; // protect middlwar
 
 const postRouter = Router();
 
-const hasSearchQuery = (req) => {
-    const hasKeyword = typeof req.query.keyword === 'string' && req.query.keyword.trim().length > 0;
-    const hasTags = req.query.tags && req.query.tags.length > 0;
-    
-    return hasKeyword || hasTags;
+const hasNonEmptyString = (value) =>
+    typeof value === 'string' && value.trim().length > 0;
+
+const getKeyword = (req) => {
+    if (hasNonEmptyString(req.query.keyword)) return req.query.keyword.trim();
+    if (hasNonEmptyString(req.query.search)) return req.query.search.trim();
+    return '';
 };
+
+const hasTagFilter = (tags) =>
+    Array.isArray(tags)
+        ? tags.some((tag) => hasNonEmptyString(tag))
+        : hasNonEmptyString(tags);
+
+const hasSearchQuery = (req) =>
+    getKeyword(req).length > 0 || hasTagFilter(req.query.tags);
 
 const searchLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
