@@ -12,7 +12,7 @@ import Post from '../components/Post.jsx';
 import Post_Sort from '../components/Post_Sort.jsx';
 import Create_Post from '../components/Create_Post.jsx';
 
-import './Search.css';
+import './Home.css';
 
 function Search() {
 
@@ -67,16 +67,19 @@ function Search() {
                         </h2>
                     )}
 
-                    <h2 className = "results_for">
-                        Results for: {keyword}
-                    </h2>
+                    {keyword && (
+                        <h2 style={{ color: 'white', textAlign: 'center', marginTop: '20px'}}>
+                            Results for: {keyword}
+                        </h2>
+                    )}
+                    
 
-                    {!isLoading && posts?.length === 0 && (
-                        <h2>
+                    {keyword && !isLoading && posts?.length === 0 &&(
+                        <h2 style={{ color: 'white', textAlign: 'center', marginTop: '20px' }}>
                             No results found 😢
                         </h2>
                     )}
-
+                    
                     {/* Render posts */}
                     {!isLoading && !isError && posts?.map((post) => (
                         <Post 

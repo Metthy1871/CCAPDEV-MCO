@@ -210,7 +210,8 @@ const searchPosts = async ({ keyword = "", tags = [], sortBy=SORT_POSTS_OPTIONS.
             
             query.$or = [
                 { title: pattern },
-                { content: pattern }
+                { content: pattern },
+                { tags: pattern}
             ];
         }
 

@@ -23,7 +23,7 @@
     padding: 40px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .left_side_container, .right_side_container {
