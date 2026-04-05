@@ -29,7 +29,7 @@ function getTextLength(html) {
 
 function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downvotes, tags = [], isPreview, isGuest}) {
     
-    const { data: authorProfile } = useFetchUserByName(author.username);
+    const { data: authorProfile } = useFetchUserByName(author?.username);
     const { data: current_user } = useFetchCurrentUser();
     const { data: fetchedComments = [], isLoading} = useFetchComments(_id);
 
@@ -38,7 +38,7 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
     const editPostMutation = useEditPost();
     const voteMutation = usePostVote();
 
-    const isAuthor = current_user?.username === author.username;
+    const isAuthor = current_user?.username === author?.username;
     const relativeDate = getRelativeTime(createdAt);
     const exactDate = getExactTime(createdAt);
     const formattedEditDate = getExactTime(updatedAt);
@@ -167,21 +167,31 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
                 {/* Section 1: Post Header */}
                 <div className = 'post_header'>
 
-                    <Link 
-                        to = {`/profile/${author.username}`}
-                        onClick = {(e) => e.stopPropagation()}>
-
+                    {author ? (
+                        /* If author exists, render the clickable Link */
+                        <Link 
+                            to = {`/profile/${author.username}`}
+                            onClick = {(e) => e.stopPropagation()}
+                        >
+                            <img 
+                                src = {authorProfile?.avatar || "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg"}
+                                className = "post_avatar"
+                            />
+                        </Link>
+                    ) : (
+                        /* If author is deleted, render just the image, no Link wrapper */
                         <img 
-                            src = {authorProfile?.avatar}
+                            src = "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg"
                             className = "post_avatar"
+                            style = {{ cursor: 'default' }} 
                         />
-                    </Link>
+                    )}
 
                     <div className = "post_info">
 
                         {/* Post author */}
                         <span className = "post_author"> 
-                            @{author.username}
+                            {author ? `@${author.username}` : "[This account is no longer available]"}
                         </span>
 
                         {/* Post date */}

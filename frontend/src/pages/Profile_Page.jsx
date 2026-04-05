@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
 import { useFetchPostHistory } from '../hooks/useFetchPostHistory';
 import { useFetchUserByName } from '../hooks/useFetchUserByName';
+import { useDeleteProfile } from '../hooks/useDeleteProfile';
 
 import Nav_Bar from '../components/Nav_Bar';
 import Post from '../components/Post';
@@ -29,6 +30,8 @@ function Profile_Page() {
     const [sortBy, setSortBy] = useState('recent');
     const { data: user_posts = [], isLoading: loadingPosts } = useFetchPostHistory(viewed_user?._id, sortBy);
 
+    const { mutate: deleteProfile } = useDeleteProfile();
+
     if (loadingAuth || loadingUser || loadingPosts) 
         return <h2 style={{ color: 'white', textAlign: 'center' }}>Loading Profile... ⏳</h2>;
 
@@ -42,6 +45,17 @@ function Profile_Page() {
         month: 'long',
         day: 'numeric'
     });
+
+    const handleDelete = () => {
+
+        const isSure = window.confirm(
+            "Are you absolutely sure you want to delete your account? Your profile will be permanently erased, but your past posts will remain anonymously. This cannot be undone."
+        );
+
+        if (isSure) {
+            deleteProfile();
+        }
+    }
 
     return (
 
@@ -91,16 +105,28 @@ function Profile_Page() {
 
                         </div>
 
-                        {isOwner && (
-                            
-                            <button 
-                                className = "edit_profile_button" 
-                                onClick = {() => setIsEditOpen(true)}
-                            >
-                                ⚙ EDIT
-                            </button>
-                        )}
+                        <div className = "profile_buttons">
                         
+                            {isOwner && (
+                                <>
+                                    <button 
+                                        className="edit_profile_button" 
+                                        onClick={() => setIsEditOpen(true)}
+                                    >
+                                        ⚙ EDIT
+                                    </button>
+
+                                    <button 
+                                        className="delete_profile_button" 
+                                        onClick={handleDelete} 
+                                    >
+                                        🗑 DELETE
+                                    </button>
+                                </>
+                            )}
+
+                        </div>
+
                     </div>
 
                     {/* Section 3: Post History */}

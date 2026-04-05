@@ -101,15 +101,25 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                     {/* Section 1: Comment Header */}
                     <div className = "comment_header">
 
-                        <Link 
-                            to = {`/profile/${author.username}`}
-                            onClick = {(e) => e.stopPropagation()}>
-
+                        {author ? (
+                            /* If author exists, render the clickable Link */
+                            <Link 
+                                to = {`/profile/${author.username}`}
+                                onClick = {(e) => e.stopPropagation()}
+                            >
+                                <img 
+                                    src = {authorProfile?.avatar || "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg"}
+                                    className = "post_avatar"
+                                />
+                            </Link>
+                        ) : (
+                            /* If author is deleted, render just the image, no Link wrapper */
                             <img 
-                                src = {authorProfile?.avatar}
+                                src = "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg"
                                 className = "post_avatar"
+                                style = {{ cursor: 'default' }} 
                             />
-                        </Link>
+                        )}
 
                         <div className = "post_info">
 
