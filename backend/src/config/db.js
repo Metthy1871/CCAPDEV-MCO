@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
     try {
+        // global query-filter sanitization to reduce query selector injection risk
+        mongoose.set('sanitizeFilter', true);
+
         const conn = await mongoose.connect(config.mongoUri);
         console.log(`MongoDB Connected: ${conn.connection.host}.`);
         console.log(`Mode: ${config.nodeEnv}`);
