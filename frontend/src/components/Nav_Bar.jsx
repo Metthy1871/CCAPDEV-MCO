@@ -82,7 +82,7 @@ function Nav_Bar(){
                         onChange={(e) => setSearchQuery(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && searchQuery.trim()) {
-                                navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+                                navigate(`/search?keyword=${encodeURIComponent(searchQuery.trim())}`);
                             }
                         }}
                     />

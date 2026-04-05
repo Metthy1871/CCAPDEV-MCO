@@ -18,7 +18,7 @@ function Search() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchParams] = useSearchParams();
-    const keyword = searchParams.get('q') || '';
+    const keyword = searchParams.get('keyword') || '';
 
     const { data: current_user } = useFetchCurrentUser();
     const [sortBy, setSortBy] = useState('recent');
