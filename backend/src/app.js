@@ -9,10 +9,10 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import mongoSanitize from 'express-mongo-sanitize';
-// import rateLimit from 'express-rate-limit';
+// import mongoSanitize from 'express-mongo-sanitize';
+import rateLimit from 'express-rate-limit';
 
-
+import config from './config/env.js';
 import corsOptions from './config/corsOptions.js';
 
 // import routers
@@ -28,7 +28,32 @@ app.use(helmet()); // sets HTTP headers to secure the app
 app.use(morgan("dev")); // log HTTP requests to the console
 app.use(cors(corsOptions)); // allows requests from the React frontend and requests with no origin to send HTTP requests
 
-// add rate limiter here
+
+const isAuthRateLimitedRoute = (req) =>
+    req.method === 'POST' &&
+    (req.path === '/auth/login' || req.path === '/auth/register');
+
+const isSearchRateLimitedRoute = (req) =>
+    req.method === 'GET' &&
+    req.path === '/posts' &&
+    typeof req.query.search === 'string' &&
+    req.query.search.trim().length > 0;
+
+// use Redis for multi-server deployments
+const globalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: config.rateLimitGlobalMax,
+    message: {
+        success: false,
+        message: "Too many API requests, please try again later.",
+    },
+    // prevent double counting for requests already protected by auth/search limiter
+    skip: (req) => isAuthRateLimitedRoute(req) || isSearchRateLimitedRoute(req),
+});
+
+
+app.use("/api", globalLimiter);
+
 
 app.use(express.json()); // parse incoming JSON payloads
 app.use(express.urlencoded( { extended: true } )); // parse data sent via standard HTML forms

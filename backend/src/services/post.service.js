@@ -203,9 +203,11 @@ const searchPosts = async ({ keyword, tags = [], sortBy=SORT_POSTS_OPTIONS.RECEN
     
     // sanitize user input
     const escaped = keyword.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(escaped, 'i'); // avoid sanitizeFilter from interfering with $regex objects
+    
     query.$or = [
-        { title: { $regex: escaped, $options: "i" } },
-        { content: { $regex: escaped, $options: "i" } }
+        { title: pattern },
+        { content: pattern }
     ];
     
 
