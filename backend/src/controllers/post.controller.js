@@ -4,23 +4,32 @@ import { sanitizeHTML } from '../utils/sanitize.js';
 
 
 const getAllPosts = catchAsync(async (req, res) => {
-    const { sortBy, search, tags } = req.query;
-    const keyword = search?.trim();
+
+    const { sortBy, keyword, tags } = req.query;
+    const cleanKeyword = keyword?.trim() || "";
 
     // parse tags
     // if no tags param, default to empty array
     // normalize tags to lowercase
-    const tagList = tags
-        ? tags.split(",").map(t => t.trim().toLowerCase()).filter(Boolean)
-        : [];
+    let tagList = [];
 
-    // get all post if no query is done
-    const posts = keyword 
-        ? await postService.searchPosts({ keyword, tags: tagList, sortBy })
+    if (tags) {
+
+        if (Array.isArray(tags)) 
+            tagList = tags.map(t => t.trim().toLowerCase()).filter(Boolean);
+        
+        else if (typeof tags === 'string') 
+            tagList = tags.split(",").map(t => t.trim().toLowerCase()).filter(Boolean);
+    }
+
+    // Trigger search if there is a keyword OR a tag!
+    const isSearch = cleanKeyword.length > 0 || tagList.length > 0;
+
+    const posts = isSearch 
+        ? await postService.searchPosts({ keyword: cleanKeyword, tags: tagList, sortBy })
         : await postService.getAllPosts(sortBy);
 
     res.status(200).json({ success: true, data: posts });
-
 });
 
 const getPostById = catchAsync(async (req, res) => {

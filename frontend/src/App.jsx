@@ -59,7 +59,7 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path = "/post/:id" element = {<Post_Page/>}/>
                 <Route path = "/profile/:username" element = {<Profile_Page/>}/>
-                <Route path="/search" element={<Search />} />
+                <Route path = "/search" element = {<Search />} />
             </Routes>
 
         </>

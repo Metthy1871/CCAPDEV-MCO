@@ -1,7 +1,7 @@
 /* This is the search page of the application. */
 
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser.js';
 import { useFetchPosts } from '../hooks/useFetchPosts.js';
 
@@ -17,14 +17,14 @@ import './Search.css';
 function Search() {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [searchParams] = useSearchParams();
+    const keyword = searchParams.get('q') || '';
 
     const { data: current_user } = useFetchCurrentUser();
     const [sortBy, setSortBy] = useState('recent');
-    const location = useLocation();
-    const query = new URLSearchParams(location.search).get('q');
-    const { data: posts, isLoading, isError } = useFetchPosts(sortBy, query);
+
+    const { data: posts, isLoading, isError } = useFetchPosts(sortBy, keyword, []);
     const isGuest = !current_user;
-    
 
     return (
     
@@ -68,7 +68,7 @@ function Search() {
                     )}
 
                     <h2 className = "results_for">
-                        Results for: {query}
+                        Results for: {keyword}
                     </h2>
 
                     {!isLoading && posts?.length === 0 && (
