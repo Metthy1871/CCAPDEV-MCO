@@ -52,7 +52,7 @@ function Right_Side_Bar() {
                 {/* Forum description */}
                 <div className="forum_description">
                     <p>
-                        An online forum to discuss Phanthom Thief activity.
+                        An online forum to discuss Phantom Thief activity.
                     </p>
                 </div>
 
