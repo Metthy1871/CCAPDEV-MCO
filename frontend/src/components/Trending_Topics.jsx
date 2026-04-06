@@ -1,5 +1,6 @@
 /* This component renders the trending topics. */
 
+import { useNavigate } from 'react-router-dom';
 import { useFetchPopularTopics } from '../hooks/useFetchPopularTopics';
 
 import './Trending_Topics.css';
@@ -7,6 +8,14 @@ import './Trending_Topics.css';
 function Trending_Topics() {
 
     const { data: popularTopics, isLoading } = useFetchPopularTopics();
+    const navigate = useNavigate();
+
+    const handleTopicClick = (topic) => {
+
+        const cleanTopic = topic.replace('#', ''); 
+        
+        navigate(`/search?keyword=${encodeURIComponent(cleanTopic)}`);
+    };
 
     if (isLoading) 
         return <div>Loading popular topics...</div>;
@@ -24,7 +33,12 @@ function Trending_Topics() {
                     {/* Map the list of trending topics */}
                     {popularTopics?.map(tag => (
 
-                        <li key = {tag.name} className = "topic">
+                        <li 
+                            key = {tag.name} 
+                            className = "topic"
+                            onClick = {() => handleTopicClick(tag.name)} 
+                            style = {{ cursor: 'pointer' }}
+                        >
                             <span className = "keyword">#{tag.name}</span>
                             <span className = "topic_count">{tag.count} posts</span>
                         </li>
