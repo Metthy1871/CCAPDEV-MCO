@@ -1,5 +1,7 @@
 /* This component displays the forum information and rules. */
 
+import { useState } from 'react';
+
 import { useFetchTotalMembers } from '../hooks/useFetchTotalMembers.js';
 import { forum_rules } from '../data/forum_rules.js';
 
@@ -8,6 +10,12 @@ import './Right_Side_Bar.css';
 function Right_Side_Bar() {
 
     const {data: totalMembers, isLoading } = useFetchTotalMembers();
+    
+    const [activeRule, setActiveRule] = useState(null);
+
+    const toggleRule = (id) => {
+        setActiveRule(activeRule === id ? null : id);
+    };
 
     return (
 
@@ -67,11 +75,29 @@ function Right_Side_Bar() {
 
                 {/* Map the rules list */}
                 <ul className = "rules_list">
+
                     {forum_rules.map((rule) => (
-                        <li key = {rule.id}>
-                            <span> {rule.id}. {rule.title}</span>
+
+                        <li 
+                            key = {rule.id}
+                            onClick = {() => toggleRule(rule.id)}
+                            style = {{ cursor: 'pointer', marginBottom: '10px' }}
+                        >
+                            <div style = {{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                                <span>{rule.id}. {rule.title}</span>
+                                <span>{activeRule === rule.id ? '▼' : '▶'}</span>
+                            </div>
+                            
+                            {activeRule === rule.id && rule.description && (
+                                <div style = {{ fontSize: '0.85rem', color: 'var(--text-secondary, #ccc)', marginTop: '5px', paddingLeft: '15px' }}>
+                                    {rule.description}
+                                </div>
+                            )}
+
                         </li>
+
                     ))}
+
                 </ul>
 
             </div>
