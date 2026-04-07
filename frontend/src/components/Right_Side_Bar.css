@@ -216,3 +216,7 @@
     cursor: pointer;
     color: var(--p5-red);
 }
+
+.developers div{
+    margin-bottom: 10px;
+}

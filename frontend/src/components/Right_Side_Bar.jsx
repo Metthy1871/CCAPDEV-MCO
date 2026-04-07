@@ -112,14 +112,14 @@ function Right_Side_Bar() {
             <div className="about_container">
 
                 <h4 className="about_header"> 
-                    About
+                    About the App
                 </h4>
 
                 <ul className="about_list">
 
                     <li onClick={() => toggleAbout(1)}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
-                            <span>Frontend</span>
+                            <span>Frontend Packages</span>
                             <span>{activeAbout === 1 ? '▼' : '▶'}</span>
                         </div>
 
@@ -140,7 +140,7 @@ function Right_Side_Bar() {
 
                     <li onClick={() => toggleAbout(2)}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
-                            <span>Backend</span>
+                            <span>Backend Packages</span>
                             <span>{activeAbout === 2 ? '▼' : '▶'}</span>
                         </div>
 
@@ -164,13 +164,13 @@ function Right_Side_Bar() {
                         )}
                     </li>
 
-                    <li onClick={() => toggleAbout(4)}>
+                    <li onClick={() => toggleAbout(3)}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
                             <span>Development Dependencies</span>
-                            <span>{activeAbout === 4 ? '▼' : '▶'}</span>
+                            <span>{activeAbout === 3 ? '▼' : '▶'}</span>
                         </div>
 
-                        {activeAbout === 4 && (
+                        {activeAbout === 3 && (
                             <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary, #ccc)', marginTop: '5px', paddingLeft: '15px' }}>
                                 <div>@eslint/js</div>
                                 <div>@types/react</div>
@@ -184,6 +184,24 @@ function Right_Side_Bar() {
                                 <div>vite</div>
                                 <div>nodemon</div>
                                 <div>concurrently</div>
+                            </div>
+                        )}
+                    </li>
+
+                    <li onClick={() => toggleAbout(4)}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                            <span>The Developers</span>
+                            <span>{activeAbout === 4 ? '▼' : '▶'}</span>
+                        </div>
+
+                        {activeAbout === 4 && (
+                            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary, #ccc)', marginTop: '5px', paddingLeft: '15px' }}>
+                                <div className = "developers">
+                                    <div >Dee, Adrian Matthew Lee</div>
+                                    <div>Dela Cruz, Althea Leanne Luna</div>
+                                    <div>Samonte, Anne Camille Tamayo</div>
+                                    <div>Xu, Kai Wen Hong</div>
+                                </div>
                             </div>
                         )}
                     </li>
