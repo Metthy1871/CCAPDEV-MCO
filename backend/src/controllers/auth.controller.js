@@ -1,11 +1,12 @@
 import * as authService from "../services/auth.service.js";
 import jwt from "jsonwebtoken";
+import config from "../config/env.js";
 
 const generateToken = (id, remember = false) => {
-    // If rememberMe is true, set expiration to 3 weeks, otherwise default to 24 hours
-    const expiration = remember ? "21d" : "24h"; 
-    return jwt.sign({ id, remember }, process.env.JWT_SECRET, {
-        expiresIn: expiration,
+    const expiresIn = remember ? config.jwtRememberExpiresIn : config.jwtExpiresIn;
+
+    return jwt.sign({ id, remember }, config.jwtSecret, {
+        expiresIn,
     });
 }
 
@@ -63,9 +64,9 @@ const loginUser = async (req, res) => {
 
         res.cookie("session", "active", {
             httpOnly: false,
-            maxAge: remember 
-                ? 21 * 24 * 60 * 60 * 1000 
-                : 24 * 60 * 60 * 1000, // match token expiration
+            maxAge: remember
+                ? 21 * 24 * 60 * 60 * 1000
+                : 24 * 60 * 60 * 1000,
         });
 
         return res.status(200).json({

@@ -23,6 +23,9 @@ const config = {
     port: process.env.PORT || 3000,
     mongoUri: process.env.MONGO_URI,
     nodeEnv,
+    jwtSecret: process.env.JWT_SECRET,
+    jwtExpiresIn: process.env.JWT_EXPIRES_IN || '24h',
+    jwtRememberExpiresIn: process.env.JWT_REMEMBER_EXPIRES_IN || '21d',
     // TRUST_PROXY accepts 1/true/0/false; if unset, default to true in production.
     trustProxy: toBoolean(process.env.TRUST_PROXY, nodeEnv === 'production'),
     clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',

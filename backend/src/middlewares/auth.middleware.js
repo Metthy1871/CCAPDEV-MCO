@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
+import config from "../config/env.js";
 
 const protect = async (req, res, next) => {
     let token;
@@ -10,7 +11,7 @@ const protect = async (req, res, next) => {
             token = req.headers.authorization.split(" ")[1];
 
             // verify the token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, config.jwtSecret);
 
             // attach the user to the request object, excluding the password
             req.user = await User.findById(decoded.id).select("-password");
@@ -23,8 +24,8 @@ const protect = async (req, res, next) => {
             if (decoded.remember) {
                 const newToken = jwt.sign(
                     { id: decoded.id, remember: true },
-                    process.env.JWT_SECRET,
-                    { expiresIn: "21d" }                 
+                    config.jwtSecret,
+                    { expiresIn: config.jwtRememberExpiresIn }
                 );
                 // Attach the new token to the response header for the client to update
                 res.setHeader("x-refreshed-token", newToken);
