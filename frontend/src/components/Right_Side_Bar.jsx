@@ -17,6 +17,12 @@ function Right_Side_Bar() {
         setActiveRule(activeRule === id ? null : id);
     };
 
+    const [activeAbout, setActiveAbout] = useState(null);
+
+    const toggleAbout = (id) => {
+        setActiveAbout(activeAbout === id ? null : id);
+    };
+
     return (
 
         <nav className = "right_side_bar">
@@ -101,7 +107,90 @@ function Right_Side_Bar() {
                 </ul>
 
             </div>
-            
+
+            {/* Section 3: About */}
+            <div className="about_container">
+
+                <h4 className="about_header"> 
+                    About
+                </h4>
+
+                <ul className="about_list">
+
+                    <li onClick={() => toggleAbout(1)}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                            <span>Frontend</span>
+                            <span>{activeAbout === 1 ? '▼' : '▶'}</span>
+                        </div>
+
+                        {activeAbout === 1 && (
+                            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary, #ccc)', marginTop: '5px', paddingLeft: '15px' }}>
+                                <div>@tanstack/react-query</div>
+                                <div>axios</div>
+                                <div>dompurify</div>
+                                <div>quill</div>
+                                <div>react</div>
+                                <div>react-dom</div>
+                                <div>react-quill-new</div>
+                                <div>react-quilljs</div>
+                                <div>react-router-dom</div>
+                            </div>
+                        )}
+                    </li>
+
+                    <li onClick={() => toggleAbout(2)}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                            <span>Backend</span>
+                            <span>{activeAbout === 2 ? '▼' : '▶'}</span>
+                        </div>
+
+                        {activeAbout === 2 && (
+                            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary, #ccc)', marginTop: '5px', paddingLeft: '15px' }}>
+                                <div>bcrypt</div>
+                                <div>cookie-parser</div>
+                                <div>cors</div>
+                                <div>dompurify</div>
+                                <div>dotenv</div>
+                                <div>express</div>
+                                <div>express-mongo-sanitize</div>
+                                <div>express-rate-limit</div>
+                                <div>helmet</div>
+                                <div>jsdom</div>
+                                <div>jsonwebtoken</div>
+                                <div>mongodb</div>
+                                <div>mongoose</div>
+                                <div>morgan</div>
+                            </div>
+                        )}
+                    </li>
+
+                    <li onClick={() => toggleAbout(4)}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                            <span>Development Dependencies</span>
+                            <span>{activeAbout === 4 ? '▼' : '▶'}</span>
+                        </div>
+
+                        {activeAbout === 4 && (
+                            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary, #ccc)', marginTop: '5px', paddingLeft: '15px' }}>
+                                <div>@eslint/js</div>
+                                <div>@types/react</div>
+                                <div>@types/react-dom</div>
+                                <div>@vitejs/plugin-react</div>
+                                <div>eslint</div>
+                                <div>eslint-plugin-react-hooks</div>
+                                <div>eslint-plugin-react-refresh</div>
+                                <div>globals</div>
+                                <div>json-server</div>
+                                <div>vite</div>
+                                <div>nodemon</div>
+                                <div>concurrently</div>
+                            </div>
+                        )}
+                    </li>
+
+                </ul>
+
+            </div>
         </nav>
     )
 }
