@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useLogin } from '../hooks/useLogin';
+import { useLogout } from '../hooks/useLogout';
 
 import phantom_logo from '../media/Phantom_Logo.png';
 
@@ -13,6 +14,7 @@ function Login() {
 
     const navigate = useNavigate();
     const loginMutation = useLogin();
+    const logoutMutation = useLogout();
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
@@ -109,8 +111,15 @@ function Login() {
                     type = "button" 
                     className = "guest_button" 
                     onClick = {() => {
-                        localStorage.removeItem('token');
-                        navigate('/');
+                        if (logoutMutation.isPending) {
+                            return;
+                        }
+
+                        logoutMutation.mutate(undefined, {
+                            onSettled: () => {
+                                navigate('/');
+                            }
+                        });
                         }
                     }
                 >

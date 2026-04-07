@@ -1,9 +1,9 @@
 /* This component renders the global navigation bar for the application. */
 
 import { Link, useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
+import { useLogout } from '../hooks/useLogout';
 
 import Pill_Button from './Pill_Button';
 import Profile_Icon from './Profile_Icon';
@@ -19,7 +19,7 @@ function Nav_Bar(){
     const [searchQuery, setSearchQuery] = useState('');
 
     const navigate = useNavigate();
-    const queryClient = useQueryClient();
+    const logoutMutation = useLogout();
 
     const { data: current_user, isLoading } = useFetchCurrentUser();
     const isGuest = !current_user && !isLoading;
@@ -31,10 +31,15 @@ function Nav_Bar(){
     )}
 
     const handleLogOut = () => {
+        if (logoutMutation.isPending) {
+            return;
+        }
 
-        localStorage.removeItem('token'); 
-        queryClient.clear(); 
-        window.location.href = '/';
+        logoutMutation.mutate(undefined, {
+            onSettled: () => {
+                window.location.href = '/';
+            }
+        });
     }
 
     return (
