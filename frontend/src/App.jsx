@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
 import TopScroll from './components/TopScroll';
+import RateLimitToast from './components/RateLimitToast';
+
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -31,14 +33,24 @@ axios.interceptors.response.use(
     },
     
     (error) => {
-        // If the token is completely expired or invalid, kick them to login
-        if (error.response && error.response.status === 401) {
-            localStorage.removeItem('token');
-            // Only redirect if they aren't already on the login page
-            if (window.location.pathname !== '/login') {
-                window.location.href = '/login'; 
+
+        if (error.response) {
+            
+            // Catch 429 Rate Limits
+            if (error.response.status === 429) {
+                window.dispatchEvent(new CustomEvent('rate-limit-hit'));
+            }
+            
+            // Catch 401 Unauthorized (Expired tokens)
+            if (error.response.status === 401) {
+                localStorage.removeItem('token');
+                // Only redirect if they aren't already on the login page
+                if (window.location.pathname !== '/login') {
+                    window.location.href = '/login'; 
+                }
             }
         }
+        
         return Promise.reject(error);
     }
 );
@@ -50,6 +62,7 @@ function App() {
         <>
 
             <TopScroll/>
+            <RateLimitToast/>
 
             {/* Client-side routes are managed here*/}
             <Routes>
