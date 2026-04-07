@@ -36,7 +36,7 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
     const editPostMutation = useEditPost();
     const voteMutation = usePostVote();
 
-    const isAuthor = current_user?.username === author?.username;
+    const isAuthor = current_user && author && (current_user.username === author.username);
     const relativeDate = getRelativeTime(createdAt);
     const exactDate = getExactTime(createdAt);
     const formattedEditDate = getExactTime(updatedAt);
@@ -51,8 +51,11 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
     const [isEditing, setIsEditing] = useState(false);
     const [currentTitle, setCurrentTitle] = useState(title);
     const [currentContent, setCurrentContent] = useState(content);
-    const [editContent, setEditContent] = useState(content);
+    const [currentTags, setCurrentTags] = useState(tags);
+
     const [editTitle, setEditTitle] = useState(title);
+    const [editContent, setEditContent] = useState(content);
+    const [editTags, setEditTags] = useState(tags.join(', '));
 
     /* Reply */
     const [isReplying, setIsReplying] = useState(false);
@@ -73,8 +76,9 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
         if (isEditing) {
             setEditTitle(currentTitle);
             setEditContent(currentContent);
+            setEditTags(currentTags.join(', '));
         }
-    }, [isEditing, currentTitle, currentContent]);
+    }, [isEditing, currentTitle, currentContent, currentTags]);
 
     /* Navigates to the specific post page */
     const handlePostClick = () => {
@@ -238,38 +242,17 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
 
                 </div>
 
-                {/* Post title */}
-                {!isEditing && (
-                    <h2 className="post_title">
-                        {currentTitle}
-                    </h2>
-                )}
-                
-                <div className="post_tags">
-                    {tags.map((tag, index) => (
-                        <span 
-                            key = {index} 
-                            className = "tag_pill"
-                            onClick = {(e) => {
-                                e.stopPropagation();
-                            }}
-                        >
-                            #{tag}
-                        </span>
-                    ))}
-                </div>
-
-                {/* Post content */}
                 {isEditing ? (
 
-                        <div className = "reply_box" onClick={(e) => e.stopPropagation()}>
+                        <div className="reply_box" onClick={(e) => e.stopPropagation()}>
                             
+                            {/* Title Edit Input */}
                             <input 
-                                type = "text"
-                                className = "rich_text_editor"
-                                value = {editTitle}
-                                onChange = {(e) => setEditTitle(e.target.value)}
-                                style = {{
+                                type="text"
+                                className="rich_text_editor"
+                                value={editTitle}
+                                onChange={(e) => setEditTitle(e.target.value)}
+                                style={{
                                     width: '100%',
                                     padding: '10px',
                                     marginBottom: '10px',
@@ -281,18 +264,33 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
                                     color: 'inherit'
                                 }}
                             />
-                            
-                            <div
+
+                            {/* Tags Edit Input */}
+                            <input 
+                                type="text"
+                                className="rich_text_editor"
+                                value={editTags}
+                                onChange={(e) => setEditTags(e.target.value)}
+                                placeholder="Tags (comma separated, max 5)"
                                 style={{
-                                    minHeight: '100px',
-                                    display: 'block'
+                                    width: '100%',
+                                    padding: '10px',
+                                    marginBottom: '10px',
+                                    fontSize: '1rem',
+                                    borderRadius: '5px',
+                                    border: '1px solid #ccc',
+                                    background: 'transparent',
+                                    color: 'inherit'
                                 }}
-                            >
+                            />
+                            
+                            {/* Content Edit Input */}
+                            <div style={{ minHeight: '100px', display: 'block' }}>
                                 <Rich_Text
-                                    className = "rich_text_editor"
-                                    key = {_id + "_post_edit"}
-                                    value = {editContent}
-                                    setValue = {setEditContent}
+                                    className="rich_text_editor"
+                                    key={_id + "_post_edit"}
+                                    value={editContent}
+                                    setValue={setEditContent}
                                 />
                             </div>
 
@@ -300,37 +298,71 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
                                 {getTextLength(editContent)}/50000
                             </span>
                             
-                            <div className = "reply_box_footer" style = {{ marginTop: '5px' }}>
+                            <div className="reply_box_footer" style={{ marginTop: '5px' }}>
 
                                 <Pill_Button
-                                    icon = "" text = "Cancel"
+                                    icon="" text="Cancel"
                                     onClick={() => {
                                         setIsEditing(false);
-                                        setEditContent(currentContent); // revert to original
-                                        setCurrentTitle(currentTitle);
+                                        setEditContent(currentContent); 
+                                        setEditTitle(currentTitle); // Fixed from setCurrentTitle
+                                        setEditTags(currentTags.join(', ')); // Reset tags on cancel
                                     }}
                                 />
 
                                 <Pill_Button 
-                                    icon = "" text = "Save"
-                                    disabled = {editPostMutation.isPending || editContent.trim().length < 5 || editContent === currentContent}
-                                    onClick = {() => {
+                                    icon="" text="Save"
+                                    disabled={editPostMutation.isPending || editContent.trim().length < 5}
+                                    onClick={() => {
+                                        // Clean and format the tags
+                                        const formattedTags = editTags
+                                            .split(',')
+                                            .map(tag => tag.trim().toLowerCase())
+                                            .filter(tag => tag.length >= 2 && tag.length <= 50)
+                                            .slice(0, 5);
+
                                         editPostMutation.mutate(
-                                            { postId: _id, title: editTitle, content: DOMPurify.sanitize(editContent) },
+                                            { 
+                                                postId: _id, 
+                                                title: editTitle, 
+                                                content: DOMPurify.sanitize(editContent),
+                                                tags: formattedTags
+                                            },
                                             { onSuccess: () => {
                                                 setCurrentContent(DOMPurify.sanitize(editContent));
-                                                setIsEditing(false);                             // close editor
-                                            } } // Close box on success
+                                                setCurrentTitle(editTitle);
+                                                setCurrentTags(formattedTags);
+                                                setIsEditing(false);                            
+                                            } } 
                                         );
                                     }}
                                 />
                             </div>
                         </div>
                     ) : (
-                        <div
-                            className="post_content"
-                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(currentContent) }}
-                        />
+ 
+                        <>
+                            <h2 className="post_title">
+                                {currentTitle}
+                            </h2>
+                            
+                            <div className="post_tags">
+                                {currentTags.map((tag, index) => (
+                                    <span 
+                                        key={index} 
+                                        className="tag_pill"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        #{tag}
+                                    </span>
+                                ))}
+                            </div>
+
+                            <div
+                                className="post_content"
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(currentContent) }}
+                            />
+                        </>
                 )}
                
                 {/* Section 2: Post Footer */}

@@ -119,11 +119,11 @@ const createPost = async ({ title, content, userId, tags }) => {
     }
 }
 
-const updatePost = async ({ postId, userId, title, content }) => {
+const updatePost = async ({ postId, userId, title, content, tags }) => {
     try {
         const updatedPost = await Post.findOneAndUpdate(
             { _id: postId, author: userId },
-            { title, content },
+            { title, content, tags },
             {
                 new: true, // returns the updated document
                 runValidators: true // check minlength/maxlength rules again

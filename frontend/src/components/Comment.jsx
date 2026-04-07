@@ -35,7 +35,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
     const editCommentMutation = useEditComment();
     const voteMutation = useCommentVote();
 
-    const isAuthor = current_user?.username === author.username;
+    const isAuthor = current_user && author && (current_user.username === author.username);
     const relativeDate = getRelativeTime(createdAt);
     const exactDate = getExactTime(createdAt);
     const formattedEditDte = getExactTime(updatedAt);
@@ -123,7 +123,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
 
                             {/* Comment author */}
                             <span className = "comment_user">
-                                @{author.username} 
+                                {author ? `@${author.username}` : "[This account is no longer available]"}
                             </span>
 
                             {/* Comment date */}

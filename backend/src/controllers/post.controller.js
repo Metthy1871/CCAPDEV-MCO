@@ -71,12 +71,12 @@ const createPost = catchAsync(async (req, res) => {
 
 const updatePost = catchAsync(async (req, res) => {
     const userId = req.user._id;
-    const { title, content } = req.body;
+    const { title, content, tags } = req.body;
     const postId = req.params.postId;
 
     const safeContent = sanitizeHTML(content);
 
-    const updatedPost = await postService.updatePost({ postId, userId, title, content: safeContent });
+    const updatedPost = await postService.updatePost({ postId, userId, title, content: safeContent, tags });
 
     if (!updatedPost) {
         return res.status(404).json({ success: false, message: "Post not found"});

@@ -8,12 +8,12 @@ export function useEditPost() {
 
     return useMutation({
 
-        mutationFn: async ({ postId, title, content }) => {
+        mutationFn: async ({ postId, title, content, tags }) => {
 
             const token = localStorage.getItem('token');
             const response = await axios.put(
                 `${config.apiUrl}/api/posts/${postId}`,
-                { title, content },
+                { title, content, tags },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 

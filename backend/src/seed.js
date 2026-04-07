@@ -42,10 +42,22 @@ const seedDatabase = async () => {
             { 
                 username: 'Queen', email: 'studentcouncil@phantom.com', password: 'password123',
                 bio: "hehe", avatar: "https://i.redd.it/20ld74wraawa1.jpg" 
+            },
+            { 
+                username: 'Oracle', email: 'navi@phantom.com', password: 'password123',
+                bio: "Computers are awesome", avatar: "https://assetsio.gnwcdn.com/persona-5-royal-futaba-confidant.jpg?width=1200&height=1200&fit=crop&quality=100&format=png&enable=upscale&auto=webp" 
+            },
+            { 
+                username: 'Noir', email: 'capitalist@phantom.com', password: 'password123',
+                bio: "Tending to the garden", avatar: "https://images8.alphacoders.com/121/1210979.png" 
+            },
+            { 
+                username: 'Crow', email: 'crow@phantom.com', password: 'password123',
+                bio: "Justice will prevail.", avatar: "https://images.steamusercontent.com/ugc/1021698695532836540/A09520054CE27FBFE73300DB7953DF173E33F209/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" 
             }
         ]);
         
-        console.log('5 Users created.');
+        console.log('8 Users created.');
 
         // Create posts with time travel (for testing sorting algorithm)
         const sixMonthsAgo = new Date();
@@ -60,6 +72,9 @@ const seedDatabase = async () => {
         const postId3 = new mongoose.Types.ObjectId();
         const postId4 = new mongoose.Types.ObjectId();
         const postId5 = new mongoose.Types.ObjectId();
+        const postId6 = new mongoose.Types.ObjectId();
+        const postId7 = new mongoose.Types.ObjectId();
+        const postId8 = new mongoose.Types.ObjectId();
 
         // Use the raw MongoDB driver to bypass Mongoose's automatic timestamp handling,
         // allowing us to manually set createdAt for testing the sorting algorithms
@@ -118,8 +133,42 @@ const seedDatabase = async () => {
                 downvotes: [users[0]._id], // 1 Downvote
                 createdAt: new Date(),
                 updatedAt: new Date()
+            },
+            {
+                _id: postId6,
+                title: 'Any good turn-based RPGs out right now?',
+                content: "I've 100%'d every game in my backlog. Need something highly tactical. Bonus points if it has permadeath.",
+                author: users[5]._id, // Oracle
+                tags: ['gaming', 'rpg', 'help'],
+                upvotes: [users[0]._id, users[1]._id, users[6]._id], // 3 Votes
+                downvotes: [],
+                createdAt: yesterday,
+                updatedAt: yesterday
+            },
+            {
+                _id: postId7,
+                title: 'The strategy of the Napoleonic era...',
+                content: "Fascinating how the tactics of the past mirror modern chess. Anyone here play? I hover around a 1300 rating online when I have free time between cases.",
+                author: users[7]._id, // Crow
+                tags: ['chess', 'history', 'strategy'],
+                upvotes: [users[4]._id], // Queen approves
+                downvotes: [users[1]._id], // Skull downvotes
+                createdAt: sixMonthsAgo,
+                updatedAt: new Date() // Edited recently!
+            },
+            {
+                _id: postId8,
+                title: 'Any good book recommendations?',
+                content: "As the title says",
+                author: users[6]._id, // Crow
+                tags: ['books', 'education'],
+                upvotes: [users[4]._id], // Queen approves
+                downvotes: [],
+                createdAt: sixMonthsAgo,
+                updatedAt: yesterday
             }
         ]);
+
         console.log('Posts created with manipulated timestamps.');
 
         // Create nested comments w/ upvotes and time travel
@@ -142,17 +191,6 @@ const seedDatabase = async () => {
             createdAt: twoDaysAgo
         });
 
-        // Top-Level Comment 2: Newest, but highly upvoted (Most Popular)
-        const rootComment2 = await Comment.create({
-            content: 'Wait, I have proof. Look at this picture I took at the courtyard.',
-            author: users[3]._id, // Fox
-            post: postId1,
-            parentComment: null,
-            upvotes: [users[0]._id, users[1]._id, users[2]._id, users[4]._id], // 4 Upvotes
-            downvotes: [],
-            createdAt: oneHourAgo
-        });
-
         // Reply to Root Comment 1 (A nested thread)
         const reply1 = await Comment.create({
             content: 'Let me know if you find anything. I can ask around.',
@@ -162,6 +200,17 @@ const seedDatabase = async () => {
             upvotes: [], // 0 Upvotes
             downvotes: [],
             createdAt: new Date()
+        });
+
+        // Top-Level Comment 2: Newest, but highly upvoted (Most Popular)
+        const rootComment2 = await Comment.create({
+            content: 'Wait, I have proof. Look at this picture I took at the courtyard.',
+            author: users[3]._id, // Fox
+            post: postId1,
+            parentComment: null,
+            upvotes: [users[0]._id, users[1]._id, users[2]._id, users[4]._id], // 4 Upvotes
+            downvotes: [],
+            createdAt: oneHourAgo
         });
 
         const reply2 = await Comment.create({
@@ -182,6 +231,66 @@ const seedDatabase = async () => {
             upvotes: [users[0]._id, users[1]._id, users[2]._id, users[4]._id], // 0 Upvotes
             downvotes: [],
             createdAt: new Date()
+        });
+
+        const rootComment3 = await Comment.create({
+            content: 'Have you tried touching grass instead?',
+            author: users[1]._id, // Skull
+            post: postId6,
+            parentComment: null,
+            upvotes: [users[7]._id], 
+            downvotes: [users[5]._id, users[0]._id],
+            createdAt: yesterday
+        });
+
+        const reply4 = await Comment.create({
+            content: 'I will hack your search history and post it on the calling card board.',
+            author: users[5]._id, // Oracle
+            post: postId6,
+            parentComment: rootComment3._id,
+            upvotes: [users[0]._id, users[4]._id, users[6]._id], // High upvotes
+            downvotes: [],
+            createdAt: yesterday
+        });
+
+        const rootComment4 = await Comment.create({
+            content: '1300 is decent, but true strategy is found in the student council room. We should play sometime.',
+            author: users[4]._id, // Queen
+            post: postId7,
+            parentComment: null,
+            upvotes: [users[0]._id],
+            downvotes: [],
+            createdAt: new Date()
+        });
+
+        const rootComment5 = await Comment.create({
+            content: 'If you want to talk about art history, the aesthetic of the French Empire is truly something to behold.',
+            author: users[3]._id, // Fox
+            post: postId7,
+            parentComment: null,
+            upvotes: [users[6]._id], // Noir upvotes
+            downvotes: [],
+            createdAt: new Date()
+        });
+
+        const rootComment6 = await Comment.create({
+            content: 'Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein',
+            author: users[5]._id, // Oracle
+            post: postId8,
+            parentComment: null,
+            upvotes: [],
+            downvotes: [users[0]._id, users[4]._id, users[6]._id],
+            createdAt: yesterday
+        });
+
+        const rootComment7 = await Comment.create({
+            content: 'All Quiet on The Western Front',
+            author: users[4]._id, // Queen
+            post: postId8,
+            parentComment: null,
+            upvotes: [users[0]._id, users[4]._id, users[6]._id],
+            downvotes: [],
+            createdAt: yesterday
         });
 
         console.log('Nested comment tree created with upvotes and timestamps.');
