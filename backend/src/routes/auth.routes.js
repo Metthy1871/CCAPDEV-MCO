@@ -17,6 +17,8 @@ const authLimiter = rateLimit({
         success: false,
         message: 'Too many login attempts, please try again later.',
     },
+    standardHeaders: true,
+    legacyHeaders: false,
 });
 
 authRouter.route('/register').post(authLimiter, registerUser);

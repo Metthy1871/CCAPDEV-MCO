@@ -26,7 +26,7 @@ const getCommentsByPost = async (postId) => {
             // default:
         const oldestComments = await Comment.find({ post: postId })
             .sort({ createdAt: 1 }) // sort by oldest
-            .populate('author', 'username');
+            .populate('author', 'username avatar');
         return oldestComments;
         
     } catch (error) {
@@ -44,7 +44,7 @@ const createComment = async ({ content, userId, postId, parentComment}) => {
         });
 
         // populate username right away to render immediately without needing a refresh
-        return await newComment.populate('author', 'username');
+        return await newComment.populate('author', 'username avatar');
     } catch (error) {
         throw error;
     }

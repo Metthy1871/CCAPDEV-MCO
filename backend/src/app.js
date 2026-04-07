@@ -52,7 +52,10 @@ const isSearchRateLimitedRoute = (req) =>
     req.path === '/posts' &&
     (getKeyword(req).length > 0 || hasTagFilter(req.query.tags));
 
-    
+// set this before rate limiting so req.ip can use forwarded client IPs behind proxies (e.g., Render).
+app.set('trust proxy', config.trustProxy ? 1 : false);
+
+
 // use Redis for multi-server deployments
 const globalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -62,6 +65,8 @@ const globalLimiter = rateLimit({
         message: "Too many API requests, please try again later.",
     },
     // prevent double counting for requests already protected by auth/search limiter
+    standardHeaders: true,
+    legacyHeaders: false,
     skip: (req) => isAuthRateLimitedRoute(req) || isSearchRateLimitedRoute(req),
 });
 

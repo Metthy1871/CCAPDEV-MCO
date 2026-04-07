@@ -33,7 +33,9 @@ const searchLimiter = rateLimit({
     },
     // only rate limit when this endpoint is used for search
     skip: (req) => !hasSearchQuery(req),
-    skipFailedRequests: true
+    skipFailedRequests: true,
+    standardHeaders: true,
+    legacyHeaders: false,
 });
 
 

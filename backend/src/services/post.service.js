@@ -15,7 +15,7 @@ const getAllPosts = async (sortBy = SORT_POSTS_OPTIONS.RECENT) => {
                     { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
                 ])
 
-                return await Post.populate(allTime, { path: 'author', select: 'username'} );
+                return await Post.populate(allTime, { path: 'author', select: 'username avatar'} );
             
             case SORT_POSTS_OPTIONS.POPULAR_RECENT: // sort by the most popular for posts created within the last seven days
                 const sevenDaysAgo = new Date();
@@ -28,13 +28,13 @@ const getAllPosts = async (sortBy = SORT_POSTS_OPTIONS.RECENT) => {
                     { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
                 ]);
 
-                return await Post.populate(recentPopular, { path: 'author', select: 'username'} );
+                return await Post.populate(recentPopular, { path: 'author', select: 'username avatar'} );
 
             case SORT_POSTS_OPTIONS.RECENT:
             default:
                 const recentPosts = await Post.find()
                     .sort({ createdAt: -1 }) // sort by most recent
-                    .populate('author', 'username');
+                    .populate('author', 'username avatar');
                 return recentPosts;
         }
     } catch (error) {
@@ -45,7 +45,7 @@ const getAllPosts = async (sortBy = SORT_POSTS_OPTIONS.RECENT) => {
 // used for dedicated viewing of a post
 const getPostById = async (postId) => {
     try {
-        const post = await Post.findById(postId).populate('author', 'username');
+        const post = await Post.findById(postId).populate('author', 'username avatar');
         
         if (!post) {
             throw new Error("Post not found");
@@ -69,7 +69,7 @@ const getPostsByUser = async (userId, sortBy = SORT_POSTS_OPTIONS.RECENT) => {
                     { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
                 ])
 
-                return await Post.populate(allTime, { path: 'author', select: 'username'} );
+                return await Post.populate(allTime, { path: 'author', select: 'username avatar'} );
             
             case SORT_POSTS_OPTIONS.POPULAR_RECENT: // sort by the most popular for posts created within the last seven days
                 const sevenDaysAgo = new Date();
@@ -86,13 +86,13 @@ const getPostsByUser = async (userId, sortBy = SORT_POSTS_OPTIONS.RECENT) => {
                     { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
                 ]);
 
-                return await Post.populate(recentPopular, { path: 'author', select: 'username'} );
+                return await Post.populate(recentPopular, { path: 'author', select: 'username avatar'} );
 
             case SORT_POSTS_OPTIONS.RECENT:
             default:
                 const recentPosts = await Post.find({ author: userId })
                     .sort({ createdAt: -1 }) // sort by most recent
-                    .populate('author', 'username');
+                    .populate('author', 'username avatar');
                 return recentPosts;
         }
 
@@ -112,7 +112,7 @@ const createPost = async ({ title, content, userId, tags }) => {
         });
 
         // populate author details so username automatically renders without refresh
-        return await newPost.populate('author', 'username');
+        return await newPost.populate('author', 'username avatar');
     } catch (error) {
         throw error;
     }
@@ -186,7 +186,7 @@ const togglePostVote = async ({ postId, userId, action }) => {
             postId,
             update,
             { new: true, timestamps: false }
-        ).populate('author', 'username');
+        ).populate('author', 'username avatar');
 
     } catch (error) {
         throw error;
@@ -235,7 +235,7 @@ const searchPosts = async ({ keyword = "", tags = [], sortBy=SORT_POSTS_OPTIONS.
                     { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
                 ])
 
-                return await Post.populate(allTime, { path: 'author', select: 'username'} );
+                return await Post.populate(allTime, { path: 'author', select: 'username avatar'} );
             
             case SORT_POSTS_OPTIONS.POPULAR_RECENT: // sort by the most popular for posts created within the last seven days
                 const sevenDaysAgo = new Date();
@@ -255,13 +255,13 @@ const searchPosts = async ({ keyword = "", tags = [], sortBy=SORT_POSTS_OPTIONS.
                     { $sort: { voteCount: -1, createdAt: -1 } } // sort posts by vote count in descending order, and then by time of creation in descending order 
                 ]);
 
-                return await Post.populate(recentPopular, { path: 'author', select: 'username'} );
+                return await Post.populate(recentPopular, { path: 'author', select: 'username avatar'} );
 
             case SORT_POSTS_OPTIONS.RECENT:
             default:
                 return await Post.find(query)
                     .sort({ createdAt: -1 }) // sort by most recent
-                    .populate('author', 'username');
+                    .populate('author', 'username avatar');
             }
 
     } catch (error) {
