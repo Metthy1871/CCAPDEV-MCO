@@ -15,12 +15,21 @@ function Signup() {
     const registerMutation = useRegister();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordError, setPasswordError] = useState(false);
 
     const handleRegister = (e) => {
 
         e.preventDefault();
+
+        if (password !== confirmPassword) {
+            setPasswordError(true);
+            return;
+        }
+
+        setPasswordError(false);
 
         registerMutation.mutate(
             { username, email, password },
@@ -52,6 +61,18 @@ function Signup() {
 
                 <h1 className = "signup_title">Create Account</h1>
                 <p className = "signup_subtitle">Sign up to join The Phantom Forum</p>
+
+                {registerMutation.isError && (
+                    <p style={{ color: 'red', fontSize: '14px' }}>
+                        {registerMutation.error?.response?.data?.message || "Registration failed. Please try again."}
+                    </p>
+                )}
+
+                {passwordError && (
+                    <p style={{ color: 'red', fontSize: '14px' }}>
+                        Passwords do not match!
+                    </p>
+                )}
 
                 <label>
                     Username

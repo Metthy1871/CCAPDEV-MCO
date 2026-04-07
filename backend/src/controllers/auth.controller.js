@@ -36,13 +36,19 @@ const registerUser = async (req, res) => {
         });
     } catch (error) {
 
+        if (error.name === 'ValidationError') {
+            const messages = Object.values(error.errors).map(err => err.message);
+            return res.status(400).json({ message: messages.join(', ') });
+        }
+
         if (error.code === 11000){
             const field = Object.keys(error.keyValue)[0]; 
             return res.status(409).json({ message: `That ${field} is already taken.` });
         }
 
+        console.error("🚨 REGISTRATION CRASH:", error);
         return res.status(500).json({ 
-            message: "Internal server error", error: error.message
+            message: "Internal server error"
         });
     }
 }
