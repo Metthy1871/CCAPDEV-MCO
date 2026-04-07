@@ -8,7 +8,14 @@ import App from './App.jsx'
 import './index.css'
 
 /* Create the Client to manage the data */
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 1000 * 60 * 5,
+            refetchOnWindowFocus: false,
+        },
+    },
+})
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   

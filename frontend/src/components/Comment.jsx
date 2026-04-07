@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom'
 
 import { useFetchCurrentUser } from '../hooks/useFetchCurrentUser';
-import { useFetchUserByName } from '../hooks/useFetchUserByName';
 import { useCreateComment } from '../hooks/useCreateComment';
 import { useDeleteComment } from '../hooks/useDeleteComment';
 import { useEditComment } from '../hooks/useEditComment';
@@ -29,7 +28,6 @@ function getTextLength(html) {
 
 function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, downvotes, isDeleted, comments, isGuest}) {
 
-    const { data: authorProfile } = useFetchUserByName(author.username);
     const { data: current_user } = useFetchCurrentUser();
 
     const createCommentMutation = useCreateComment();
@@ -108,7 +106,7 @@ function Comment({ postId, _id, author, createdAt, updatedAt, content, upvotes, 
                                 onClick = {(e) => e.stopPropagation()}
                             >
                                 <img 
-                                    src = {authorProfile?.avatar || "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg"}
+                                    src = {author?.avatar || "https://wallpapers.com/images/hd/blank-default-pfp-wue0zko1dfxs9z2c.jpg"}
                                     className = "post_avatar"
                                 />
                             </Link>
