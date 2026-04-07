@@ -1,13 +1,14 @@
 import { User } from "../models/User.js";
 import Post from "../models/Post.js";
 import Comment from "../models/Comment.js";
+import AppError from "../utils/appError.js";
 
 const findUserByUsername = async (username) => {
      // Find user by username and exclude the password from the results
     const user = await User.findOne({ username }).select("-password").lean();
 
     if (!user) {
-        throw new Error("User not found");
+        throw new AppError('User not found', 404);
     }
 
     const postKarmaCalc = await Post.aggregate([

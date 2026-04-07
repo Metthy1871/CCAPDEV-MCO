@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Post from '../models/Post.js';
 import { SORT_POSTS_OPTIONS, VOTE_ACTIONS } from '../utils/constants.js';
+import AppError from '../utils/appError.js';
 
 const { ObjectId } = mongoose.Types;
 
@@ -48,7 +49,7 @@ const getPostById = async (postId) => {
         const post = await Post.findById(postId).populate('author', 'username avatar');
         
         if (!post) {
-            throw new Error("Post not found");
+            throw new AppError('Post not found', 404);
         }
         return post;
     } catch (error) {
@@ -152,7 +153,7 @@ const togglePostVote = async ({ postId, userId, action }) => {
 
         // safety check
         if (!post) {
-            throw new Error("Post not found");
+            throw new AppError('Post not found', 404);
         }
 
         // compare stringified Object IDs

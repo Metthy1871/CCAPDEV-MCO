@@ -2,6 +2,9 @@ import * as authService from "../services/auth.service.js";
 import jwt from "jsonwebtoken";
 import config from "../config/env.js";
 
+const hasNonEmptyString = (value) =>
+    typeof value === "string" && value.trim().length > 0;
+
 const generateToken = (id, remember = false) => {
     const expiresIn = remember ? config.jwtRememberExpiresIn : config.jwtExpiresIn;
 
@@ -59,6 +62,10 @@ const loginUser = async (req, res) => {
         // check if the user already exists and capture the rememberMe flag
         const { identifier, password, remember } = req.body;
 
+        if (!hasNonEmptyString(identifier) || typeof password !== "string" || password.length === 0) {
+            return res.status(400).json({ message: "Email/username and password are required" });
+        }
+
         const user = await authService.validateUserLogin(identifier, password);
 
         if (!user) {
@@ -86,6 +93,10 @@ const loginUser = async (req, res) => {
             }
         });
     } catch (error) {
+        if (error.statusCode) {
+            return res.status(error.statusCode).json({ message: error.message });
+        }
+
         return res.status(500).json({
             message: "Internal Server Error", error: error.message
         });
@@ -101,7 +112,7 @@ const logoutUser = async (req, res) => {
         return res.status(200).json({
             message: "Logout successful"
         });
-    }catch (error) {
+    } catch (error) {
         return res.status(500).json({
             message: "Internal Server Error", error: error.message 
         });

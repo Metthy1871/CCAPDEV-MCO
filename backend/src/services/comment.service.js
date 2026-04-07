@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Comment from '../models/Comment.js';
 import { VOTE_ACTIONS } from '../utils/constants.js';
+import AppError from '../utils/appError.js';
 
 const { ObjectId } = mongoose.Types;
 
@@ -93,12 +94,12 @@ const toggleCommentVote = async ({ commentId, userId, action}) => {
 
         // safety check
         if (!comment) {
-            throw new Error("Comment not found");
+            throw new AppError('Comment not found', 404);
         }
 
         // check if comment is not deleted
         if (comment.isDeleted) {
-            throw new Error("Cannot vote on a deleted comment");
+            throw new AppError('Cannot vote on a deleted comment', 400);
         }
 
         // compare stringified Object IDs
