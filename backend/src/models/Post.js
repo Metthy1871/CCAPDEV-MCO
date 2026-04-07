@@ -60,5 +60,15 @@ postSchema.virtual('voteScore').get(function() {
 postSchema.set('toJSON', { virtuals: true });
 postSchema.set('toObject', { virtuals: true });
 
+postSchema.pre('findOneAndDelete', async function() {
+
+    // Get the ID of the post that is about to be deleted
+    const postId = this.getQuery()['_id'];
+
+    console.log("🚨 CASCADING DELETE FIRED FOR POST:", postId);
+    // Tell the Comment model to delete everything tied to this post
+    await mongoose.model('Comment').deleteMany({ post: postId }); 
+});
+
 const Post = model('Post', postSchema);
 export default Post;

@@ -292,7 +292,7 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
                                     className = "rich_text_editor"
                                     key = {_id + "_post_edit"}
                                     value = {editContent}
-                                    setValue = {setEditText}
+                                    setValue = {setEditContent}
                                 />
                             </div>
 
@@ -306,7 +306,8 @@ function Post({_id, title, author, createdAt, updatedAt, content, upvotes, downv
                                     icon = "" text = "Cancel"
                                     onClick={() => {
                                         setIsEditing(false);
-                                        setEditText(content); // revert to original
+                                        setEditContent(currentContent); // revert to original
+                                        setCurrentTitle(currentTitle);
                                     }}
                                 />
 
